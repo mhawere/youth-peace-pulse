@@ -6,6 +6,7 @@ import FivePsSection from '@/components/FivePsSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Quote, Users, Globe2, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   return (
@@ -163,17 +164,23 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
+              asChild
               size="lg" 
               className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4"
             >
-              Start Your Journey
+              <Link to="/get-involved">
+                Start Your Journey
+              </Link>
             </Button>
             <Button 
+              asChild
               variant="outline" 
               size="lg" 
               className="border-white text-white hover:bg-white/10 text-lg px-8 py-4"
             >
-              Learn More
+              <Link to="/donate">
+                Support Us
+              </Link>
             </Button>
           </div>
         </div>

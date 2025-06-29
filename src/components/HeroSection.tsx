@@ -1,6 +1,7 @@
 
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
@@ -36,11 +37,14 @@ const HeroSection = () => {
 
           <div className="flex justify-center">
             <Button 
+              asChild
               size="lg" 
               className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4 group"
             >
-              Get Involved Today
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Link to="/donate">
+                Support Us
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
 

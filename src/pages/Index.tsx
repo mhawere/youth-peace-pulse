@@ -1,14 +1,20 @@
-
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/HeroSection';
 import FivePsSection from '@/components/FivePsSection';
+import EditableText from '@/components/EditableText';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Quote, Users, Globe2, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => {
+  const [missionText, setMissionText] = useState("To mobilize and empower young people worldwide by connecting them to the resources, platforms, and partnerships needed to advance the United Nations Sustainable Development Goals through advocacy, funding, and community-led action.");
+  const [visionText, setVisionText] = useState("A peaceful and united world where youth lead the way in solving the planet's most urgent challenges—from climate action to social justice—by turning shared values into global impact.");
+  const [ctaTitle, setCtaTitle] = useState("Ready to Make a Difference?");
+  const [ctaDescription, setCtaDescription] = useState("Join thousands of young changemakers worldwide. Whether you want to volunteer, start a program, or partner with us—there's a place for you in the Y-Peace movement.");
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -28,18 +34,27 @@ const Index = () => {
               <div className="space-y-6">
                 <div className="border-l-4 border-primary pl-6">
                   <h3 className="text-xl font-semibold mb-2 text-primary">Mission</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    To mobilize and empower young people worldwide by connecting them to the resources, platforms, 
-                    and partnerships needed to advance the United Nations Sustainable Development Goals through 
-                    advocacy, funding, and community-led action.
-                  </p>
+                  <EditableText
+                    value={missionText}
+                    onChange={setMissionText}
+                    multiline
+                    className="text-gray-600 leading-relaxed"
+                    as="p"
+                  >
+                    {missionText}
+                  </EditableText>
                 </div>
                 <div className="border-l-4 border-secondary pl-6">
                   <h3 className="text-xl font-semibold mb-2 text-secondary">Vision</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    A peaceful and united world where youth lead the way in solving the planet's most urgent challenges—from 
-                    climate action to social justice—by turning shared values into global impact.
-                  </p>
+                  <EditableText
+                    value={visionText}
+                    onChange={setVisionText}
+                    multiline
+                    className="text-gray-600 leading-relaxed"
+                    as="p"
+                  >
+                    {visionText}
+                  </EditableText>
                 </div>
               </div>
             </div>
@@ -155,13 +170,23 @@ const Index = () => {
       {/* Call to Action */}
       <section className="py-20 gradient-brand">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to Make a Difference?
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of young changemakers worldwide. Whether you want to volunteer, 
-            start a program, or partner with us—there's a place for you in the Y-Peace movement.
-          </p>
+          <EditableText
+            value={ctaTitle}
+            onChange={setCtaTitle}
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
+            as="h2"
+          >
+            {ctaTitle}
+          </EditableText>
+          <EditableText
+            value={ctaDescription}
+            onChange={setCtaDescription}
+            multiline
+            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
+            as="p"
+          >
+            {ctaDescription}
+          </EditableText>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               asChild

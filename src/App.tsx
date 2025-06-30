@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AdminProvider } from "@/contexts/AdminContext";
-import AdminLogin from "@/components/AdminLogin";
+import AdminPanel from "@/components/AdminPanel";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Programs from "./pages/Programs";
@@ -15,6 +15,7 @@ import Donate from "./pages/Donate";
 import Blog from "./pages/Blog";
 import PressReleases from "./pages/PressReleases";
 import Newsletter from "./pages/Newsletter";
+import AdminLoginPage from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,7 +27,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AdminLogin />
+          <AdminPanel />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/news/blog" element={<Blog />} />
             <Route path="/news/press-releases" element={<PressReleases />} />
             <Route path="/news/newsletter" element={<Newsletter />} />
+            <Route path="/admin" element={<AdminLoginPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

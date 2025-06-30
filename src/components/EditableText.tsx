@@ -12,7 +12,7 @@ interface EditableTextProps {
   onChange: (value: string) => void;
   multiline?: boolean;
   className?: string;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
 }
 
 const EditableText: React.FC<EditableTextProps> = ({
@@ -38,7 +38,7 @@ const EditableText: React.FC<EditableTextProps> = ({
   };
 
   if (!isEditMode) {
-    return <Component className={className}>{children}</Component>;
+    return React.createElement(Component, { className }, children);
   }
 
   if (isEditing) {
@@ -73,7 +73,7 @@ const EditableText: React.FC<EditableTextProps> = ({
 
   return (
     <div className={`relative group ${className}`}>
-      <Component className="w-full">{children}</Component>
+      {React.createElement(Component, { className: "w-full" }, children)}
       {isEditMode && (
         <Button
           size="sm"

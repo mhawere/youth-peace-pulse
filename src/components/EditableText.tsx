@@ -43,7 +43,8 @@ const EditableText: React.FC<EditableTextProps> = ({
 
   if (isEditing) {
     return (
-      <div className={`relative ${className}`}>
+      <div className={`relative ${className} border-2 border-blue-500 rounded-lg p-2 bg-blue-50`}>
+        <div className="text-xs text-blue-600 font-medium mb-2">✏️ Editing Text:</div>
         {multiline ? (
           <Textarea
             value={editValue}
@@ -60,11 +61,13 @@ const EditableText: React.FC<EditableTextProps> = ({
           />
         )}
         <div className="flex gap-2 mt-2">
-          <Button size="sm" onClick={handleSave}>
-            <Check className="h-4 w-4" />
+          <Button size="sm" onClick={handleSave} className="bg-green-600 hover:bg-green-700">
+            <Check className="h-4 w-4 mr-1" />
+            Save
           </Button>
           <Button size="sm" variant="outline" onClick={handleCancel}>
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4 mr-1" />
+            Cancel
           </Button>
         </div>
       </div>
@@ -72,16 +75,16 @@ const EditableText: React.FC<EditableTextProps> = ({
   }
 
   return (
-    <div className={`relative group ${className}`}>
+    <div className={`relative group ${className} ${isEditMode ? 'border-2 border-dashed border-yellow-400 hover:border-yellow-500 hover:bg-yellow-50' : ''}`}>
       {React.createElement(Component, { className: "w-full" }, children)}
       {isEditMode && (
         <Button
           size="sm"
-          variant="ghost"
-          className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-blue-600 text-white hover:bg-blue-700"
+          className="absolute -top-2 -right-2 bg-yellow-500 text-black hover:bg-yellow-600 opacity-90 group-hover:opacity-100 transition-opacity shadow-lg"
           onClick={() => setIsEditing(true)}
         >
-          <Edit2 className="h-3 w-3" />
+          <Edit2 className="h-3 w-3 mr-1" />
+          Edit
         </Button>
       )}
     </div>

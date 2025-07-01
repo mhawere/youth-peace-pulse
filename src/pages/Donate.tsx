@@ -1,11 +1,43 @@
 
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import EditableText from '@/components/EditableText';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Users, Globe, TrendingUp, Handshake, CheckCircle } from 'lucide-react';
 
 const Donate = () => {
+  // State for page content
+  const [pageTitle, setPageTitle] = useState("Support Our Mission");
+  const [pageSubtitle, setPageSubtitle] = useState("Together for Humanity - Your contribution creates lasting change");
+  const [pageDescription, setPageDescription] = useState("Every donation directly supports youth-led initiatives that advance the UN Sustainable Development Goals and build a more peaceful, sustainable world.");
+
+  // State for impact section
+  const [impactTitle, setImpactTitle] = useState("Your Impact in Numbers");
+  const [impactSubtitle, setImpactSubtitle] = useState("See how your support translates into real change around the world");
+
+  // State for donation tiers section
+  const [tiersTitle, setTiersTitle] = useState("Choose Your Support Level");
+  const [tiersSubtitle, setTiersSubtitle] = useState("Every contribution makes a difference. Choose the level that works for you.");
+
+  // State for custom amount section
+  const [customTitle, setCustomTitle] = useState("Or Choose Your Own Amount");
+  const [customSubtitle, setCustomSubtitle] = useState("Every dollar counts in creating positive change. Donate any amount that feels right for you.");
+
+  // State for alternative support section
+  const [altTitle, setAltTitle] = useState("Other Ways to Support");
+  const [altSubtitle, setAltSubtitle] = useState("Can't donate right now? There are many other ways to support our mission.");
+
+  const [volunteerTitle, setVolunteerTitle] = useState("Volunteer");
+  const [volunteerDesc, setVolunteerDesc] = useState("Join our global network of volunteers and contribute your skills to meaningful projects.");
+
+  const [partnerTitle, setPartnerTitle] = useState("Partner With Us");
+  const [partnerDesc, setPartnerDesc] = useState("Explore partnership opportunities for organizations and businesses.");
+
+  const [shareTitle, setShareTitle] = useState("Spread the Word");
+  const [shareDesc, setShareDesc] = useState("Share our mission with your network and help us reach more young changemakers.");
+
   const donationTiers = [
     {
       amount: '$25',
@@ -41,14 +73,15 @@ const Donate = () => {
       {/* Header */}
       <section className="gradient-brand py-20">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 text-white">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">Support Our Mission</h1>
-          <p className="text-xl md:text-2xl opacity-90 mb-8">
-            Together for Humanity - Your contribution creates lasting change
-          </p>
-          <p className="text-lg opacity-80 max-w-3xl mx-auto">
-            Every donation directly supports youth-led initiatives that advance the UN Sustainable Development Goals 
-            and build a more peaceful, sustainable world.
-          </p>
+          <EditableText value={pageTitle} onChange={setPageTitle} className="text-5xl md:text-6xl font-bold mb-6" as="h1">
+            {pageTitle}
+          </EditableText>
+          <EditableText value={pageSubtitle} onChange={setPageSubtitle} className="text-xl md:text-2xl opacity-90 mb-8" as="p">
+            {pageSubtitle}
+          </EditableText>
+          <EditableText value={pageDescription} onChange={setPageDescription} multiline className="text-lg opacity-80 max-w-3xl mx-auto" as="p">
+            {pageDescription}
+          </EditableText>
         </div>
       </section>
 
@@ -56,10 +89,12 @@ const Donate = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Your Impact in Numbers</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              See how your support translates into real change around the world
-            </p>
+            <EditableText value={impactTitle} onChange={setImpactTitle} className="text-3xl font-bold text-gray-800 mb-4" as="h2">
+              {impactTitle}
+            </EditableText>
+            <EditableText value={impactSubtitle} onChange={setImpactSubtitle} className="text-gray-600 max-w-2xl mx-auto" as="p">
+              {impactSubtitle}
+            </EditableText>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -102,10 +137,12 @@ const Donate = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Choose Your Support Level</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Every contribution makes a difference. Choose the level that works for you.
-            </p>
+            <EditableText value={tiersTitle} onChange={setTiersTitle} className="text-4xl font-bold text-gray-800 mb-4" as="h2">
+              {tiersTitle}
+            </EditableText>
+            <EditableText value={tiersSubtitle} onChange={setTiersSubtitle} className="text-xl text-gray-600 max-w-3xl mx-auto" as="p">
+              {tiersSubtitle}
+            </EditableText>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -150,10 +187,12 @@ const Donate = () => {
       {/* Custom Amount */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Or Choose Your Own Amount</h2>
-          <p className="text-gray-600 mb-8">
-            Every dollar counts in creating positive change. Donate any amount that feels right for you.
-          </p>
+          <EditableText value={customTitle} onChange={setCustomTitle} className="text-3xl font-bold text-gray-800 mb-6" as="h2">
+            {customTitle}
+          </EditableText>
+          <EditableText value={customSubtitle} onChange={setCustomSubtitle} multiline className="text-gray-600 mb-8" as="p">
+            {customSubtitle}
+          </EditableText>
           <div className="max-w-md mx-auto">
             <div className="flex items-center space-x-4 mb-6">
               <span className="text-2xl font-bold text-gray-800">$</span>
@@ -174,20 +213,24 @@ const Donate = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Other Ways to Support</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Can't donate right now? There are many other ways to support our mission.
-            </p>
+            <EditableText value={altTitle} onChange={setAltTitle} className="text-3xl font-bold text-gray-800 mb-4" as="h2">
+              {altTitle}
+            </EditableText>
+            <EditableText value={altSubtitle} onChange={setAltSubtitle} className="text-gray-600 max-w-2xl mx-auto" as="p">
+              {altSubtitle}
+            </EditableText>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="text-center">
               <CardContent className="p-8">
                 <Users className="h-16 w-16 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-4">Volunteer</h3>
-                <p className="text-gray-600 mb-6">
-                  Join our global network of volunteers and contribute your skills to meaningful projects.
-                </p>
+                <EditableText value={volunteerTitle} onChange={setVolunteerTitle} className="text-xl font-semibold mb-4" as="h3">
+                  {volunteerTitle}
+                </EditableText>
+                <EditableText value={volunteerDesc} onChange={setVolunteerDesc} multiline className="text-gray-600 mb-6" as="p">
+                  {volunteerDesc}
+                </EditableText>
                 <Button variant="outline" className="text-primary border-primary">
                   Get Involved
                 </Button>
@@ -197,10 +240,12 @@ const Donate = () => {
             <Card className="text-center">
               <CardContent className="p-8">
                 <Handshake className="h-16 w-16 text-secondary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-4">Partner With Us</h3>
-                <p className="text-gray-600 mb-6">
-                  Explore partnership opportunities for organizations and businesses.
-                </p>
+                <EditableText value={partnerTitle} onChange={setPartnerTitle} className="text-xl font-semibold mb-4" as="h3">
+                  {partnerTitle}
+                </EditableText>
+                <EditableText value={partnerDesc} onChange={setPartnerDesc} multiline className="text-gray-600 mb-6" as="p">
+                  {partnerDesc}
+                </EditableText>
                 <Button variant="outline" className="text-secondary border-secondary">
                   Learn More
                 </Button>
@@ -210,10 +255,12 @@ const Donate = () => {
             <Card className="text-center">
               <CardContent className="p-8">
                 <Globe className="h-16 w-16 text-accent mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-4">Spread the Word</h3>
-                <p className="text-gray-600 mb-6">
-                  Share our mission with your network and help us reach more young changemakers.
-                </p>
+                <EditableText value={shareTitle} onChange={setShareTitle} className="text-xl font-semibold mb-4" as="h3">
+                  {shareTitle}
+                </EditableText>
+                <EditableText value={shareDesc} onChange={setShareDesc} multiline className="text-gray-600 mb-6" as="p">
+                  {shareDesc}
+                </EditableText>
                 <Button variant="outline" className="text-accent border-accent">
                   Share Now
                 </Button>

@@ -1,6 +1,7 @@
-
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import EditableText from '@/components/EditableText';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,57 +24,150 @@ import {
 } from 'lucide-react';
 
 const Contact = () => {
+  // Page content state
+  const [pageTitle, setPageTitle] = useState('Contact Us');
+  const [pageSubtitle, setPageSubtitle] = useState('Let\'s work together to create positive change');
+  const [pageDescription, setPageDescription] = useState('Whether you have questions, want to get involved, or are interested in partnerships, we\'d love to hear from you. Every conversation is a step toward building a better world.');
+
+  // Contact info section state
+  const [contactTitle, setContactTitle] = useState('Get in Touch');
+  const [contactSubtitle, setContactSubtitle] = useState('Multiple ways to reach our team around the world');
+
+  // Individual contact info state
+  const [emailTitle, setEmailTitle] = useState('Email Us');
+  const [emailPrimary, setEmailPrimary] = useState('hello@y-peace.org');
+  const [emailSecondary, setEmailSecondary] = useState('partnerships@y-peace.org');
+  const [emailDescription, setEmailDescription] = useState('General inquiries and partnership opportunities');
+
+  const [phoneTitle, setPhoneTitle] = useState('Call Us');
+  const [phonePrimary, setPhonePrimary] = useState('+1 (555) 123-4567');
+  const [phoneSecondary, setPhoneSecondary] = useState('+44 20 7123 4567');
+  const [phoneDescription, setPhoneDescription] = useState('Available Monday to Friday, 9 AM - 6 PM');
+
+  const [addressTitle, setAddressTitle] = useState('Main Office');
+  const [addressPrimary, setAddressPrimary] = useState('123 Peace Avenue');
+  const [addressSecondary, setAddressSecondary] = useState('Global City, GC 12345');
+  const [addressDescription, setAddressDescription] = useState('Our headquarters and main coordination center');
+
+  const [hoursTitle, setHoursTitle] = useState('Office Hours');
+  const [hoursPrimary, setHoursPrimary] = useState('Mon - Fri: 9:00 AM - 6:00 PM');
+  const [hoursSecondary, setHoursSecondary] = useState('Weekend: Emergency only');
+  const [hoursDescription, setHoursDescription] = useState('We respond to emails within 24 hours');
+
+  // Contact form state
+  const [formTitle, setFormTitle] = useState('Send us a Message');
+  const [formDescription, setFormDescription] = useState('Fill out the form below and we\'ll get back to you as soon as possible. All fields marked with * are required.');
+
+  // Inquiry types state
+  const [inquiryTitle, setInquiryTitle] = useState('What can we help you with?');
+
+  const [inquiry1Title, setInquiry1Title] = useState('General Inquiries');
+  const [inquiry1Description, setInquiry1Description] = useState('Questions about Y-Peace, our mission, or how to get started');
+
+  const [inquiry2Title, setInquiry2Title] = useState('Program Information');
+  const [inquiry2Description, setInquiry2Description] = useState('Details about our Five Ps programs and how to participate');
+
+  const [inquiry3Title, setInquiry3Title] = useState('Partnership Opportunities');
+  const [inquiry3Description, setInquiry3Description] = useState('Corporate partnerships, NGO collaborations, and institutional alliances');
+
+  const [inquiry4Title, setInquiry4Title] = useState('Media & Press');
+  const [inquiry4Description, setInquiry4Description] = useState('Press inquiries, interview requests, and media partnerships');
+
+  // Social media state
+  const [socialTitle, setSocialTitle] = useState('Follow Us');
+  const [socialDescription, setSocialDescription] = useState('Stay connected with our latest updates, stories, and opportunities to make a difference.');
+
+  // Quick response state
+  const [responseTitle, setResponseTitle] = useState('Quick Response Promise');
+
+  // Map section state
+  const [mapTitle, setMapTitle] = useState('Our Global Presence');
+  const [mapSubtitle, setMapSubtitle] = useState('Y-Peace operates in over 50 countries worldwide');
+  const [mapHeading, setMapHeading] = useState('Interactive Map Coming Soon');
+  const [mapDescription, setMapDescription] = useState('Explore our global network of programs, partners, and impact stories');
+
+  const [mapStat1, setMapStat1] = useState('50+');
+  const [mapStat1Label, setMapStat1Label] = useState('Countries');
+  const [mapStat2, setMapStat2] = useState('200+');
+  const [mapStat2Label, setMapStat2Label] = useState('Local Partners');
+  const [mapStat3, setMapStat3] = useState('25K+');
+  const [mapStat3Label, setMapStat3Label] = useState('Youth Reached');
+
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email Us',
-      primary: 'hello@y-peace.org',
-      secondary: 'partnerships@y-peace.org',
-      description: 'General inquiries and partnership opportunities'
+      title: emailTitle,
+      setTitle: setEmailTitle,
+      primary: emailPrimary,
+      setPrimary: setEmailPrimary,
+      secondary: emailSecondary,
+      setSecondary: setEmailSecondary,
+      description: emailDescription,
+      setDescription: setEmailDescription
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      primary: '+1 (555) 123-4567',
-      secondary: '+44 20 7123 4567',
-      description: 'Available Monday to Friday, 9 AM - 6 PM'
+      title: phoneTitle,
+      setTitle: setPhoneTitle,
+      primary: phonePrimary,
+      setPrimary: setPhonePrimary,
+      secondary: phoneSecondary,
+      setSecondary: setPhoneSecondary,
+      description: phoneDescription,
+      setDescription: setPhoneDescription
     },
     {
       icon: MapPin,
-      title: 'Main Office',
-      primary: '123 Peace Avenue',
-      secondary: 'Global City, GC 12345',
-      description: 'Our headquarters and main coordination center'
+      title: addressTitle,
+      setTitle: setAddressTitle,
+      primary: addressPrimary,
+      setPrimary: setAddressPrimary,
+      secondary: addressSecondary,
+      setSecondary: setAddressSecondary,
+      description: addressDescription,
+      setDescription: setAddressDescription
     },
     {
       icon: Clock,
-      title: 'Office Hours',
-      primary: 'Mon - Fri: 9:00 AM - 6:00 PM',
-      secondary: 'Weekend: Emergency only',
-      description: 'We respond to emails within 24 hours'
+      title: hoursTitle,
+      setTitle: setHoursTitle,
+      primary: hoursPrimary,
+      setPrimary: setHoursPrimary,
+      secondary: hoursSecondary,
+      setSecondary: setHoursSecondary,
+      description: hoursDescription,
+      setDescription: setHoursDescription
     }
   ];
 
   const inquiryTypes = [
     {
       icon: Users,
-      title: 'General Inquiries',
-      description: 'Questions about Y-Peace, our mission, or how to get started'
+      title: inquiry1Title,
+      setTitle: setInquiry1Title,
+      description: inquiry1Description,
+      setDescription: setInquiry1Description
     },
     {
       icon: HelpCircle,
-      title: 'Program Information', 
-      description: 'Details about our Five Ps programs and how to participate'
+      title: inquiry2Title,
+      setTitle: setInquiry2Title,
+      description: inquiry2Description,
+      setDescription: setInquiry2Description
     },
     {
       icon: Briefcase,
-      title: 'Partnership Opportunities',
-      description: 'Corporate partnerships, NGO collaborations, and institutional alliances'
+      title: inquiry3Title,
+      setTitle: setInquiry3Title,
+      description: inquiry3Description,
+      setDescription: setInquiry3Description
     },
     {
       icon: MessageSquare,
-      title: 'Media & Press',
-      description: 'Press inquiries, interview requests, and media partnerships'
+      title: inquiry4Title,
+      setTitle: setInquiry4Title,
+      description: inquiry4Description,
+      setDescription: setInquiry4Description
     }
   ];
 
@@ -92,14 +186,31 @@ const Contact = () => {
       {/* Header */}
       <section className="gradient-brand py-20">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 text-white">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
-          <p className="text-xl md:text-2xl opacity-90 mb-8">
-            Let's work together to create positive change
-          </p>
-          <p className="text-lg opacity-80 max-w-3xl mx-auto">
-            Whether you have questions, want to get involved, or are interested in partnerships, 
-            we'd love to hear from you. Every conversation is a step toward building a better world.
-          </p>
+          <EditableText
+            value={pageTitle}
+            onChange={setPageTitle}
+            className="text-5xl md:text-6xl font-bold mb-6"
+            as="h1"
+          >
+            {pageTitle}
+          </EditableText>
+          <EditableText
+            value={pageSubtitle}
+            onChange={setPageSubtitle}
+            className="text-xl md:text-2xl opacity-90 mb-8"
+            as="p"
+          >
+            {pageSubtitle}
+          </EditableText>
+          <EditableText
+            value={pageDescription}
+            onChange={setPageDescription}
+            multiline
+            className="text-lg opacity-80 max-w-3xl mx-auto"
+            as="p"
+          >
+            {pageDescription}
+          </EditableText>
         </div>
       </section>
 
@@ -107,8 +218,22 @@ const Contact = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Get in Touch</h2>
-            <p className="text-xl text-gray-600">Multiple ways to reach our team around the world</p>
+            <EditableText
+              value={contactTitle}
+              onChange={setContactTitle}
+              className="text-4xl font-bold mb-4 text-gray-800"
+              as="h2"
+            >
+              {contactTitle}
+            </EditableText>
+            <EditableText
+              value={contactSubtitle}
+              onChange={setContactSubtitle}
+              className="text-xl text-gray-600"
+              as="p"
+            >
+              {contactSubtitle}
+            </EditableText>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -122,12 +247,40 @@ const Contact = () => {
                         <Icon className="h-8 w-8 text-primary" />
                       </div>
                     </div>
-                    <h3 className="text-xl font-semibold mb-4 text-gray-800">{contact.title}</h3>
+                    <EditableText
+                      value={contact.title}
+                      onChange={contact.setTitle}
+                      className="text-xl font-semibold mb-4 text-gray-800"
+                      as="h3"
+                    >
+                      {contact.title}
+                    </EditableText>
                     <div className="space-y-2 mb-4">
-                      <p className="font-medium text-gray-700">{contact.primary}</p>
-                      <p className="text-gray-600">{contact.secondary}</p>
+                      <EditableText
+                        value={contact.primary}
+                        onChange={contact.setPrimary}
+                        className="font-medium text-gray-700"
+                        as="p"
+                      >
+                        {contact.primary}
+                      </EditableText>
+                      <EditableText
+                        value={contact.secondary}
+                        onChange={contact.setSecondary}
+                        className="text-gray-600"
+                        as="p"
+                      >
+                        {contact.secondary}
+                      </EditableText>
                     </div>
-                    <p className="text-sm text-gray-500">{contact.description}</p>
+                    <EditableText
+                      value={contact.description}
+                      onChange={contact.setDescription}
+                      className="text-sm text-gray-500"
+                      as="p"
+                    >
+                      {contact.description}
+                    </EditableText>
                   </CardContent>
                 </Card>
               );
@@ -142,11 +295,23 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Form */}
             <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-800">Send us a Message</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Fill out the form below and we'll get back to you as soon as possible. 
-                All fields marked with * are required.
-              </p>
+              <EditableText
+                value={formTitle}
+                onChange={setFormTitle}
+                className="text-4xl font-bold mb-6 text-gray-800"
+                as="h2"
+              >
+                {formTitle}
+              </EditableText>
+              <EditableText
+                value={formDescription}
+                onChange={setFormDescription}
+                multiline
+                className="text-lg text-gray-600 mb-8"
+                as="p"
+              >
+                {formDescription}
+              </EditableText>
 
               <Card className="shadow-lg">
                 <CardContent className="p-8">
@@ -225,7 +390,14 @@ const Contact = () => {
             {/* Inquiry Types & Social */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-semibold mb-6 text-gray-800">What can we help you with?</h3>
+                <EditableText
+                  value={inquiryTitle}
+                  onChange={setInquiryTitle}
+                  className="text-2xl font-semibold mb-6 text-gray-800"
+                  as="h3"
+                >
+                  {inquiryTitle}
+                </EditableText>
                 <div className="space-y-4">
                   {inquiryTypes.map((type, index) => {
                     const Icon = type.icon;
@@ -237,8 +409,22 @@ const Contact = () => {
                               <Icon className="h-6 w-6 text-primary" />
                             </div>
                             <div>
-                              <h4 className="font-semibold text-gray-800 mb-2">{type.title}</h4>
-                              <p className="text-gray-600 text-sm">{type.description}</p>
+                              <EditableText
+                                value={type.title}
+                                onChange={type.setTitle}
+                                className="font-semibold text-gray-800 mb-2"
+                                as="h4"
+                              >
+                                {type.title}
+                              </EditableText>
+                              <EditableText
+                                value={type.description}
+                                onChange={type.setDescription}
+                                className="text-gray-600 text-sm"
+                                as="p"
+                              >
+                                {type.description}
+                              </EditableText>
                             </div>
                           </div>
                         </CardContent>
@@ -249,11 +435,23 @@ const Contact = () => {
               </div>
 
               <div>
-                <h3 className="text-2xl font-semibold mb-6 text-gray-800">Follow Us</h3>
-                <p className="text-gray-600 mb-6">
-                  Stay connected with our latest updates, stories, and opportunities 
-                  to make a difference.
-                </p>
+                <EditableText
+                  value={socialTitle}
+                  onChange={setSocialTitle}
+                  className="text-2xl font-semibold mb-6 text-gray-800"
+                  as="h3"
+                >
+                  {socialTitle}
+                </EditableText>
+                <EditableText
+                  value={socialDescription}
+                  onChange={setSocialDescription}
+                  multiline
+                  className="text-gray-600 mb-6"
+                  as="p"
+                >
+                  {socialDescription}
+                </EditableText>
                 <div className="flex space-x-4">
                   {socialLinks.map((social, index) => {
                     const Icon = social.icon;
@@ -273,7 +471,14 @@ const Contact = () => {
 
               <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
                 <CardContent className="p-6">
-                  <h4 className="font-semibold text-gray-800 mb-3">Quick Response Promise</h4>
+                  <EditableText
+                    value={responseTitle}
+                    onChange={setResponseTitle}
+                    className="font-semibold text-gray-800 mb-3"
+                    as="h4"
+                  >
+                    {responseTitle}
+                  </EditableText>
                   <div className="space-y-2 text-sm text-gray-600">
                     <p>📧 Email inquiries: Within 24 hours</p>
                     <p>📞 Phone calls: During business hours</p>
@@ -291,10 +496,22 @@ const Contact = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Our Global Presence</h2>
-            <p className="text-xl text-gray-600">
-              Y-Peace operates in over 50 countries worldwide
-            </p>
+            <EditableText
+              value={mapTitle}
+              onChange={setMapTitle}
+              className="text-4xl font-bold mb-4 text-gray-800"
+              as="h2"
+            >
+              {mapTitle}
+            </EditableText>
+            <EditableText
+              value={mapSubtitle}
+              onChange={setMapSubtitle}
+              className="text-xl text-gray-600"
+              as="p"
+            >
+              {mapSubtitle}
+            </EditableText>
           </div>
 
           <Card className="shadow-xl">
@@ -303,26 +520,80 @@ const Contact = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <MapPin className="h-16 w-16 text-primary mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Interactive Map Coming Soon</h3>
-                    <p className="text-gray-600">
-                      Explore our global network of programs, partners, and impact stories
-                    </p>
+                    <EditableText
+                      value={mapHeading}
+                      onChange={setMapHeading}
+                      className="text-2xl font-bold text-gray-800 mb-2"
+                      as="h3"
+                    >
+                      {mapHeading}
+                    </EditableText>
+                    <EditableText
+                      value={mapDescription}
+                      onChange={setMapDescription}
+                      className="text-gray-600"
+                      as="p"
+                    >
+                      {mapDescription}
+                    </EditableText>
                   </div>
                 </div>
               </div>
               <div className="p-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                   <div>
-                    <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                    <div className="text-gray-600">Countries</div>
+                    <EditableText
+                      value={mapStat1}
+                      onChange={setMapStat1}
+                      className="text-3xl font-bold text-primary mb-2"
+                      as="div"
+                    >
+                      {mapStat1}
+                    </EditableText>
+                    <EditableText
+                      value={mapStat1Label}
+                      onChange={setMapStat1Label}
+                      className="text-gray-600"
+                      as="div"
+                    >
+                      {mapStat1Label}
+                    </EditableText>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-secondary mb-2">200+</div>
-                    <div className="text-gray-600">Local Partners</div>
+                    <EditableText
+                      value={mapStat2}
+                      onChange={setMapStat2}
+                      className="text-3xl font-bold text-secondary mb-2"
+                      as="div"
+                    >
+                      {mapStat2}
+                    </EditableText>
+                    <EditableText
+                      value={mapStat2Label}
+                      onChange={setMapStat2Label}
+                      className="text-gray-600"
+                      as="div"
+                    >
+                      {mapStat2Label}
+                    </EditableText>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-accent mb-2">25K+</div>
-                    <div className="text-gray-600">Youth Reached</div>
+                    <EditableText
+                      value={mapStat3}
+                      onChange={setMapStat3}
+                      className="text-3xl font-bold text-accent mb-2"
+                      as="div"
+                    >
+                      {mapStat3}
+                    </EditableText>
+                    <EditableText
+                      value={mapStat3Label}
+                      onChange={setMapStat3Label}
+                      className="text-gray-600"
+                      as="div"
+                    >
+                      {mapStat3Label}
+                    </EditableText>
                   </div>
                 </div>
               </div>

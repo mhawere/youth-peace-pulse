@@ -1,6 +1,7 @@
-
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import EditableText from '@/components/EditableText';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,15 +20,77 @@ import {
 } from 'lucide-react';
 
 const GetInvolved = () => {
+  // Page content state
+  const [pageTitle, setPageTitle] = useState('Get Involved');
+  const [pageSubtitle, setPageSubtitle] = useState('Join the global movement for peace and sustainable development');
+  const [pageDescription, setPageDescription] = useState('Whether you have 2 hours a week or want to make Y-Peace your full-time passion, there\'s a perfect way for you to contribute to our mission.');
+
+  // Steps section state
+  const [stepsTitle, setStepsTitle] = useState('How to Get Started');
+  const [stepsSubtitle, setStepsSubtitle] = useState('Four simple steps to join the Y-Peace community');
+
+  const [step1Title, setStep1Title] = useState('Choose Your Path');
+  const [step1Description, setStep1Description] = useState('Select the involvement option that best matches your interests, skills, and availability.');
+
+  const [step2Title, setStep2Title] = useState('Complete Application');
+  const [step2Description, setStep2Description] = useState('Fill out our simple application form with your background, interests, and goals.');
+
+  const [step3Title, setStep3Title] = useState('Get Matched');
+  const [step3Description, setStep3Description] = useState('Our team will connect you with relevant opportunities and provide orientation materials.');
+
+  const [step4Title, setStep4Title] = useState('Start Making Impact');
+  const [step4Description, setStep4Description] = useState('Begin your journey with Y-Peace and start creating positive change in your community.');
+
+  // Opportunities section state
+  const [opportunitiesTitle, setOpportunitiesTitle] = useState('Ways to Get Involved');
+  const [opportunitiesSubtitle, setOpportunitiesSubtitle] = useState('From volunteering to partnerships, find the perfect way to contribute your skills and passion');
+
+  // Volunteer opportunity state
+  const [volunteerTitle, setVolunteerTitle] = useState('Volunteer Opportunities');
+  const [volunteerDescription, setVolunteerDescription] = useState('Join our global community of volunteers supporting programs on the ground and online.');
+  const [volunteerCommitment, setVolunteerCommitment] = useState('Flexible: 2-10 hours per week');
+
+  // Membership opportunity state
+  const [membershipTitle, setMembershipTitle] = useState('Membership Program');
+  const [membershipDescription, setMembershipDescription] = useState('Become a Y-Peace member to gain access to exclusive events, updates, and community networks.');
+  const [membershipCommitment, setMembershipCommitment] = useState('Annual membership with monthly activities');
+
+  // Partnership opportunity state
+  const [partnershipTitle, setPartnershipTitle] = useState('Partnership Opportunities');
+  const [partnershipDescription, setPartnershipDescription] = useState('Explore how your organization, company, or government agency can collaborate with Y-Peace.');
+  const [partnershipCommitment, setPartnershipCommitment] = useState('Customized partnership agreements');
+
+  // Events opportunity state
+  const [eventsTitle, setEventsTitle] = useState('Events & Workshops');
+  const [eventsDescription, setEventsDescription] = useState('Attend or host educational, cultural, and training events that support our mission.');
+  const [eventsCommitment, setEventsCommitment] = useState('Event-based participation');
+
+  // Application form state
+  const [formTitle, setFormTitle] = useState('Ready to Join Us?');
+  const [formSubtitle, setFormSubtitle] = useState('Fill out this form and we\'ll get back to you within 48 hours');
+
+  // Stats section state
+  const [statsTitle, setStatsTitle] = useState('Join a Growing Movement');
+  const [stat1, setStat1] = useState('1,000+');
+  const [stat1Label, setStat1Label] = useState('Active Volunteers');
+  const [stat2, setStat2] = useState('50+');
+  const [stat2Label, setStat2Label] = useState('Country Chapters');
+  const [stat3, setStat3] = useState('200+');
+  const [stat3Label, setStat3Label] = useState('Partner Organizations');
+  const [stat4, setStat4] = useState('25,000+');
+  const [stat4Label, setStat4Label] = useState('Lives Impacted');
+
   const opportunities = [
     {
-      title: 'Volunteer Opportunities',
+      title: volunteerTitle,
+      setTitle: setVolunteerTitle,
       icon: Heart,
       color: 'text-pink-600',
       bgColor: 'bg-pink-50',
       gradientFrom: 'from-pink-500',
       gradientTo: 'to-pink-400',
-      description: 'Join our global community of volunteers supporting programs on the ground and online.',
+      description: volunteerDescription,
+      setDescription: setVolunteerDescription,
       options: [
         'Program facilitation and mentoring',
         'Content creation and social media',
@@ -36,17 +99,20 @@ const GetInvolved = () => {
         'Translation and interpretation',
         'Fundraising and outreach'
       ],
-      commitment: 'Flexible: 2-10 hours per week',
+      commitment: volunteerCommitment,
+      setCommitment: setVolunteerCommitment,
       benefits: ['Global network access', 'Skill development', 'Leadership training', 'Recognition certificates']
     },
     {
-      title: 'Membership Program',
+      title: membershipTitle,
+      setTitle: setMembershipTitle,
       icon: Users,
       color: 'text-primary',
       bgColor: 'bg-primary/10',
       gradientFrom: 'from-primary',
       gradientTo: 'to-primary/80',
-      description: 'Become a Y-Peace member to gain access to exclusive events, updates, and community networks.',
+      description: membershipDescription,
+      setDescription: setMembershipDescription,
       options: [
         'Youth Membership (18-35 years)',
         'Community Leader Membership',
@@ -55,17 +121,20 @@ const GetInvolved = () => {
         'Alumni Network Access',
         'Professional Development Track'
       ],
-      commitment: 'Annual membership with monthly activities',
+      commitment: membershipCommitment,
+      setCommitment: setMembershipCommitment,
       benefits: ['Exclusive events', 'Networking opportunities', 'Resource access', 'Mentorship programs']
     },
     {
-      title: 'Partnership Opportunities',
+      title: partnershipTitle,
+      setTitle: setPartnershipTitle,
       icon: Handshake,
       color: 'text-secondary',
       bgColor: 'bg-secondary/10',
       gradientFrom: 'from-secondary',
       gradientTo: 'to-secondary/80',
-      description: 'Explore how your organization, company, or government agency can collaborate with Y-Peace.',
+      description: partnershipDescription,
+      setDescription: setPartnershipDescription,
       options: [
         'Corporate Social Responsibility partnerships',
         'NGO collaboration agreements',
@@ -74,17 +143,20 @@ const GetInvolved = () => {
         'Faith-based organization partnerships',
         'Youth organization networks'
       ],
-      commitment: 'Customized partnership agreements',
+      commitment: partnershipCommitment,
+      setCommitment: setPartnershipCommitment,
       benefits: ['Brand visibility', 'Impact amplification', 'Shared resources', 'Joint programming']
     },
     {
-      title: 'Events & Workshops',
+      title: eventsTitle,
+      setTitle: setEventsTitle,
       icon: Calendar,
       color: 'text-accent',
       bgColor: 'bg-accent/10',
       gradientFrom: 'from-accent',
       gradientTo: 'to-accent/80',
-      description: 'Attend or host educational, cultural, and training events that support our mission.',
+      description: eventsDescription,
+      setDescription: setEventsDescription,
       options: [
         'SDG awareness workshops',
         'Youth leadership summits',
@@ -93,7 +165,8 @@ const GetInvolved = () => {
         'Peace-building dialogues',
         'Innovation challenges'
       ],
-      commitment: 'Event-based participation',
+      commitment: eventsCommitment,
+      setCommitment: setEventsCommitment,
       benefits: ['Skill building', 'Cultural exchange', 'Leadership development', 'Certificate programs']
     }
   ];
@@ -101,23 +174,31 @@ const GetInvolved = () => {
   const steps = [
     {
       icon: Target,
-      title: 'Choose Your Path',
-      description: 'Select the involvement option that best matches your interests, skills, and availability.'
+      title: step1Title,
+      setTitle: setStep1Title,
+      description: step1Description,
+      setDescription: setStep1Description
     },
     {
       icon: Users,
-      title: 'Complete Application',
-      description: 'Fill out our simple application form with your background, interests, and goals.'
+      title: step2Title,
+      setTitle: setStep2Title,
+      description: step2Description,
+      setDescription: setStep2Description
     },
     {
       icon: Zap,
-      title: 'Get Matched',
-      description: 'Our team will connect you with relevant opportunities and provide orientation materials.'
+      title: step3Title,
+      setTitle: setStep3Title,
+      description: step3Description,
+      setDescription: setStep3Description
     },
     {
       icon: Star,
-      title: 'Start Making Impact',
-      description: 'Begin your journey with Y-Peace and start creating positive change in your community.'
+      title: step4Title,
+      setTitle: setStep4Title,
+      description: step4Description,
+      setDescription: setStep4Description
     }
   ];
 
@@ -128,14 +209,31 @@ const GetInvolved = () => {
       {/* Header */}
       <section className="gradient-brand py-20">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 text-white">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">Get Involved</h1>
-          <p className="text-xl md:text-2xl opacity-90 mb-8">
-            Join the global movement for peace and sustainable development
-          </p>
-          <p className="text-lg opacity-80 max-w-3xl mx-auto">
-            Whether you have 2 hours a week or want to make Y-Peace your full-time passion, 
-            there's a perfect way for you to contribute to our mission.
-          </p>
+          <EditableText
+            value={pageTitle}
+            onChange={setPageTitle}
+            className="text-5xl md:text-6xl font-bold mb-6"
+            as="h1"
+          >
+            {pageTitle}
+          </EditableText>
+          <EditableText
+            value={pageSubtitle}
+            onChange={setPageSubtitle}
+            className="text-xl md:text-2xl opacity-90 mb-8"
+            as="p"
+          >
+            {pageSubtitle}
+          </EditableText>
+          <EditableText
+            value={pageDescription}
+            onChange={setPageDescription}
+            multiline
+            className="text-lg opacity-80 max-w-3xl mx-auto"
+            as="p"
+          >
+            {pageDescription}
+          </EditableText>
         </div>
       </section>
 
@@ -143,8 +241,22 @@ const GetInvolved = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">How to Get Started</h2>
-            <p className="text-xl text-gray-600">Four simple steps to join the Y-Peace community</p>
+            <EditableText
+              value={stepsTitle}
+              onChange={setStepsTitle}
+              className="text-4xl font-bold mb-4 text-gray-800"
+              as="h2"
+            >
+              {stepsTitle}
+            </EditableText>
+            <EditableText
+              value={stepsSubtitle}
+              onChange={setStepsSubtitle}
+              className="text-xl text-gray-600"
+              as="p"
+            >
+              {stepsSubtitle}
+            </EditableText>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -160,8 +272,23 @@ const GetInvolved = () => {
                       {index + 1}
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
+                  <EditableText
+                    value={step.title}
+                    onChange={step.setTitle}
+                    className="text-xl font-semibold mb-3 text-gray-800"
+                    as="h3"
+                  >
+                    {step.title}
+                  </EditableText>
+                  <EditableText
+                    value={step.description}
+                    onChange={step.setDescription}
+                    multiline
+                    className="text-gray-600"
+                    as="p"
+                  >
+                    {step.description}
+                  </EditableText>
                 </div>
               );
             })}
@@ -173,10 +300,22 @@ const GetInvolved = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Ways to Get Involved</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From volunteering to partnerships, find the perfect way to contribute your skills and passion
-            </p>
+            <EditableText
+              value={opportunitiesTitle}
+              onChange={setOpportunitiesTitle}
+              className="text-4xl font-bold mb-4 text-gray-800"
+              as="h2"
+            >
+              {opportunitiesTitle}
+            </EditableText>
+            <EditableText
+              value={opportunitiesSubtitle}
+              onChange={setOpportunitiesSubtitle}
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+              as="p"
+            >
+              {opportunitiesSubtitle}
+            </EditableText>
           </div>
 
           <div className="space-y-12">
@@ -193,17 +332,37 @@ const GetInvolved = () => {
                           <div className={`p-4 rounded-full bg-white/50 mr-4`}>
                             <Icon className={`h-10 w-10 ${opportunity.color}`} />
                           </div>
-                          <h3 className="text-3xl font-bold text-gray-800">{opportunity.title}</h3>
+                          <EditableText
+                            value={opportunity.title}
+                            onChange={opportunity.setTitle}
+                            className="text-3xl font-bold text-gray-800"
+                            as="h3"
+                          >
+                            {opportunity.title}
+                          </EditableText>
                         </div>
                         
-                        <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+                        <EditableText
+                          value={opportunity.description}
+                          onChange={opportunity.setDescription}
+                          multiline
+                          className="text-gray-700 text-lg mb-6 leading-relaxed"
+                          as="p"
+                        >
                           {opportunity.description}
-                        </p>
+                        </EditableText>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                           <div>
                             <h4 className="font-semibold text-gray-800 mb-2">Time Commitment</h4>
-                            <p className="text-sm text-gray-600">{opportunity.commitment}</p>
+                            <EditableText
+                              value={opportunity.commitment}
+                              onChange={opportunity.setCommitment}
+                              className="text-sm text-gray-600"
+                              as="p"
+                            >
+                              {opportunity.commitment}
+                            </EditableText>
                           </div>
                           <div>
                             <h4 className="font-semibold text-gray-800 mb-2">Benefits</h4>
@@ -247,10 +406,22 @@ const GetInvolved = () => {
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Ready to Join Us?</h2>
-            <p className="text-xl text-gray-600">
-              Fill out this form and we'll get back to you within 48 hours
-            </p>
+            <EditableText
+              value={formTitle}
+              onChange={setFormTitle}
+              className="text-4xl font-bold mb-4 text-gray-800"
+              as="h2"
+            >
+              {formTitle}
+            </EditableText>
+            <EditableText
+              value={formSubtitle}
+              onChange={setFormSubtitle}
+              className="text-xl text-gray-600"
+              as="p"
+            >
+              {formSubtitle}
+            </EditableText>
           </div>
 
           <Card className="shadow-xl">
@@ -340,24 +511,87 @@ const GetInvolved = () => {
       {/* Stats & Impact */}
       <section className="py-20 gradient-brand">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-center">
-          <h2 className="text-4xl font-bold mb-12">Join a Growing Movement</h2>
+          <EditableText
+            value={statsTitle}
+            onChange={setStatsTitle}
+            className="text-4xl font-bold mb-12"
+            as="h2"
+          >
+            {statsTitle}
+          </EditableText>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">1,000+</div>
-              <div className="text-lg opacity-90">Active Volunteers</div>
+              <EditableText
+                value={stat1}
+                onChange={setStat1}
+                className="text-4xl md:text-5xl font-bold mb-2"
+                as="div"
+              >
+                {stat1}
+              </EditableText>
+              <EditableText
+                value={stat1Label}
+                onChange={setStat1Label}
+                className="text-lg opacity-90"
+                as="div"
+              >
+                {stat1Label}
+              </EditableText>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">50+</div>
-              <div className="text-lg opacity-90">Country Chapters</div>
+              <EditableText
+                value={stat2}
+                onChange={setStat2}
+                className="text-4xl md:text-5xl font-bold mb-2"
+                as="div"
+              >
+                {stat2}
+              </EditableText>
+              <EditableText
+                value={stat2Label}
+                onChange={setStat2Label}
+                className="text-lg opacity-90"
+                as="div"
+              >
+                {stat2Label}
+              </EditableText>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">200+</div>
-              <div className="text-lg opacity-90">Partner Organizations</div>
+              <EditableText
+                value={stat3}
+                onChange={setStat3}
+                className="text-4xl md:text-5xl font-bold mb-2"
+                as="div"
+              >
+                {stat3}
+              </EditableText>
+              <EditableText
+                value={stat3Label}
+                onChange={setStat3Label}
+                className="text-lg opacity-90"
+                as="div"
+              >
+                {stat3Label}
+              </EditableText>
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">25,000+</div>
-              <div className="text-lg opacity-90">Lives Impacted</div>
+              <EditableText
+                value={stat4}
+                onChange={setStat4}
+                className="text-4xl md:text-5xl font-bold mb-2"
+                as="div"
+              >
+                {stat4}
+              </EditableText>
+              <EditableText
+                value={stat4Label}
+                onChange={setStat4Label}
+                className="text-lg opacity-90"
+                as="div"
+              >
+                {stat4Label}
+              </EditableText>
             </div>
           </div>
         </div>

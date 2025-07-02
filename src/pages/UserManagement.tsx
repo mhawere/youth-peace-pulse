@@ -146,8 +146,63 @@ const UserManagement = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex justify-between items-center mb-6">
+            <div className="mb-6">
               <p className="text-gray-600">Manage system users and their permissions</p>
+              <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                <p className="text-sm text-yellow-800">
+                  <strong>Note:</strong> This project is not connected to a database. User data is stored locally and will reset when you refresh the page. 
+                  To persist user data, consider connecting to Supabase for real database functionality.
+                </p>
+              </div>
+            </div>
+
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Username</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Created Date</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {users.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="font-medium">{user.username}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.role}</TableCell>
+                    <TableCell>{user.createdAt}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => openChangePassword(user.id)}
+                          className="flex items-center gap-1"
+                        >
+                          <Key className="h-3 w-3" />
+                          Change Password
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleDeleteUser(user.id)}
+                          disabled={user.id === '1'}
+                          className="flex items-center gap-1"
+                        >
+                          <UserX className="h-3 w-3" />
+                          Delete
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            {/* Add User Button moved to bottom */}
+            <div className="mt-6 flex justify-center">
               <Dialog open={isAddUserOpen} onOpenChange={setIsAddUserOpen}>
                 <DialogTrigger asChild>
                   <Button className="flex items-center gap-2">
@@ -209,51 +264,6 @@ const UserManagement = () => {
                 </DialogContent>
               </Dialog>
             </div>
-
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Username</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Created Date</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {users.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="font-medium">{user.username}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>{user.createdAt}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => openChangePassword(user.id)}
-                          className="flex items-center gap-1"
-                        >
-                          <Key className="h-3 w-3" />
-                          Change Password
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleDeleteUser(user.id)}
-                          disabled={user.id === '1'}
-                          className="flex items-center gap-1"
-                        >
-                          <UserX className="h-3 w-3" />
-                          Delete
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
           </CardContent>
         </Card>
 

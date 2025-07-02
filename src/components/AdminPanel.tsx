@@ -2,8 +2,9 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAdmin } from '@/contexts/AdminContext';
-import { Edit, LogOut, Settings } from 'lucide-react';
+import { Edit, LogOut, Settings, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 const AdminPanel = () => {
   const { isAdminLoggedIn, isEditMode, logout, toggleEditMode } = useAdmin();
@@ -49,6 +50,16 @@ const AdminPanel = () => {
             ✓ Hover over text to edit it
           </div>
         )}
+        
+        <Link to="/user-management">
+          <Button 
+            variant="outline" 
+            className="w-full border-purple-600 text-purple-600 hover:bg-purple-50"
+          >
+            <Users className="h-4 w-4 mr-2" />
+            User Management
+          </Button>
+        </Link>
         
         <Button 
           onClick={handleLogout} 

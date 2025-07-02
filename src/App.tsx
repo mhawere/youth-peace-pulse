@@ -16,6 +16,7 @@ import Blog from "./pages/Blog";
 import PressReleases from "./pages/PressReleases";
 import Newsletter from "./pages/Newsletter";
 import AdminLoginPage from "./pages/AdminLogin";
+import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/news/press-releases" element={<PressReleases />} />
             <Route path="/news/newsletter" element={<Newsletter />} />
             <Route path="/admin" element={<AdminLoginPage />} />
+            <Route path="/user-management" element={<UserManagement />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

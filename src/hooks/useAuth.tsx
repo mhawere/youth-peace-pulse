@@ -40,8 +40,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           // Check if user is admin
           setTimeout(async () => {
             try {
-              const { data } = await supabase
-                .from('user_roles' as any)
+              const { data } = await (supabase as any)
+                .from('user_roles')
                 .select('role')
                 .eq('user_id', session.user.id)
                 .eq('role', 'admin')

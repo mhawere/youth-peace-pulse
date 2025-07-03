@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -37,8 +36,8 @@ const PressReleases = () => {
 
   const fetchPressReleases = async () => {
     try {
-      const { data, error } = await supabase
-        .from('press_releases' as any)
+      const { data, error } = await (supabase as any)
+        .from('press_releases')
         .select('*')
         .order('release_date', { ascending: false });
 

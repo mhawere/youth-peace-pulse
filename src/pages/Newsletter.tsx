@@ -1,16 +1,18 @@
-
 import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
+import AdminNewsletterManager from '@/components/AdminNewsletterManager';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Download, Calendar } from 'lucide-react';
 import { useNewsletters } from '@/hooks/useNewsletters';
+import { useAuth } from '@/hooks/useAuth';
 
 const Newsletter = () => {
-  const { newsletters, loading, subscribeToNewsletter } = useNewsletters();
+  const { newsletters, loading, subscribeToNewsletter, refetch } = useNewsletters();
+  const { isAdmin } = useAuth();
   const [email, setEmail] = useState('');
   const [subscribing, setSubscribing] = useState(false);
 
@@ -72,6 +74,15 @@ const Newsletter = () => {
           </div>
         </div>
       </section>
+
+      {/* Admin Management Section */}
+      {isAdmin && (
+        <section className="py-8 bg-blue-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AdminNewsletterManager onUpdate={refetch} />
+          </div>
+        </section>
+      )}
 
       {/* Newsletter Signup */}
       <section className="py-16 bg-white">

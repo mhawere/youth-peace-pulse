@@ -40,13 +40,13 @@ const AdminPressReleaseManager = ({ onUpdate }: AdminPressReleaseManagerProps) =
         const fileName = `${Date.now()}.${fileExt}`;
         
         const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('press_releases' as any)
+          .from('press_releases')
           .upload(fileName, formData.pdf_file);
 
         if (uploadError) throw uploadError;
 
         const { data: { publicUrl } } = supabase.storage
-          .from('press_releases' as any)
+          .from('press_releases')
           .getPublicUrl(fileName);
 
         pdf_url = publicUrl;
@@ -55,7 +55,7 @@ const AdminPressReleaseManager = ({ onUpdate }: AdminPressReleaseManagerProps) =
 
       // Insert press release
       const { error } = await supabase
-        .from('press_releases' as any)
+        .from('press_releases')
         .insert([{
           title: formData.title,
           summary: formData.summary,

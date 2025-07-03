@@ -20,7 +20,7 @@ export const useNewsletters = () => {
 
   const fetchNewsletters = async () => {
     try {
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from('newsletters')
         .select('*')
         .order('issue_date', { ascending: false });
@@ -44,7 +44,7 @@ export const useNewsletters = () => {
 
   const subscribeToNewsletter = async (email: string) => {
     try {
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('newsletter_subscribers')
         .insert([{ email }]);
 

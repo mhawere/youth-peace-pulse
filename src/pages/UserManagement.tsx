@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -53,7 +54,7 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       // Fetch profiles with user roles
-      const { data: profilesData, error: profilesError } = await (supabase as any)
+      const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
         .select(`
           id,
@@ -96,7 +97,7 @@ const UserManagement = () => {
 
   const handleMakeAdmin = async (userId: string) => {
     try {
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('user_roles')
         .insert([{ user_id: userId, role: 'admin' }]);
 
@@ -120,7 +121,7 @@ const UserManagement = () => {
 
   const handleRemoveAdmin = async (userId: string) => {
     try {
-      const { error } = await (supabase as any)
+      const { error } = await supabase
         .from('user_roles')
         .delete()
         .eq('user_id', userId)

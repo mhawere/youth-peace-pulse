@@ -9,7 +9,126 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      newsletter_subscribers: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      newsletters: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          issue_date: string
+          pdf_filename: string | null
+          pdf_url: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          issue_date: string
+          pdf_filename?: string | null
+          pdf_url?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          issue_date?: string
+          pdf_filename?: string | null
+          pdf_url?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      press_releases: {
+        Row: {
+          created_at: string | null
+          id: string
+          location: string
+          pdf_filename: string | null
+          pdf_url: string | null
+          release_date: string
+          summary: string
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          location: string
+          pdf_filename?: string | null
+          pdf_url?: string | null
+          release_date: string
+          summary: string
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          location?: string
+          pdf_filename?: string | null
+          pdf_url?: string | null
+          release_date?: string
+          summary?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          id: string
+          username: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          username?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

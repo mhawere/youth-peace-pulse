@@ -39,13 +39,13 @@ const AdminNewsletterManager = ({ onUpdate }: AdminNewsletterManagerProps) => {
         const fileName = `${Date.now()}.${fileExt}`;
         
         const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('newsletters' as any)
+          .from('newsletters')
           .upload(fileName, formData.pdf_file);
 
         if (uploadError) throw uploadError;
 
         const { data: { publicUrl } } = supabase.storage
-          .from('newsletters' as any)
+          .from('newsletters')
           .getPublicUrl(fileName);
 
         pdf_url = publicUrl;
@@ -54,7 +54,7 @@ const AdminNewsletterManager = ({ onUpdate }: AdminNewsletterManagerProps) => {
 
       // Insert newsletter
       const { error } = await supabase
-        .from('newsletters' as any)
+        .from('newsletters')
         .insert([{
           title: formData.title,
           description: formData.description,

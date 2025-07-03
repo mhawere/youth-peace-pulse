@@ -7,8 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Download, Calendar } from 'lucide-react';
+import { useNewsletters } from '@/hooks/useNewsletters';
 
 const Newsletter = () => {
+  const { newsletters, loading, subscribeToNewsletter } = useNewsletters();
+  const [email, setEmail] = useState('');
+  const [subscribing, setSubscribing] = useState(false);
+
   // State for page content
   const [pageTitle, setPageTitle] = useState("Newsletter");
   const [pageSubtitle, setPageSubtitle] = useState("Stay connected with monthly updates from the Y-Peace community");
@@ -21,52 +26,24 @@ const Newsletter = () => {
   // State for past newsletters section
   const [pastTitle, setPastTitle] = useState("Past Newsletters");
   const [pastDescription, setPastDescription] = useState("Catch up on previous editions of our monthly newsletter");
-  
-  // State for newsletter items
-  const [newsletter1Title, setNewsletter1Title] = useState("December 2024 - Year in Review");
-  const [newsletter1Date, setNewsletter1Date] = useState("December 2024");
-  const [newsletter1Description, setNewsletter1Description] = useState("A comprehensive look at our achievements this year, featuring success stories from young leaders worldwide.");
-  
-  const [newsletter2Title, setNewsletter2Title] = useState("November 2024 - Climate Action Special");
-  const [newsletter2Date, setNewsletter2Date] = useState("November 2024");
-  const [newsletter2Description, setNewsletter2Description] = useState("Spotlight on youth-led climate initiatives and how young activists are driving environmental change.");
-  
-  const [newsletter3Title, setNewsletter3Title] = useState("October 2024 - Partnership Highlights");
-  const [newsletter3Date, setNewsletter3Date] = useState("October 2024");
-  const [newsletter3Description, setNewsletter3Description] = useState("Exploring new partnerships and collaborations that are expanding our global impact.");
 
-  const newsletters = [
-    {
-      id: 1,
-      title: newsletter1Title,
-      setTitle: setNewsletter1Title,
-      date: newsletter1Date,
-      setDate: setNewsletter1Date,
-      description: newsletter1Description,
-      setDescription: setNewsletter1Description,
-      downloadUrl: "#"
-    },
-    {
-      id: 2,
-      title: newsletter2Title,
-      setTitle: setNewsletter2Title,
-      date: newsletter2Date,
-      setDate: setNewsletter2Date,
-      description: newsletter2Description,
-      setDescription: setNewsletter2Description,
-      downloadUrl: "#"
-    },
-    {
-      id: 3,
-      title: newsletter3Title,
-      setTitle: setNewsletter3Title,
-      date: newsletter3Date,
-      setDate: setNewsletter3Date,
-      description: newsletter3Description,
-      setDescription: setNewsletter3Description,
-      downloadUrl: "#"
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setSubscribing(true);
+    const result = await subscribeToNewsletter(email);
+    if (result.success) {
+      setEmail('');
     }
-  ];
+    setSubscribing(false);
+  };
+
+  const handleDownload = (newsletter: any) => {
+    if (newsletter.pdf_url) {
+      window.open(newsletter.pdf_url, '_blank');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -122,15 +99,23 @@ const Newsletter = () => {
               </EditableText>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <Input 
+                  type="email"
                   placeholder="Enter your email address" 
                   className="bg-white text-gray-900 border-0"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
-                <Button className="bg-white text-primary hover:bg-gray-100 font-semibold">
-                  Subscribe
+                <Button 
+                  type="submit"
+                  className="bg-white text-primary hover:bg-gray-100 font-semibold"
+                  disabled={subscribing}
+                >
+                  {subscribing ? 'Subscribing...' : 'Subscribe'}
                 </Button>
-              </div>
+              </form>
               <EditableText
                 value={privacyText}
                 onChange={setPrivacyText}
@@ -166,52 +151,45 @@ const Newsletter = () => {
             </EditableText>
           </div>
 
-          <div className="space-y-6">
-            {newsletters.map((newsletter) => (
-              <Card key={newsletter.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-xl text-primary mb-2">
-                        <EditableText
-                          value={newsletter.title}
-                          onChange={newsletter.setTitle}
-                          as="span"
-                        >
+          {loading ? (
+            <div className="text-center">Loading newsletters...</div>
+          ) : (
+            <div className="space-y-6">
+              {newsletters.map((newsletter) => (
+                <Card key={newsletter.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-xl text-primary mb-2">
                           {newsletter.title}
-                        </EditableText>
-                      </CardTitle>
-                      <div className="flex items-center text-gray-500">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        <EditableText
-                          value={newsletter.date}
-                          onChange={newsletter.setDate}
-                          as="span"
-                        >
-                          {newsletter.date}
-                        </EditableText>
+                        </CardTitle>
+                        <div className="flex items-center text-gray-500">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {new Date(newsletter.issue_date).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long' 
+                          })}
+                        </div>
                       </div>
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleDownload(newsletter)}
+                        disabled={!newsletter.pdf_url}
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        Download
+                      </Button>
                     </div>
-                    <Button variant="outline">
-                      <Download className="h-4 w-4 mr-2" />
-                      Download
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <EditableText
-                    value={newsletter.description}
-                    onChange={newsletter.setDescription}
-                    multiline
-                    className="text-gray-700"
-                    as="p"
-                  >
-                    {newsletter.description}
-                  </EditableText>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-700">
+                      {newsletter.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

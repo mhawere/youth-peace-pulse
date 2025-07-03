@@ -72,7 +72,7 @@ const UserManagement = () => {
 
       // Combine the data
       const combinedUsers = profilesData?.map((profile: any) => {
-        const authUser = authUsers.find(u => u.id === profile.id);
+        const authUser = authUsers?.find((u: any) => u.id === profile.id);
         return {
           id: profile.id,
           username: profile.username || 'Unknown',

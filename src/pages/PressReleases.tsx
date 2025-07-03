@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
+import AdminPressReleaseManager from '@/components/AdminPressReleaseManager';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, Download, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 
 interface PressRelease {
   id: string;
@@ -23,6 +25,7 @@ const PressReleases = () => {
   const [pressReleases, setPressReleases] = useState<PressRelease[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { isAdmin } = useAuth();
 
   // State for page content
   const [pageTitle, setPageTitle] = useState("Press Releases");
@@ -35,7 +38,7 @@ const PressReleases = () => {
   const fetchPressReleases = async () => {
     try {
       const { data, error } = await supabase
-        .from('press_releases')
+        .from('press_releases' as any)
         .select('*')
         .order('release_date', { ascending: false });
 
@@ -89,6 +92,15 @@ const PressReleases = () => {
           </div>
         </div>
       </section>
+
+      {/* Admin Management Section */}
+      {isAdmin && (
+        <section className="py-8 bg-blue-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AdminPressReleaseManager onUpdate={fetchPressReleases} />
+          </div>
+        </section>
+      )}
 
       {/* Press Releases */}
       <section className="py-16">

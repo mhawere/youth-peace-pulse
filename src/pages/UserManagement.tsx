@@ -2,10 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { UserPlus, Users, Shield, Trash2 } from 'lucide-react';
@@ -26,8 +23,6 @@ const UserManagement = () => {
   
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAddRoleOpen, setIsAddRoleOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isAdmin) {
@@ -60,7 +55,7 @@ const UserManagement = () => {
     try {
       // Fetch profiles with user roles
       const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
+        .from('profiles' as any)
         .select(`
           id,
           username,
@@ -76,7 +71,7 @@ const UserManagement = () => {
       if (authError) throw authError;
 
       // Combine the data
-      const combinedUsers = profilesData?.map(profile => {
+      const combinedUsers = profilesData?.map((profile: any) => {
         const authUser = authUsers.find(u => u.id === profile.id);
         return {
           id: profile.id,
@@ -103,7 +98,7 @@ const UserManagement = () => {
   const handleMakeAdmin = async (userId: string) => {
     try {
       const { error } = await supabase
-        .from('user_roles')
+        .from('user_roles' as any)
         .insert([{ user_id: userId, role: 'admin' }]);
 
       if (error) throw error;
@@ -127,7 +122,7 @@ const UserManagement = () => {
   const handleRemoveAdmin = async (userId: string) => {
     try {
       const { error } = await supabase
-        .from('user_roles')
+        .from('user_roles' as any)
         .delete()
         .eq('user_id', userId)
         .eq('role', 'admin');

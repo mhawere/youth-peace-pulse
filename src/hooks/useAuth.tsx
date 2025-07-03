@@ -39,14 +39,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (session?.user) {
           // Check if user is admin
           setTimeout(async () => {
-            const { data } = await supabase
-              .from('user_roles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .eq('role', 'admin')
-              .single();
-            
-            setIsAdmin(!!data);
+            try {
+              const { data } = await supabase
+                .from('user_roles' as any)
+                .select('role')
+                .eq('user_id', session.user.id)
+                .eq('role', 'admin')
+                .single();
+              
+              setIsAdmin(!!data);
+            } catch (error) {
+              console.error('Error checking admin status:', error);
+              setIsAdmin(false);
+            }
           }, 0);
         } else {
           setIsAdmin(false);

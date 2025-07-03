@@ -1,26 +1,53 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { useAdmin } from '@/contexts/AdminContext';
-import { Edit, LogOut, Settings, Users } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { Edit, LogOut, Settings, Users, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
+import { makeUserAdmin } from '@/utils/adminHelpers';
 
 const AdminPanel = () => {
-  const { isAdminLoggedIn, isEditMode, logout, toggleEditMode } = useAdmin();
+  const { user, isAdmin } = useAuth();
   const { toast } = useToast();
 
-  if (!isAdminLoggedIn) {
+  const handleMakeAdmin = async () => {
+    if (!user) return;
+    
+    const success = await makeUserAdmin(user.id);
+    if (success) {
+      toast({
+        title: "Success",
+        description: "You are now an admin! Please refresh the page.",
+      });
+      // Refresh the page to update admin status
+      window.location.reload();
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to make you an admin",
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (!user) {
     return null;
   }
 
-  const handleLogout = () => {
-    logout();
-    toast({
-      title: "Success",
-      description: "Admin logged out successfully",
-    });
-  };
+  if (!isAdmin) {
+    return (
+      <div className="fixed top-4 right-4 z-50 bg-white shadow-lg border rounded-lg p-4">
+        <div className="text-sm text-gray-600 mb-2">
+          Not an admin? Click below to make yourself admin:
+        </div>
+        <Button onClick={handleMakeAdmin} className="w-full">
+          <Shield className="h-4 w-4 mr-2" />
+          Make Me Admin
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -36,21 +63,6 @@ const AdminPanel = () => {
           Admin Controls
         </div>
         
-        <Button
-          onClick={toggleEditMode}
-          variant={isEditMode ? "default" : "outline"}
-          className={`w-full ${isEditMode ? "bg-green-600 hover:bg-green-700 text-white" : "border-blue-600 text-blue-600 hover:bg-blue-50"}`}
-        >
-          <Edit className="h-4 w-4 mr-2" />
-          {isEditMode ? "EDITING ON" : "Turn On Editing"}
-        </Button>
-        
-        {isEditMode && (
-          <div className="text-xs text-green-600 font-medium text-center">
-            ✓ Hover over text to edit it
-          </div>
-        )}
-        
         <Link to="/user-management">
           <Button 
             variant="outline" 
@@ -60,15 +72,6 @@ const AdminPanel = () => {
             User Management
           </Button>
         </Link>
-        
-        <Button 
-          onClick={handleLogout} 
-          variant="outline" 
-          className="w-full border-red-600 text-red-600 hover:bg-red-50"
-        >
-          <LogOut className="h-4 w-4 mr-2" />
-          Logout
-        </Button>
       </div>
     </>
   );

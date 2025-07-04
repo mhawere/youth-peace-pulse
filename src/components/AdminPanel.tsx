@@ -2,128 +2,79 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
-import { Edit, LogOut, Settings, Users, Shield, Newspaper } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
-import { makeUserAdmin } from '@/utils/adminHelpers';
+import { Settings, Users, LogOut } from 'lucide-react';
 
 const AdminPanel = () => {
   const { user, isAdmin, isNewsEditor, signOut } = useAuth();
-  const { toast } = useToast();
 
-  const handleMakeAdmin = async () => {
-    if (!user) return;
-    
-    const success = await makeUserAdmin(user.id);
-    if (success) {
-      toast({
-        title: "Success",
-        description: "You are now an admin! Please refresh the page.",
-      });
-      // Refresh the page to update admin status
-      window.location.reload();
-    } else {
-      toast({
-        title: "Error",
-        description: "Failed to make you an admin",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    toast({
-      title: "Success",
-      description: "Signed out successfully",
-    });
-  };
-
-  if (!user) {
+  // Don't show admin panel if user is not logged in or doesn't have any admin/editor roles
+  if (!user || (!isAdmin && !isNewsEditor)) {
     return null;
   }
 
-  // Show "Make Me Admin" button if user has no roles
-  if (!isAdmin && !isNewsEditor) {
-    return (
-      <div className="fixed top-4 right-4 z-50 bg-white shadow-lg border rounded-lg p-4">
-        <div className="text-sm text-gray-600 mb-2">
-          Need admin access? Click below:
-        </div>
-        <Button onClick={handleMakeAdmin} className="w-full mb-2">
-          <Shield className="h-4 w-4 mr-2" />
-          Make Me Admin
-        </Button>
-        <Button onClick={handleSignOut} variant="outline" className="w-full">
-          <LogOut className="h-4 w-4 mr-2" />
-          Sign Out
-        </Button>
-      </div>
-    );
-  }
-
   return (
-    <>
-      {/* Role Status Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-blue-600 text-white text-center py-2 font-bold">
-        {isAdmin ? 'ADMIN MODE' : 'NEWS EDITOR MODE'} - {user.email}
-      </div>
-      
-      {/* Admin/Editor Control Panel */}
-      <div className="fixed top-12 right-4 z-50 bg-white shadow-lg border rounded-lg p-4 space-y-3">
-        <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
-          <Settings className="h-4 w-4" />
-          {isAdmin ? 'Admin Controls' : 'Editor Controls'}
+    <div className="fixed top-4 right-4 z-50">
+      <div className="bg-white rounded-lg shadow-lg border p-4 space-y-2">
+        <div className="text-sm font-medium text-gray-700">
+          Admin Panel
         </div>
         
-        {/* Admin-only controls */}
-        {isAdmin && (
-          <Link to="/user-management">
-            <Button 
-              variant="outline" 
-              className="w-full border-purple-600 text-purple-600 hover:bg-purple-50"
+        <div className="space-y-1">
+          {isAdmin && (
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="w-full justify-start"
             >
-              <Users className="h-4 w-4 mr-2" />
-              User Management
+              <Link to="/user-management">
+                <Users className="w-4 h-4 mr-2" />
+                Users
+              </Link>
             </Button>
-          </Link>
-        )}
-
-        {/* News management controls (for both admin and news_editor) */}
-        {(isAdmin || isNewsEditor) && (
-          <>
-            <Link to="/news/press-releases">
-              <Button 
-                variant="outline" 
-                className="w-full border-green-600 text-green-600 hover:bg-green-50"
+          )}
+          
+          {(isAdmin || isNewsEditor) && (
+            <>
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start"
               >
-                <Newspaper className="h-4 w-4 mr-2" />
-                Manage Press Releases
+                <Link to="/news/press-releases">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Press Releases
+                </Link>
               </Button>
-            </Link>
-            
-            <Link to="/news/newsletter">
-              <Button 
-                variant="outline" 
-                className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+              
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start"
               >
-                <Edit className="h-4 w-4 mr-2" />
-                Manage Newsletter
+                <Link to="/news/newsletter">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Newsletter
+                </Link>
               </Button>
-            </Link>
-          </>
-        )}
-
-        <Button 
-          onClick={handleSignOut} 
-          variant="outline" 
-          className="w-full border-red-600 text-red-600 hover:bg-red-50"
-        >
-          <LogOut className="h-4 w-4 mr-2" />
-          Sign Out
-        </Button>
+            </>
+          )}
+          
+          <Button
+            onClick={signOut}
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start text-red-600 hover:text-red-700"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

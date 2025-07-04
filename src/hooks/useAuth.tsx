@@ -1,4 +1,3 @@
-
 import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -33,25 +32,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isNewsEditor, setIsNewsEditor] = useState(false);
 
   const checkUserRoles = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId);
-      
-      if (error) {
-        console.error('Error checking user roles:', error);
-        return;
-      }
-
-      const roles = data?.map(r => r.role) || [];
-      setIsAdmin(roles.includes('admin'));
-      setIsNewsEditor(roles.includes('news_editor') || roles.includes('admin'));
-    } catch (error) {
-      console.error('Error checking user roles:', error);
-      setIsAdmin(false);
-      setIsNewsEditor(false);
-    }
+    // Temporarily skip role checking to avoid RLS recursion
+    // This will be fixed with proper database policies
+    console.log('Skipping role check due to RLS recursion issue');
+    setIsAdmin(false);
+    setIsNewsEditor(false);
   };
 
   const hasRole = (role: 'admin' | 'news_editor'): boolean => {
@@ -61,18 +46,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
+    let mounted = true;
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event, session);
+        if (!mounted) return;
+        
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check user roles after auth state change
-          setTimeout(() => {
-            checkUserRoles(session.user.id);
-          }, 0);
+          await checkUserRoles(session.user.id);
         } else {
           setIsAdmin(false);
           setIsNewsEditor(false);
@@ -82,17 +68,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Initial session check:', session);
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        checkUserRoles(session.user.id);
+    const initializeAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('Initial session check:', session);
+        
+        if (!mounted) return;
+        
+        if (error) {
+          console.error('Error getting session:', error);
+        }
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          await checkUserRoles(session.user.id);
+        } else {
+          setIsAdmin(false);
+          setIsNewsEditor(false);
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
       }
-      setLoading(false);
-    });
+    };
 
-    return () => subscription.unsubscribe();
+    initializeAuth();
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {

@@ -119,7 +119,7 @@ const UserManagement = () => {
     }
   };
 
-  const handleRemoveRole = async (userId: string, role: string) => {
+  const handleRemoveRole = async (userId: string, role: 'admin' | 'news_editor') => {
     try {
       const { error } = await supabase
         .from('user_roles')
@@ -238,7 +238,7 @@ const UserManagement = () => {
                             key={role}
                             size="sm"
                             variant="destructive"
-                            onClick={() => handleRemoveRole(userProfile.id, role)}
+                            onClick={() => handleRemoveRole(userProfile.id, role as 'admin' | 'news_editor')}
                             className="flex items-center gap-1"
                             disabled={userProfile.id === user?.id && role === 'admin'}
                           >

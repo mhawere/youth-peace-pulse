@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { UserPlus, Users, Shield, Trash2 } from 'lucide-react';
+import { UserPlus, Users, Shield, Trash2, Edit } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -95,51 +95,51 @@ const UserManagement = () => {
     }
   };
 
-  const handleMakeAdmin = async (userId: string) => {
+  const handleAssignRole = async (userId: string, role: 'admin' | 'news_editor') => {
     try {
       const { error } = await supabase
         .from('user_roles')
-        .insert([{ user_id: userId, role: 'admin' }]);
+        .insert([{ user_id: userId, role: role }]);
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: "User promoted to admin successfully",
+        description: `User assigned ${role} role successfully`,
       });
       
       fetchUsers();
     } catch (error) {
-      console.error('Error making user admin:', error);
+      console.error('Error assigning role:', error);
       toast({
         title: "Error",
-        description: "Failed to promote user to admin",
+        description: `Failed to assign ${role} role`,
         variant: "destructive",
       });
     }
   };
 
-  const handleRemoveAdmin = async (userId: string) => {
+  const handleRemoveRole = async (userId: string, role: string) => {
     try {
       const { error } = await supabase
         .from('user_roles')
         .delete()
         .eq('user_id', userId)
-        .eq('role', 'admin');
+        .eq('role', role);
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: "Admin role removed successfully",
+        description: `${role} role removed successfully`,
       });
       
       fetchUsers();
     } catch (error) {
-      console.error('Error removing admin role:', error);
+      console.error('Error removing role:', error);
       toast({
         title: "Error",
-        description: "Failed to remove admin role",
+        description: `Failed to remove ${role} role`,
         variant: "destructive",
       });
     }
@@ -168,6 +168,10 @@ const UserManagement = () => {
           <CardContent>
             <div className="mb-6">
               <p className="text-gray-600">Manage system users and their permissions</p>
+              <div className="mt-2 text-sm text-gray-500">
+                <strong>Admin:</strong> Full access to all features including user management<br/>
+                <strong>News Editor:</strong> Can manage press releases and newsletters only
+              </div>
             </div>
 
             <Table>
@@ -186,41 +190,62 @@ const UserManagement = () => {
                     <TableCell className="font-medium">{userProfile.username}</TableCell>
                     <TableCell>{userProfile.email}</TableCell>
                     <TableCell>
-                      <div className="flex gap-1">
-                        {userProfile.roles.map(role => (
-                          <span key={role} className={`px-2 py-1 rounded text-xs ${
-                            role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
-                          }`}>
-                            {role}
+                      <div className="flex gap-1 flex-wrap">
+                        {userProfile.roles.length === 0 ? (
+                          <span className="px-2 py-1 rounded text-xs bg-gray-100 text-gray-800">
+                            No roles
                           </span>
-                        ))}
+                        ) : (
+                          userProfile.roles.map(role => (
+                            <span key={role} className={`px-2 py-1 rounded text-xs ${
+                              role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
+                            }`}>
+                              {role}
+                            </span>
+                          ))
+                        )}
                       </div>
                     </TableCell>
                     <TableCell>{new Date(userProfile.created_at).toLocaleDateString()}</TableCell>
                     <TableCell>
-                      <div className="flex gap-2">
-                        {!userProfile.roles.includes('admin') ? (
+                      <div className="flex gap-2 flex-wrap">
+                        {!userProfile.roles.includes('admin') && (
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => handleMakeAdmin(userProfile.id)}
+                            onClick={() => handleAssignRole(userProfile.id, 'admin')}
                             className="flex items-center gap-1"
                           >
                             <Shield className="h-3 w-3" />
                             Make Admin
                           </Button>
-                        ) : (
+                        )}
+                        
+                        {!userProfile.roles.includes('news_editor') && !userProfile.roles.includes('admin') && (
                           <Button
                             size="sm"
-                            variant="destructive"
-                            onClick={() => handleRemoveAdmin(userProfile.id)}
+                            variant="outline"
+                            onClick={() => handleAssignRole(userProfile.id, 'news_editor')}
                             className="flex items-center gap-1"
-                            disabled={userProfile.id === user?.id}
                           >
-                            <Trash2 className="h-3 w-3" />
-                            Remove Admin
+                            <Edit className="h-3 w-3" />
+                            Make Editor
                           </Button>
                         )}
+                        
+                        {userProfile.roles.map(role => (
+                          <Button
+                            key={role}
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleRemoveRole(userProfile.id, role)}
+                            className="flex items-center gap-1"
+                            disabled={userProfile.id === user?.id && role === 'admin'}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                            Remove {role}
+                          </Button>
+                        ))}
                       </div>
                     </TableCell>
                   </TableRow>

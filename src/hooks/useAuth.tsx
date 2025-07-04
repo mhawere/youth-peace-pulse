@@ -11,6 +11,8 @@ interface AuthContextType {
   signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   isAdmin: boolean;
+  isNewsEditor: boolean;
+  hasRole: (role: 'admin' | 'news_editor') => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +30,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isNewsEditor, setIsNewsEditor] = useState(false);
+
+  const checkUserRoles = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+      
+      if (error) {
+        console.error('Error checking user roles:', error);
+        return;
+      }
+
+      const roles = data?.map(r => r.role) || [];
+      setIsAdmin(roles.includes('admin'));
+      setIsNewsEditor(roles.includes('news_editor') || roles.includes('admin'));
+    } catch (error) {
+      console.error('Error checking user roles:', error);
+      setIsAdmin(false);
+      setIsNewsEditor(false);
+    }
+  };
+
+  const hasRole = (role: 'admin' | 'news_editor'): boolean => {
+    if (role === 'admin') return isAdmin;
+    if (role === 'news_editor') return isNewsEditor;
+    return false;
+  };
 
   useEffect(() => {
     // Set up auth state listener
@@ -37,24 +68,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check if user is admin
-          setTimeout(async () => {
-            try {
-              const { data } = await supabase
-                .from('user_roles')
-                .select('role')
-                .eq('user_id', session.user.id)
-                .eq('role', 'admin')
-                .single();
-              
-              setIsAdmin(!!data);
-            } catch (error) {
-              console.error('Error checking admin status:', error);
-              setIsAdmin(false);
-            }
+          // Check user roles after auth state change
+          setTimeout(() => {
+            checkUserRoles(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsNewsEditor(false);
         }
         setLoading(false);
       }
@@ -64,6 +84,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
+      if (session?.user) {
+        checkUserRoles(session.user.id);
+      }
       setLoading(false);
     });
 
@@ -106,7 +129,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       signIn,
       signUp,
       signOut,
-      isAdmin
+      isAdmin,
+      isNewsEditor,
+      hasRole
     }}>
       {children}
     </AuthContext.Provider>

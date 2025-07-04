@@ -10,6 +10,7 @@ import { Navigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { Shield, Edit } from 'lucide-react';
 
 const Auth = () => {
   const { user, signIn, signUp } = useAuth();
@@ -83,9 +84,28 @@ const Auth = () => {
         <div className="max-w-md mx-auto px-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-center">Welcome to Y-Peace</CardTitle>
+              <CardTitle className="text-2xl text-center flex items-center justify-center gap-2">
+                <Shield className="h-6 w-6" />
+                Admin & Editor Access
+              </CardTitle>
+              <p className="text-center text-gray-600">
+                Login to manage Y-Peace content and users
+              </p>
             </CardHeader>
             <CardContent>
+              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                <div className="text-sm space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4 text-red-600" />
+                    <strong>Admin:</strong> Full access including user management
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Edit className="h-4 w-4 text-blue-600" />
+                    <strong>News Editor:</strong> Manage press releases & newsletters
+                  </div>
+                </div>
+              </div>
+
               <Tabs defaultValue="login">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="login">Login</TabsTrigger>
@@ -155,6 +175,9 @@ const Auth = () => {
                     <Button type="submit" className="w-full" disabled={loading}>
                       {loading ? 'Creating account...' : 'Sign Up'}
                     </Button>
+                    <p className="text-xs text-gray-500 text-center">
+                      After signup, use "Make Me Admin" to get admin access
+                    </p>
                   </form>
                 </TabsContent>
               </Tabs>

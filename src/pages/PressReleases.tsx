@@ -78,6 +78,7 @@ const PressReleases = () => {
               onChange={setPageTitle}
               className="text-4xl md:text-6xl font-bold mb-6"
               as="h1"
+              editable={isAdmin}
             >
               {pageTitle}
             </EditableText>
@@ -86,6 +87,7 @@ const PressReleases = () => {
               onChange={setPageSubtitle}
               className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto"
               as="p"
+              editable={isAdmin}
             >
               {pageSubtitle}
             </EditableText>

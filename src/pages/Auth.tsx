@@ -10,11 +10,10 @@ import { Navigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import MakeMeAdmin from '@/components/MakeMeAdmin';
-import { Shield, Edit } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 const Auth = () => {
-  const { user, signIn, signUp } = useAuth();
+  const { user, signIn, signUp, isAdmin } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   
@@ -29,25 +28,9 @@ const Auth = () => {
     username: ''
   });
 
+  // If user is logged in, redirect to home
   if (user) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Navigation />
-        
-        <div className="py-16">
-          <div className="max-w-md mx-auto px-4">
-            <MakeMeAdmin />
-            <div className="mt-6 text-center">
-              <Button onClick={() => window.location.href = '/'}>
-                Go to Home Page
-              </Button>
-            </div>
-          </div>
-        </div>
-        
-        <Footer />
-      </div>
-    );
+    return <Navigate to="/" />;
   }
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -104,26 +87,13 @@ const Auth = () => {
             <CardHeader>
               <CardTitle className="text-2xl text-center flex items-center justify-center gap-2">
                 <Shield className="h-6 w-6" />
-                Admin & Editor Access
+                Y-Peace Admin Login
               </CardTitle>
               <p className="text-center text-gray-600">
-                Login to manage Y-Peace content and users
+                Login to manage Y-Peace content
               </p>
             </CardHeader>
             <CardContent>
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                <div className="text-sm space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-red-600" />
-                    <strong>Admin:</strong> Full access including user management
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Edit className="h-4 w-4 text-blue-600" />
-                    <strong>News Editor:</strong> Manage press releases & newsletters
-                  </div>
-                </div>
-              </div>
-
               <Tabs defaultValue="login">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="login">Login</TabsTrigger>
@@ -193,9 +163,6 @@ const Auth = () => {
                     <Button type="submit" className="w-full" disabled={loading}>
                       {loading ? 'Creating account...' : 'Sign Up'}
                     </Button>
-                    <p className="text-xs text-gray-500 text-center">
-                      After signup, use "Make Me Admin" to get admin access
-                    </p>
                   </form>
                 </TabsContent>
               </Tabs>

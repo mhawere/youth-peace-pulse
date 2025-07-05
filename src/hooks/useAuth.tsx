@@ -11,8 +11,6 @@ interface AuthContextType {
   signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   isAdmin: boolean;
-  isNewsEditor: boolean;
-  hasRole: (role: 'admin' | 'news_editor') => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,42 +28,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isNewsEditor, setIsNewsEditor] = useState(false);
 
-  const checkUserRoles = async (userId: string) => {
+  const checkIfAdmin = async (userId: string) => {
     try {
-      console.log('Checking user roles for:', userId);
+      console.log('Checking admin status for:', userId);
       
-      // Use the new database function to get user role
-      const { data, error } = await supabase.rpc('get_user_role', { 
+      const { data, error } = await supabase.rpc('is_user_admin', { 
         user_id: userId 
       });
 
       if (error) {
-        console.error('Error checking user role:', error);
+        console.error('Error checking admin status:', error);
         setIsAdmin(false);
-        setIsNewsEditor(false);
         return;
       }
 
-      console.log('User role from database:', data);
-      
-      const userRole = data as 'admin' | 'news_editor' | null;
-      setIsAdmin(userRole === 'admin');
-      setIsNewsEditor(userRole === 'news_editor' || userRole === 'admin');
-      
-      console.log('Roles set - isAdmin:', userRole === 'admin', 'isNewsEditor:', userRole === 'news_editor' || userRole === 'admin');
+      console.log('Admin status:', data);
+      setIsAdmin(data === true);
     } catch (error) {
-      console.error('Error in checkUserRoles:', error);
+      console.error('Error in checkIfAdmin:', error);
       setIsAdmin(false);
-      setIsNewsEditor(false);
     }
-  };
-
-  const hasRole = (role: 'admin' | 'news_editor'): boolean => {
-    if (role === 'admin') return isAdmin;
-    if (role === 'news_editor') return isNewsEditor;
-    return false;
   };
 
   useEffect(() => {
@@ -81,10 +64,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          await checkUserRoles(session.user.id);
+          await checkIfAdmin(session.user.id);
         } else {
           setIsAdmin(false);
-          setIsNewsEditor(false);
         }
         setLoading(false);
       }
@@ -106,10 +88,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          await checkUserRoles(session.user.id);
+          await checkIfAdmin(session.user.id);
         } else {
           setIsAdmin(false);
-          setIsNewsEditor(false);
         }
       } catch (error) {
         console.error('Error initializing auth:', error);
@@ -164,9 +145,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       signIn,
       signUp,
       signOut,
-      isAdmin,
-      isNewsEditor,
-      hasRole
+      isAdmin
     }}>
       {children}
     </AuthContext.Provider>

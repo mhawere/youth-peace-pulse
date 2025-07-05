@@ -3,13 +3,13 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
-import { Settings, Users, LogOut } from 'lucide-react';
+import { Settings, Users, LogOut, FileText, Mail } from 'lucide-react';
 
 const AdminPanel = () => {
-  const { user, isAdmin, isNewsEditor, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
 
-  // Don't show admin panel if user is not logged in or doesn't have any admin/editor roles
-  if (!user || (!isAdmin && !isNewsEditor)) {
+  // Only show admin panel if user is logged in and is an admin
+  if (!user || !isAdmin) {
     return null;
   }
 
@@ -21,47 +21,53 @@ const AdminPanel = () => {
         </div>
         
         <div className="space-y-1">
-          {isAdmin && (
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className="w-full justify-start"
-            >
-              <Link to="/user-management">
-                <Users className="w-4 h-4 mr-2" />
-                Users
-              </Link>
-            </Button>
-          )}
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/user-management">
+              <Users className="w-4 h-4 mr-2" />
+              Users
+            </Link>
+          </Button>
           
-          {(isAdmin || isNewsEditor) && (
-            <>
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="w-full justify-start"
-              >
-                <Link to="/news/press-releases">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Press Releases
-                </Link>
-              </Button>
-              
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="w-full justify-start"
-              >
-                <Link to="/news/newsletter">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Newsletter
-                </Link>
-              </Button>
-            </>
-          )}
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/news/press-releases">
+              <FileText className="w-4 h-4 mr-2" />
+              Press Releases
+            </Link>
+          </Button>
+          
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/news/newsletter">
+              <Mail className="w-4 h-4 mr-2" />
+              Newsletter
+            </Link>
+          </Button>
+          
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/news/blog">
+              <Settings className="w-4 h-4 mr-2" />
+              Blog
+            </Link>
+          </Button>
           
           <Button
             onClick={signOut}

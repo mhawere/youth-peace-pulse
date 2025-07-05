@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { useAdmin } from '@/contexts/AdminContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -23,9 +22,12 @@ const EditableText: React.FC<EditableTextProps> = ({
   className = '',
   as: Component = 'div'
 }) => {
-  const { isEditMode } = useAdmin();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
+  
+  // Since we removed AdminContext, this component is now non-functional
+  // Just render the children without edit capabilities
+  const isEditMode = false;
 
   const handleSave = () => {
     onChange(editValue);

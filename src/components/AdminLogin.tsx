@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -10,7 +9,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAdmin } from '@/contexts/AdminContext';
 import { LogIn, Edit, LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -18,54 +16,17 @@ const AdminLogin = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { isAdminLoggedIn, isEditMode, login, logout, toggleEditMode } = useAdmin();
   const { toast } = useToast();
 
+  // This component is now deprecated since we're using Supabase auth
+  // Keeping it minimal to avoid errors but it won't be functional
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(username, password)) {
-      setIsOpen(false);
-      setUsername('');
-      setPassword('');
-      toast({
-        title: "Success",
-        description: "Admin logged in successfully",
-      });
-    } else {
-      toast({
-        title: "Error",
-        description: "Invalid credentials",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleLogout = () => {
-    logout();
     toast({
-      title: "Success",
-      description: "Admin logged out successfully",
+      title: "Info",
+      description: "Please use the main auth system at /auth",
     });
   };
-
-  if (isAdminLoggedIn) {
-    return (
-      <div className="fixed top-4 right-4 z-50 flex gap-2">
-        <Button
-          onClick={toggleEditMode}
-          variant={isEditMode ? "default" : "outline"}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
-        >
-          <Edit className="h-4 w-4 mr-2" />
-          {isEditMode ? "Exit Edit" : "Edit Mode"}
-        </Button>
-        <Button onClick={handleLogout} variant="outline">
-          <LogOut className="h-4 w-4 mr-2" />
-          Logout
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -110,7 +71,7 @@ const AdminLogin = () => {
             Login
           </Button>
           <p className="text-sm text-gray-500 text-center">
-            Default: admin / admin
+            Use /auth for authentication
           </p>
         </form>
       </DialogContent>

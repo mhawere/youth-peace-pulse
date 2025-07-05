@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { UserPlus, Users, Shield, Trash2, Edit } from 'lucide-react';
+import { Users, Shield, Trash2 } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -14,7 +14,7 @@ interface UserProfile {
   username: string;
   email: string;
   created_at: string;
-  roles: string[];
+  is_admin: boolean;
 }
 
 const UserManagement = () => {
@@ -53,17 +53,23 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      // Fetch profiles with user roles
+      // Fetch profiles with admin status
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
         .select(`
           id,
           username,
-          created_at,
-          user_roles (role)
+          created_at
         `);
 
       if (profilesError) throw profilesError;
+
+      // Fetch user roles
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, is_admin');
+
+      if (rolesError) throw rolesError;
 
       // Fetch auth users to get email addresses
       const { data: { users: authUsers }, error: authError } = await supabase.auth.admin.listUsers();
@@ -73,12 +79,14 @@ const UserManagement = () => {
       // Combine the data
       const combinedUsers = profilesData?.map((profile: any) => {
         const authUser = authUsers?.find((u: any) => u.id === profile.id);
+        const userRole = rolesData?.find((r: any) => r.user_id === profile.id);
+        
         return {
           id: profile.id,
           username: profile.username || 'Unknown',
           email: authUser?.email || 'Unknown',
           created_at: profile.created_at,
-          roles: profile.user_roles?.map((r: any) => r.role) || []
+          is_admin: userRole?.is_admin || false
         };
       }) || [];
 
@@ -95,51 +103,50 @@ const UserManagement = () => {
     }
   };
 
-  const handleAssignRole = async (userId: string, role: 'admin' | 'news_editor') => {
+  const handleMakeAdmin = async (userId: string) => {
     try {
       const { error } = await supabase
         .from('user_roles')
-        .insert([{ user_id: userId, role: role }]);
+        .upsert([{ user_id: userId, is_admin: true }]);
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: `User assigned ${role} role successfully`,
+        description: "User is now an admin",
       });
       
       fetchUsers();
     } catch (error) {
-      console.error('Error assigning role:', error);
+      console.error('Error making user admin:', error);
       toast({
         title: "Error",
-        description: `Failed to assign ${role} role`,
+        description: "Failed to make user admin",
         variant: "destructive",
       });
     }
   };
 
-  const handleRemoveRole = async (userId: string, role: 'admin' | 'news_editor') => {
+  const handleRemoveAdmin = async (userId: string) => {
     try {
       const { error } = await supabase
         .from('user_roles')
-        .delete()
-        .eq('user_id', userId)
-        .eq('role', role);
+        .update({ is_admin: false })
+        .eq('user_id', userId);
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: `${role} role removed successfully`,
+        description: "Admin role removed",
       });
       
       fetchUsers();
     } catch (error) {
-      console.error('Error removing role:', error);
+      console.error('Error removing admin role:', error);
       toast({
         title: "Error",
-        description: `Failed to remove ${role} role`,
+        description: "Failed to remove admin role",
         variant: "destructive",
       });
     }
@@ -167,10 +174,9 @@ const UserManagement = () => {
           </CardHeader>
           <CardContent>
             <div className="mb-6">
-              <p className="text-gray-600">Manage system users and their permissions</p>
+              <p className="text-gray-600">Manage system users and their admin permissions</p>
               <div className="mt-2 text-sm text-gray-500">
-                <strong>Admin:</strong> Full access to all features including user management<br/>
-                <strong>News Editor:</strong> Can manage press releases and newsletters only
+                <strong>Admin:</strong> Full access to all features including user management and content editing
               </div>
             </div>
 
@@ -179,7 +185,7 @@ const UserManagement = () => {
                 <TableRow>
                   <TableHead>Username</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead>Roles</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Created Date</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -190,62 +196,37 @@ const UserManagement = () => {
                     <TableCell className="font-medium">{userProfile.username}</TableCell>
                     <TableCell>{userProfile.email}</TableCell>
                     <TableCell>
-                      <div className="flex gap-1 flex-wrap">
-                        {userProfile.roles.length === 0 ? (
-                          <span className="px-2 py-1 rounded text-xs bg-gray-100 text-gray-800">
-                            No roles
-                          </span>
-                        ) : (
-                          userProfile.roles.map(role => (
-                            <span key={role} className={`px-2 py-1 rounded text-xs ${
-                              role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
-                            }`}>
-                              {role}
-                            </span>
-                          ))
-                        )}
-                      </div>
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        userProfile.is_admin ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {userProfile.is_admin ? 'Admin' : 'User'}
+                      </span>
                     </TableCell>
                     <TableCell>{new Date(userProfile.created_at).toLocaleDateString()}</TableCell>
                     <TableCell>
-                      <div className="flex gap-2 flex-wrap">
-                        {!userProfile.roles.includes('admin') && (
+                      <div className="flex gap-2">
+                        {!userProfile.is_admin ? (
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => handleAssignRole(userProfile.id, 'admin')}
+                            onClick={() => handleMakeAdmin(userProfile.id)}
                             className="flex items-center gap-1"
                           >
                             <Shield className="h-3 w-3" />
                             Make Admin
                           </Button>
-                        )}
-                        
-                        {!userProfile.roles.includes('news_editor') && !userProfile.roles.includes('admin') && (
+                        ) : (
                           <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleAssignRole(userProfile.id, 'news_editor')}
-                            className="flex items-center gap-1"
-                          >
-                            <Edit className="h-3 w-3" />
-                            Make Editor
-                          </Button>
-                        )}
-                        
-                        {userProfile.roles.map(role => (
-                          <Button
-                            key={role}
                             size="sm"
                             variant="destructive"
-                            onClick={() => handleRemoveRole(userProfile.id, role as 'admin' | 'news_editor')}
+                            onClick={() => handleRemoveAdmin(userProfile.id)}
                             className="flex items-center gap-1"
-                            disabled={userProfile.id === user?.id && role === 'admin'}
+                            disabled={userProfile.id === user?.id}
                           >
                             <Trash2 className="h-3 w-3" />
-                            Remove {role}
+                            Remove Admin
                           </Button>
-                        ))}
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>

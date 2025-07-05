@@ -61,7 +61,6 @@ const Newsletter = () => {
               onChange={setPageTitle}
               className="text-4xl md:text-6xl font-bold mb-6"
               as="h1"
-              editable={isAdmin}
             >
               {pageTitle}
             </EditableText>
@@ -70,7 +69,6 @@ const Newsletter = () => {
               onChange={setPageSubtitle}
               className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto"
               as="p"
-              editable={isAdmin}
             >
               {pageSubtitle}
             </EditableText>
@@ -98,7 +96,6 @@ const Newsletter = () => {
                   value={signupTitle}
                   onChange={setSignupTitle}
                   as="span"
-                  editable={isAdmin}
                 >
                   {signupTitle}
                 </EditableText>
@@ -109,7 +106,6 @@ const Newsletter = () => {
                 multiline
                 className="text-lg text-gray-100"
                 as="p"
-                editable={isAdmin}
               >
                 {signupDescription}
               </EditableText>
@@ -137,7 +133,6 @@ const Newsletter = () => {
                 onChange={setPrivacyText}
                 className="text-center text-sm text-gray-200 mt-4"
                 as="p"
-                editable={isAdmin}
               >
                 {privacyText}
               </EditableText>
@@ -155,7 +150,6 @@ const Newsletter = () => {
               onChange={setPastTitle}
               className="text-3xl font-bold text-gray-900 mb-4"
               as="h2"
-              editable={isAdmin}
             >
               {pastTitle}
             </EditableText>
@@ -164,7 +158,6 @@ const Newsletter = () => {
               onChange={setPastDescription}
               className="text-lg text-gray-600"
               as="p"
-              editable={isAdmin}
             >
               {pastDescription}
             </EditableText>

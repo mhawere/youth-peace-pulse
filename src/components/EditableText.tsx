@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Check, X, Edit2 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface EditableTextProps {
   children: React.ReactNode;
@@ -24,10 +25,7 @@ const EditableText: React.FC<EditableTextProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
-  
-  // Since we removed AdminContext, this component is now non-functional
-  // Just render the children without edit capabilities
-  const isEditMode = false;
+  const { isAdmin } = useAuth();
 
   const handleSave = () => {
     onChange(editValue);
@@ -39,7 +37,7 @@ const EditableText: React.FC<EditableTextProps> = ({
     setIsEditing(false);
   };
 
-  if (!isEditMode) {
+  if (!isAdmin) {
     return React.createElement(Component, { className }, children);
   }
 
@@ -77,18 +75,16 @@ const EditableText: React.FC<EditableTextProps> = ({
   }
 
   return (
-    <div className={`relative group ${className} ${isEditMode ? 'border-2 border-dashed border-yellow-400 hover:border-yellow-500 hover:bg-yellow-50' : ''}`}>
+    <div className={`relative group ${className} border-2 border-dashed border-yellow-400 hover:border-yellow-500 hover:bg-yellow-50`}>
       {React.createElement(Component, { className: "w-full" }, children)}
-      {isEditMode && (
-        <Button
-          size="sm"
-          className="absolute -top-2 -right-2 bg-yellow-500 text-black hover:bg-yellow-600 opacity-90 group-hover:opacity-100 transition-opacity shadow-lg"
-          onClick={() => setIsEditing(true)}
-        >
-          <Edit2 className="h-3 w-3 mr-1" />
-          Edit
-        </Button>
-      )}
+      <Button
+        size="sm"
+        className="absolute -top-2 -right-2 bg-yellow-500 text-black hover:bg-yellow-600 opacity-90 group-hover:opacity-100 transition-opacity shadow-lg"
+        onClick={() => setIsEditing(true)}
+      >
+        <Edit2 className="h-3 w-3 mr-1" />
+        Edit
+      </Button>
     </div>
   );
 };

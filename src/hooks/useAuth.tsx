@@ -1,3 +1,4 @@
+
 import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -32,11 +33,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isNewsEditor, setIsNewsEditor] = useState(false);
 
   const checkUserRoles = async (userId: string) => {
-    // Temporarily skip role checking to avoid RLS recursion
-    // This will be fixed with proper database policies
-    console.log('Skipping role check due to RLS recursion issue');
-    setIsAdmin(false);
-    setIsNewsEditor(false);
+    try {
+      console.log('Checking user roles for:', userId);
+      
+      // Use the new database function to get user role
+      const { data, error } = await supabase.rpc('get_user_role', { 
+        user_id: userId 
+      });
+
+      if (error) {
+        console.error('Error checking user role:', error);
+        setIsAdmin(false);
+        setIsNewsEditor(false);
+        return;
+      }
+
+      console.log('User role from database:', data);
+      
+      const userRole = data as 'admin' | 'news_editor' | null;
+      setIsAdmin(userRole === 'admin');
+      setIsNewsEditor(userRole === 'news_editor' || userRole === 'admin');
+      
+      console.log('Roles set - isAdmin:', userRole === 'admin', 'isNewsEditor:', userRole === 'news_editor' || userRole === 'admin');
+    } catch (error) {
+      console.error('Error in checkUserRoles:', error);
+      setIsAdmin(false);
+      setIsNewsEditor(false);
+    }
   };
 
   const hasRole = (role: 'admin' | 'news_editor'): boolean => {

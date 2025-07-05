@@ -10,6 +10,7 @@ import { Navigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import MakeMeAdmin from '@/components/MakeMeAdmin';
 import { Shield, Edit } from 'lucide-react';
 
 const Auth = () => {
@@ -29,7 +30,24 @@ const Auth = () => {
   });
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
+        
+        <div className="py-16">
+          <div className="max-w-md mx-auto px-4">
+            <MakeMeAdmin />
+            <div className="mt-6 text-center">
+              <Button onClick={() => window.location.href = '/'}>
+                Go to Home Page
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        <Footer />
+      </div>
+    );
   }
 
   const handleLogin = async (e: React.FormEvent) => {

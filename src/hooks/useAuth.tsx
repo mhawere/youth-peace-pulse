@@ -8,7 +8,6 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   isAdmin: boolean;
 }
@@ -27,29 +26,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  const checkIfAdmin = async (userId: string) => {
-    try {
-      console.log('Checking admin status for:', userId);
-      
-      const { data, error } = await supabase.rpc('is_user_admin', { 
-        user_id: userId 
-      });
-
-      if (error) {
-        console.error('Error checking admin status:', error);
-        setIsAdmin(false);
-        return;
-      }
-
-      console.log('Admin status:', data);
-      setIsAdmin(data === true);
-    } catch (error) {
-      console.error('Error in checkIfAdmin:', error);
-      setIsAdmin(false);
-    }
-  };
+  // Any logged-in user is automatically an admin
+  const isAdmin = !!user;
 
   useEffect(() => {
     let mounted = true;
@@ -62,12 +41,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         setSession(session);
         setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          await checkIfAdmin(session.user.id);
-        } else {
-          setIsAdmin(false);
-        }
         setLoading(false);
       }
     );
@@ -86,12 +59,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         setSession(session);
         setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          await checkIfAdmin(session.user.id);
-        } else {
-          setIsAdmin(false);
-        }
       } catch (error) {
         console.error('Error initializing auth:', error);
       } finally {
@@ -117,22 +84,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return { error };
   };
 
-  const signUp = async (email: string, password: string, username: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          username: username,
-        }
-      }
-    });
-    return { error };
-  };
-
   const signOut = async () => {
     await supabase.auth.signOut();
   };
@@ -143,7 +94,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       session,
       loading,
       signIn,
-      signUp,
       signOut,
       isAdmin
     }}>

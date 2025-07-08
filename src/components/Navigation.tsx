@@ -46,9 +46,6 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <Button className="gradient-primary text-white hover:opacity-90 transition-opacity">
-              Join Us
-            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -81,11 +78,6 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="px-3 pt-2">
-                <Button className="w-full gradient-primary text-white">
-                  Join Us
-                </Button>
-              </div>
             </div>
           </div>
         )}

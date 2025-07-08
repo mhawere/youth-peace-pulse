@@ -16,6 +16,7 @@ import Blog from "./pages/Blog";
 import PressReleases from "./pages/PressReleases";
 import Newsletter from "./pages/Newsletter";
 import UserManagement from "./pages/UserManagement";
+import ApplicationResults from "./pages/ApplicationResults";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/news/press-releases" element={<PressReleases />} />
             <Route path="/news/newsletter" element={<Newsletter />} />
             <Route path="/user-management" element={<UserManagement />} />
+            <Route path="/application-results" element={<ApplicationResults />} />
             <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

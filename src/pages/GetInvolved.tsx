@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -6,6 +7,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Users, 
   Heart, 
@@ -20,6 +23,20 @@ import {
 } from 'lucide-react';
 
 const GetInvolved = () => {
+  const { toast } = useToast();
+  
+  // Form state
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    country: '',
+    involvementTypes: [] as string[],
+    aboutYourself: '',
+    howHeardAbout: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Page content state
   const [pageTitle, setPageTitle] = useState('Get Involved');
   const [pageSubtitle, setPageSubtitle] = useState('Join the global movement for peace and sustainable development');
@@ -79,6 +96,78 @@ const GetInvolved = () => {
   const [stat3Label, setStat3Label] = useState('Partner Organizations');
   const [stat4, setStat4] = useState('25,000+');
   const [stat4Label, setStat4Label] = useState('Lives Impacted');
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleInvolvementTypeChange = (type: string, checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      involvementTypes: checked 
+        ? [...prev.involvementTypes, type]
+        : prev.involvementTypes.filter(t => t !== type)
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.country || formData.involvementTypes.length === 0) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('get_involved_applications')
+        .insert([
+          {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            country: formData.country,
+            involvement_types: formData.involvementTypes,
+            about_yourself: formData.aboutYourself || null,
+            how_heard_about: formData.howHeardAbout || null,
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Application Submitted!",
+        description: "Thank you for your interest in Y-Peace. We'll get back to you within 48 hours.",
+      });
+
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        country: '',
+        involvementTypes: [],
+        aboutYourself: '',
+        howHeardAbout: ''
+      });
+
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit application. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const opportunities = [
     {
@@ -426,19 +515,29 @@ const GetInvolved = () => {
 
           <Card className="shadow-xl">
             <CardContent className="p-8">
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       First Name *
                     </label>
-                    <Input placeholder="Your first name" />
+                    <Input 
+                      placeholder="Your first name" 
+                      value={formData.firstName}
+                      onChange={(e) => handleInputChange('firstName', e.target.value)}
+                      required
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Last Name *
                     </label>
-                    <Input placeholder="Your last name" />
+                    <Input 
+                      placeholder="Your last name" 
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange('lastName', e.target.value)}
+                      required
+                    />
                   </div>
                 </div>
 
@@ -447,13 +546,24 @@ const GetInvolved = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address *
                     </label>
-                    <Input type="email" placeholder="your.email@example.com" />
+                    <Input 
+                      type="email" 
+                      placeholder="your.email@example.com" 
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      required
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Country/Region *
                     </label>
-                    <Input placeholder="Your country" />
+                    <Input 
+                      placeholder="Your country" 
+                      value={formData.country}
+                      onChange={(e) => handleInputChange('country', e.target.value)}
+                      required
+                    />
                   </div>
                 </div>
 
@@ -462,22 +572,17 @@ const GetInvolved = () => {
                     How would you like to get involved? *
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
-                      <input type="checkbox" className="rounded" />
-                      <span>Volunteer</span>
-                    </label>
-                    <label className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
-                      <input type="checkbox" className="rounded" />
-                      <span>Membership</span>
-                    </label>
-                    <label className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
-                      <input type="checkbox" className="rounded" />
-                      <span>Partnership</span>
-                    </label>
-                    <label className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
-                      <input type="checkbox" className="rounded" />
-                      <span>Events</span>
-                    </label>
+                    {['Volunteer', 'Membership', 'Partnership', 'Events'].map((type) => (
+                      <label key={type} className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                        <input 
+                          type="checkbox" 
+                          className="rounded" 
+                          checked={formData.involvementTypes.includes(type)}
+                          onChange={(e) => handleInvolvementTypeChange(type, e.target.checked)}
+                        />
+                        <span>{type}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
@@ -488,6 +593,8 @@ const GetInvolved = () => {
                   <Textarea 
                     placeholder="Share your background, skills, interests, and what motivates you to join Y-Peace..."
                     rows={4}
+                    value={formData.aboutYourself}
+                    onChange={(e) => handleInputChange('aboutYourself', e.target.value)}
                   />
                 </div>
 
@@ -495,12 +602,21 @@ const GetInvolved = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     How did you hear about Y-Peace?
                   </label>
-                  <Input placeholder="Social media, friend, event, etc." />
+                  <Input 
+                    placeholder="Social media, friend, event, etc." 
+                    value={formData.howHeardAbout}
+                    onChange={(e) => handleInputChange('howHeardAbout', e.target.value)}
+                  />
                 </div>
 
-                <Button size="lg" className="w-full gradient-primary text-white text-lg py-4">
-                  Submit Application
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button 
+                  type="submit"
+                  size="lg" 
+                  className="w-full gradient-primary text-white text-lg py-4"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                  {!isSubmitting && <ArrowRight className="ml-2 h-5 w-5" />}
                 </Button>
               </form>
             </CardContent>

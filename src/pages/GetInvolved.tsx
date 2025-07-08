@@ -466,9 +466,6 @@ const GetInvolved = () => {
                           </div>
                         </div>
 
-                        <Button className={`bg-gradient-to-r ${opportunity.gradientFrom} ${opportunity.gradientTo} text-white hover:opacity-90`}>
-                          Apply Now <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
                       </CardContent>
                     </Card>
                   </div>

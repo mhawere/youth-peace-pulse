@@ -19,11 +19,11 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 mr-auto">
             <img 
               src="/lovable-uploads/52ce99bc-28d2-483b-871e-22efd46cca8e.png" 
               alt="Y-Peace Logo" 
@@ -32,15 +32,15 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 ml-12">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md ${
                   isActive(item.path)
                     ? 'text-primary border-b-2 border-primary'
-                    : 'text-gray-600 hover:text-primary'
+                    : 'text-gray-600 hover:text-primary hover:bg-primary/5'
                 }`}
               >
                 {item.name}

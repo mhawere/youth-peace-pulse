@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
@@ -231,9 +232,11 @@ const Donate = () => {
                 <EditableText value={volunteerDesc} onChange={setVolunteerDesc} multiline className="text-gray-600 mb-6" as="p">
                   {volunteerDesc}
                 </EditableText>
-                <Button variant="outline" className="text-primary border-primary">
-                  Get Involved
-                </Button>
+                <Link to="/get-involved">
+                  <Button variant="outline" className="text-primary border-primary">
+                    Get Involved
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
             
@@ -246,9 +249,11 @@ const Donate = () => {
                 <EditableText value={partnerDesc} onChange={setPartnerDesc} multiline className="text-gray-600 mb-6" as="p">
                   {partnerDesc}
                 </EditableText>
-                <Button variant="outline" className="text-secondary border-secondary">
-                  Learn More
-                </Button>
+                <Link to="/about">
+                  <Button variant="outline" className="text-secondary border-secondary">
+                    Learn More
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
             

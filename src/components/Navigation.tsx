@@ -27,12 +27,12 @@ const Navigation = () => {
             <img 
               src="/lovable-uploads/52ce99bc-28d2-483b-871e-22efd46cca8e.png" 
               alt="Y-Peace Logo" 
-              className="h-10 w-auto"
+              className="h-12 w-auto"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 ml-12">
             {navItems.map((item) => (
               <Link
                 key={item.name}

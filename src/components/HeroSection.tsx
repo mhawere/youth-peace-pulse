@@ -7,7 +7,7 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient */}
-      <div className="absolute inset-0 gradient-brand opacity-70"></div>
+      <div className="absolute inset-0 gradient-brand opacity-50"></div>
       
       {/* Floating words distributed across the entire section */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

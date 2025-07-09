@@ -9,23 +9,20 @@ const HeroSection = () => {
       {/* Background with gradient */}
       <div className="absolute inset-0 gradient-brand opacity-90"></div>
       
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-secondary/20 rounded-full animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-accent/20 rounded-full animate-float" style={{animationDelay: '4s'}}></div>
-        <div className="absolute bottom-40 right-1/3 w-24 h-24 bg-white/10 rounded-full animate-float" style={{animationDelay: '1s'}}></div>
-      </div>
-
-      {/* Floating words */}
+      {/* Floating words distributed across the entire section */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-32 left-20 text-6xl font-light text-white/20 animate-float" style={{animationDelay: '0s'}}>Peace</div>
-        <div className="absolute top-60 right-32 text-5xl font-light text-white/15 animate-float" style={{animationDelay: '3s'}}>Unity</div>
-        <div className="absolute bottom-60 left-32 text-7xl font-light text-white/10 animate-float" style={{animationDelay: '1.5s'}}>Hope</div>
-        <div className="absolute bottom-32 right-24 text-4xl font-light text-white/25 animate-float" style={{animationDelay: '4.5s'}}>Happy</div>
-        <div className="absolute top-96 left-1/2 text-5xl font-light text-white/15 animate-float" style={{animationDelay: '2.5s'}}>Change</div>
-        <div className="absolute top-80 left-16 text-3xl font-light text-white/20 animate-float" style={{animationDelay: '5s'}}>Future</div>
-        <div className="absolute bottom-96 right-16 text-6xl font-light text-white/12 animate-float" style={{animationDelay: '6s'}}>Love</div>
+        <div className="absolute top-20 left-16 text-8xl font-light text-white/8 animate-float" style={{animationDelay: '0s'}}>Peace</div>
+        <div className="absolute top-32 right-24 text-6xl font-light text-white/10 animate-float" style={{animationDelay: '3s'}}>Unity</div>
+        <div className="absolute top-64 left-1/3 text-7xl font-light text-white/6 animate-float" style={{animationDelay: '1.5s'}}>Hope</div>
+        <div className="absolute top-80 right-16 text-5xl font-light text-white/12 animate-float" style={{animationDelay: '4.5s'}}>Happy</div>
+        <div className="absolute top-40 left-2/3 text-6xl font-light text-white/8 animate-float" style={{animationDelay: '2.5s'}}>Change</div>
+        <div className="absolute bottom-40 left-20 text-9xl font-light text-white/5 animate-float" style={{animationDelay: '5s'}}>Future</div>
+        <div className="absolute bottom-24 right-32 text-7xl font-light text-white/9 animate-float" style={{animationDelay: '6s'}}>Love</div>
+        <div className="absolute bottom-64 left-1/2 text-5xl font-light text-white/11 animate-float" style={{animationDelay: '7s'}}>Dream</div>
+        <div className="absolute top-56 right-1/3 text-6xl font-light text-white/7 animate-float" style={{animationDelay: '8s'}}>Inspire</div>
+        <div className="absolute bottom-80 right-1/4 text-8xl font-light text-white/6 animate-float" style={{animationDelay: '9s'}}>Together</div>
+        <div className="absolute top-96 left-12 text-4xl font-light text-white/13 animate-float" style={{animationDelay: '10s'}}>Harmony</div>
+        <div className="absolute bottom-32 left-3/4 text-7xl font-light text-white/8 animate-float" style={{animationDelay: '11s'}}>Global</div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">

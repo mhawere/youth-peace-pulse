@@ -17,6 +17,17 @@ const HeroSection = () => {
         <div className="absolute bottom-40 right-1/3 w-24 h-24 bg-white/10 rounded-full animate-float" style={{animationDelay: '1s'}}></div>
       </div>
 
+      {/* Floating words */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-32 left-20 text-6xl font-light text-white/20 animate-float" style={{animationDelay: '0s'}}>Peace</div>
+        <div className="absolute top-60 right-32 text-5xl font-light text-white/15 animate-float" style={{animationDelay: '3s'}}>Unity</div>
+        <div className="absolute bottom-60 left-32 text-7xl font-light text-white/10 animate-float" style={{animationDelay: '1.5s'}}>Hope</div>
+        <div className="absolute bottom-32 right-24 text-4xl font-light text-white/25 animate-float" style={{animationDelay: '4.5s'}}>Happy</div>
+        <div className="absolute top-96 left-1/2 text-5xl font-light text-white/15 animate-float" style={{animationDelay: '2.5s'}}>Change</div>
+        <div className="absolute top-80 left-16 text-3xl font-light text-white/20 animate-float" style={{animationDelay: '5s'}}>Future</div>
+        <div className="absolute bottom-96 right-16 text-6xl font-light text-white/12 animate-float" style={{animationDelay: '6s'}}>Love</div>
+      </div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
         <div className="animate-fade-in-up">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">

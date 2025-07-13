@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { Users, Shield, Trash2 } from 'lucide-react';
-import { Navigate } from 'react-router-dom';
+import { AdminLayout } from '@/components/AdminLayout';
 import { supabase } from '@/integrations/supabase/client';
 
 interface UserProfile {
@@ -17,38 +17,16 @@ interface UserProfile {
 }
 
 const UserManagement = () => {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const { toast } = useToast();
   
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (isAdmin) {
-      fetchUsers();
-    }
-  }, [isAdmin]);
+    fetchUsers();
+  }, []);
 
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-4 pt-16">
-        <div className="max-w-6xl mx-auto">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl text-red-600">Access Denied</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>You don't have permission to access this page. Admin access required.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
 
   const fetchUsers = async () => {
     try {
@@ -138,52 +116,49 @@ const UserManagement = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4 pt-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center">Loading users...</div>
-        </div>
-      </div>
+      <AdminLayout>
+        <div className="text-center">Loading users...</div>
+      </AdminLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 pt-16">
-      <div className="max-w-6xl mx-auto">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-2xl">
-              <Users className="h-6 w-6" />
-              User Management
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-6">
-              <p className="text-gray-600">Manage system users and their admin permissions</p>
-              <div className="mt-2 text-sm text-gray-500">
-                <strong>Admin:</strong> Full access to all features including user management and content editing
-              </div>
+    <AdminLayout>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-2xl">
+            <Users className="h-6 w-6" />
+            User Management
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-6">
+            <p className="text-muted-foreground">Manage system users and their admin permissions</p>
+            <div className="mt-2 text-sm text-muted-foreground">
+              <strong>Admin:</strong> Full access to all features including user management and content editing
             </div>
+          </div>
 
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Username</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Created Date</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Username</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Created Date</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
                 {users.map((userProfile) => (
                   <TableRow key={userProfile.id}>
                     <TableCell className="font-medium">{userProfile.username}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        userProfile.is_admin ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {userProfile.is_admin ? 'Admin' : 'User'}
-                      </span>
-                    </TableCell>
+                <TableCell>
+                  <span className={`px-2 py-1 rounded text-xs ${
+                    userProfile.is_admin ? 'bg-destructive/10 text-destructive' : 'bg-muted text-muted-foreground'
+                  }`}>
+                    {userProfile.is_admin ? 'Admin' : 'User'}
+                  </span>
+                </TableCell>
                     <TableCell>{new Date(userProfile.created_at).toLocaleDateString()}</TableCell>
                     <TableCell>
                       <div className="flex gap-2">
@@ -217,9 +192,8 @@ const UserManagement = () => {
             </Table>
           </CardContent>
         </Card>
-      </div>
-    </div>
-  );
-};
-
-export default UserManagement;
+      </AdminLayout>
+    );
+  };
+  
+  export default UserManagement;

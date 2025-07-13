@@ -19,6 +19,9 @@ import UserManagement from "./pages/UserManagement";
 import ApplicationResults from "./pages/ApplicationResults";
 import Auth from "./pages/Auth";
 import AdminStats from "./pages/AdminStats";
+import AdminBlog from "./pages/AdminBlog";
+import AdminNewsletter from "./pages/AdminNewsletter";
+import AdminPress from "./pages/AdminPress";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +46,10 @@ const App = () => (
             <Route path="/user-management" element={<UserManagement />} />
             <Route path="/application-results" element={<ApplicationResults />} />
             <Route path="/admin/stats" element={<AdminStats />} />
+            <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/blog" element={<AdminBlog />} />
+            <Route path="/admin/newsletter" element={<AdminNewsletter />} />
+            <Route path="/admin/press" element={<AdminPress />} />
             <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

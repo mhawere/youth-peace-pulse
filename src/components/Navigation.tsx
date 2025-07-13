@@ -1,12 +1,15 @@
 
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, Settings, Users, ClipboardList, FileText, Mail, BarChart3, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, isAdmin, signOut } = useAuth();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -45,8 +48,66 @@ const Navigation = () => {
               >
                 {item.name}
               </Link>
-            ))}
-          </div>
+              ))}
+              
+              {/* Admin Dropdown */}
+              {user && isAdmin && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary hover:bg-primary/5 rounded-md"
+                    >
+                      Admin
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem asChild>
+                      <Link to="/user-management" className="flex items-center w-full">
+                        <Users className="mr-2 h-4 w-4" />
+                        Users
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/application-results" className="flex items-center w-full">
+                        <ClipboardList className="mr-2 h-4 w-4" />
+                        Applications
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/stats" className="flex items-center w-full">
+                        <BarChart3 className="mr-2 h-4 w-4" />
+                        Statistics
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/news/press-releases" className="flex items-center w-full">
+                        <FileText className="mr-2 h-4 w-4" />
+                        Press Releases
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/news/newsletter" className="flex items-center w-full">
+                        <Mail className="mr-2 h-4 w-4" />
+                        Newsletter
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/news/blog" className="flex items-center w-full">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Blog
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={signOut} className="text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -78,6 +139,73 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
+              
+              {/* Mobile Admin Menu */}
+              {user && isAdmin && (
+                <>
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Admin
+                  </div>
+                  <Link
+                    to="/user-management"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Users className="inline mr-2 h-4 w-4" />
+                    Users
+                  </Link>
+                  <Link
+                    to="/application-results"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <ClipboardList className="inline mr-2 h-4 w-4" />
+                    Applications
+                  </Link>
+                  <Link
+                    to="/admin/stats"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <BarChart3 className="inline mr-2 h-4 w-4" />
+                    Statistics
+                  </Link>
+                  <Link
+                    to="/news/press-releases"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FileText className="inline mr-2 h-4 w-4" />
+                    Press Releases
+                  </Link>
+                  <Link
+                    to="/news/newsletter"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Mail className="inline mr-2 h-4 w-4" />
+                    Newsletter
+                  </Link>
+                  <Link
+                    to="/news/blog"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Settings className="inline mr-2 h-4 w-4" />
+                    Blog
+                  </Link>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setIsOpen(false);
+                    }}
+                    className="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:bg-gray-50"
+                  >
+                    <LogOut className="inline mr-2 h-4 w-4" />
+                    Sign Out
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}

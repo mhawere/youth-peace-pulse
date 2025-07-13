@@ -14,32 +14,56 @@ export const useStats = (category?: string, statKey?: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        let query = supabase.from('website_stats').select('*');
-        
-        if (category) {
-          query = query.eq('category', category);
-        }
-        
-        if (statKey) {
-          query = query.eq('stat_key', statKey);
-        }
-
-        const { data, error } = await query;
-
-        if (error) throw error;
-        setStats(data || []);
-      } catch (err) {
-        console.error('Error fetching stats:', err);
-        setError(err instanceof Error ? err.message : 'Failed to fetch stats');
-      } finally {
-        setLoading(false);
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+      let query = supabase.from('website_stats').select('*');
+      
+      if (category) {
+        query = query.eq('category', category);
       }
-    };
+      
+      if (statKey) {
+        query = query.eq('stat_key', statKey);
+      }
 
+      const { data, error } = await query;
+
+      if (error) throw error;
+      setStats(data || []);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching stats:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch stats');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchStats();
+  }, [category, statKey]);
+
+  // Set up real-time subscription for stats updates
+  useEffect(() => {
+    const channel = supabase
+      .channel('website_stats_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'website_stats'
+        },
+        () => {
+          fetchStats();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [category, statKey]);
 
   const getStat = (category: string, statKey: string): number => {
@@ -57,5 +81,6 @@ export const useStats = (category?: string, statKey?: string) => {
     error,
     getStat,
     getStatsByCategory,
+    refetch: fetchStats,
   };
 };

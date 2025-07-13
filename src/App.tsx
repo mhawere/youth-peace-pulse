@@ -22,6 +22,7 @@ import AdminStats from "./pages/AdminStats";
 import AdminBlog from "./pages/AdminBlog";
 import AdminNewsletter from "./pages/AdminNewsletter";
 import AdminPress from "./pages/AdminPress";
+import AdminLogs from "./pages/AdminLogs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/admin/blog" element={<AdminBlog />} />
             <Route path="/admin/newsletter" element={<AdminNewsletter />} />
             <Route path="/admin/press" element={<AdminPress />} />
+            <Route path="/admin/logs" element={<AdminLogs />} />
             <Route path="/auth" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_action_logs: {
+        Row: {
+          action_details: Json | null
+          action_type: string
+          admin_user_id: string
+          created_at: string
+          id: string
+          ip_address: string | null
+          target_user_id: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          action_details?: Json | null
+          action_type: string
+          admin_user_id: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          target_user_id?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          action_details?: Json | null
+          action_type?: string
+          admin_user_id?: string
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          target_user_id?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       blogs: {
         Row: {
           author: string
@@ -193,18 +226,30 @@ export type Database = {
           created_at: string | null
           id: string
           is_admin: boolean
+          is_suspended: boolean | null
+          suspended_at: string | null
+          suspended_by: string | null
+          suspension_reason: string | null
           user_id: string | null
         }
         Insert: {
           created_at?: string | null
           id?: string
           is_admin?: boolean
+          is_suspended?: boolean | null
+          suspended_at?: string | null
+          suspended_by?: string | null
+          suspension_reason?: string | null
           user_id?: string | null
         }
         Update: {
           created_at?: string | null
           id?: string
           is_admin?: boolean
+          is_suspended?: boolean | null
+          suspended_at?: string | null
+          suspended_by?: string | null
+          suspension_reason?: string | null
           user_id?: string | null
         }
         Relationships: []

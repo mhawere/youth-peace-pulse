@@ -2,6 +2,8 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
+import Navigation from "./Navigation";
+import Footer from "./Footer";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -16,8 +18,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-background p-4 pt-16">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-8 pt-20">
           <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
             <div className="p-6">
               <h2 className="text-2xl font-semibold text-destructive">Access Denied</h2>
@@ -27,20 +30,25 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full pt-16">
-        <AdminSidebar />
-        <main className="flex-1 bg-background">
-          <div className="p-6">
-            {children}
-          </div>
-        </main>
-      </div>
-    </SidebarProvider>
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <SidebarProvider>
+        <div className="flex w-full pt-16">
+          <AdminSidebar />
+          <main className="flex-1 bg-background">
+            <div className="p-6">
+              {children}
+            </div>
+          </main>
+        </div>
+      </SidebarProvider>
+      <Footer />
+    </div>
   );
 }

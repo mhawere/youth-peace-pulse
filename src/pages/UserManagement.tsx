@@ -30,25 +30,33 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      // Fetch profiles with admin status by joining with user_roles
+      // Fetch profiles first
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
         .select(`
           id,
           username,
-          created_at,
-          user_roles(is_admin)
+          created_at
         `);
 
       if (profilesError) throw profilesError;
 
-      // Transform the data
+      // Fetch user roles separately
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, is_admin');
+
+      if (rolesError) throw rolesError;
+
+      // Combine the data
       const combinedUsers = profilesData?.map((profile: any) => {
+        const userRole = rolesData?.find((role: any) => role.user_id === profile.id);
+        
         return {
           id: profile.id,
           username: profile.username || 'Unknown User',
           created_at: profile.created_at,
-          is_admin: profile.user_roles?.[0]?.is_admin || false
+          is_admin: userRole?.is_admin || false
         };
       }) || [];
 

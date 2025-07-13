@@ -80,14 +80,13 @@ const UserManagement = () => {
 
       if (rolesError) throw rolesError;
 
-      // For each profile, we'll use the profile ID to get email from auth metadata
-      // Since we can't access auth.users directly, we'll show the user ID as email fallback
+      // Combine profile and role data
       const combinedUsers = profilesData?.map((profile: any) => {
         const userRole = rolesData?.find((role: any) => role.user_id === profile.id);
         
         return {
           id: profile.id,
-          email: profile.id, // Using ID as fallback since we can't access auth.users
+          email: profile.username || `User ${profile.id.slice(0, 8)}...`, // Show username or shortened ID
           created_at: profile.created_at,
           is_admin: userRole?.is_admin || false,
           is_suspended: userRole?.is_suspended || false

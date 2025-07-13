@@ -12,7 +12,6 @@ import { supabase } from '@/integrations/supabase/client';
 interface UserProfile {
   id: string;
   username: string;
-  email: string;
   created_at: string;
   is_admin: boolean;
 }
@@ -53,40 +52,25 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      // Fetch profiles with admin status
+      // Fetch profiles with admin status by joining with user_roles
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
         .select(`
           id,
           username,
-          created_at
+          created_at,
+          user_roles(is_admin)
         `);
 
       if (profilesError) throw profilesError;
 
-      // Fetch user roles
-      const { data: rolesData, error: rolesError } = await supabase
-        .from('user_roles')
-        .select('user_id, is_admin');
-
-      if (rolesError) throw rolesError;
-
-      // Fetch auth users to get email addresses
-      const { data: { users: authUsers }, error: authError } = await supabase.auth.admin.listUsers();
-      
-      if (authError) throw authError;
-
-      // Combine the data
+      // Transform the data
       const combinedUsers = profilesData?.map((profile: any) => {
-        const authUser = authUsers?.find((u: any) => u.id === profile.id);
-        const userRole = rolesData?.find((r: any) => r.user_id === profile.id);
-        
         return {
           id: profile.id,
-          username: profile.username || 'Unknown',
-          email: authUser?.email || 'Unknown',
+          username: profile.username || 'Unknown User',
           created_at: profile.created_at,
-          is_admin: userRole?.is_admin || false
+          is_admin: profile.user_roles?.[0]?.is_admin || false
         };
       }) || [];
 
@@ -184,7 +168,6 @@ const UserManagement = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Username</TableHead>
-                  <TableHead>Email</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Created Date</TableHead>
                   <TableHead>Actions</TableHead>
@@ -194,7 +177,6 @@ const UserManagement = () => {
                 {users.map((userProfile) => (
                   <TableRow key={userProfile.id}>
                     <TableCell className="font-medium">{userProfile.username}</TableCell>
-                    <TableCell>{userProfile.email}</TableCell>
                     <TableCell>
                       <span className={`px-2 py-1 rounded text-xs ${
                         userProfile.is_admin ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'

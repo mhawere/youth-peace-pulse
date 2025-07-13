@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
+import PhotoGallery from '@/components/PhotoGallery';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, Target, MessageSquare, Heart, Globe, Lightbulb } from 'lucide-react';
 
@@ -335,6 +336,38 @@ const About = () => {
                 </EditableText>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Photos */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Our Community in Action</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              See the impact we're making together across the globe through the dedication of our volunteers, partners, and communities.
+            </p>
+          </div>
+          
+          <PhotoGallery 
+            photos={[
+              '/lovable-uploads/245cd578-06b5-4567-8a27-61c87a0a00f9.png',
+              '/lovable-uploads/756f9252-9112-44b5-9268-cb245ff3acc0.png',
+              '/lovable-uploads/b6d35217-15ba-459e-b397-bc429c0b36c2.png',
+              '/lovable-uploads/0bebf5dd-0059-4fc3-a7e3-11712acf4217.png',
+              '/lovable-uploads/3ceb3060-0c81-4787-a5dd-7dd4b9864975.png',
+              '/lovable-uploads/2062b8c9-a011-404e-a2a5-a669f85521fa.png',
+              '/lovable-uploads/e145e15a-7d5f-4a94-9e40-6907bb8d659e.png',
+              '/lovable-uploads/1e248404-77d9-49b2-a3d2-bd19944141b9.png'
+            ]}
+            className="mb-8"
+          />
+          
+          <div className="text-center">
+            <p className="text-gray-600 italic">
+              From environmental action to community service, from advocacy to education - these moments capture the spirit of Y-Peace in action.
+            </p>
           </div>
         </div>
       </section>

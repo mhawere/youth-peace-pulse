@@ -2,8 +2,11 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useStats } from '@/hooks/useStats';
 
 const HeroSection = () => {
+  const { getStat } = useStats('dashboard');
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient */}
@@ -51,19 +54,19 @@ const HeroSection = () => {
           {/* Statistics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/20">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">17</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'un_sdgs')}</div>
               <div className="text-sm md:text-base text-gray-200">UN SDGs</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">5</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'core_pillars')}</div>
               <div className="text-sm md:text-base text-gray-200">Core Pillars</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">50+</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'countries')}+</div>
               <div className="text-sm md:text-base text-gray-200">Countries</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">1000+</div>
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'youth_leaders')}+</div>
               <div className="text-sm md:text-base text-gray-200">Youth Leaders</div>
             </div>
           </div>

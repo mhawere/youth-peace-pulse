@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
+import { useStats } from '@/hooks/useStats';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +25,8 @@ import {
 } from 'lucide-react';
 
 const Contact = () => {
+  const { getStat } = useStats('contact');
+  
   // Page content state
   const [pageTitle, setPageTitle] = useState('Contact Us');
   const [pageSubtitle, setPageSubtitle] = useState('Let\'s work together to create positive change');
@@ -86,12 +89,6 @@ const Contact = () => {
   const [mapHeading, setMapHeading] = useState('Interactive Map Coming Soon');
   const [mapDescription, setMapDescription] = useState('Explore our global network of programs, partners, and impact stories');
 
-  const [mapStat1, setMapStat1] = useState('50+');
-  const [mapStat1Label, setMapStat1Label] = useState('Countries');
-  const [mapStat2, setMapStat2] = useState('200+');
-  const [mapStat2Label, setMapStat2Label] = useState('Local Partners');
-  const [mapStat3, setMapStat3] = useState('25K+');
-  const [mapStat3Label, setMapStat3Label] = useState('Youth Reached');
 
   const contactInfo = [
     {
@@ -542,58 +539,28 @@ const Contact = () => {
               <div className="p-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                   <div>
-                    <EditableText
-                      value={mapStat1}
-                      onChange={setMapStat1}
-                      className="text-3xl font-bold text-primary mb-2"
-                      as="div"
-                    >
-                      {mapStat1}
-                    </EditableText>
-                    <EditableText
-                      value={mapStat1Label}
-                      onChange={setMapStat1Label}
-                      className="text-gray-600"
-                      as="div"
-                    >
-                      {mapStat1Label}
-                    </EditableText>
+                    <div className="text-3xl font-bold text-primary mb-2">
+                      {getStat('contact', 'countries')}+
+                    </div>
+                    <div className="text-gray-600">
+                      Countries
+                    </div>
                   </div>
                   <div>
-                    <EditableText
-                      value={mapStat2}
-                      onChange={setMapStat2}
-                      className="text-3xl font-bold text-secondary mb-2"
-                      as="div"
-                    >
-                      {mapStat2}
-                    </EditableText>
-                    <EditableText
-                      value={mapStat2Label}
-                      onChange={setMapStat2Label}
-                      className="text-gray-600"
-                      as="div"
-                    >
-                      {mapStat2Label}
-                    </EditableText>
+                    <div className="text-3xl font-bold text-secondary mb-2">
+                      {getStat('contact', 'local_partners')}+
+                    </div>
+                    <div className="text-gray-600">
+                      Local Partners
+                    </div>
                   </div>
                   <div>
-                    <EditableText
-                      value={mapStat3}
-                      onChange={setMapStat3}
-                      className="text-3xl font-bold text-accent mb-2"
-                      as="div"
-                    >
-                      {mapStat3}
-                    </EditableText>
-                    <EditableText
-                      value={mapStat3Label}
-                      onChange={setMapStat3Label}
-                      className="text-gray-600"
-                      as="div"
-                    >
-                      {mapStat3Label}
-                    </EditableText>
+                    <div className="text-3xl font-bold text-accent mb-2">
+                      {getStat('contact', 'youth_reached')}+
+                    </div>
+                    <div className="text-gray-600">
+                      Youth Reached
+                    </div>
                   </div>
                 </div>
               </div>

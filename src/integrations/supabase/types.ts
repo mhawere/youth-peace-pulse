@@ -209,6 +209,36 @@ export type Database = {
         }
         Relationships: []
       }
+      website_stats: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          stat_key: string
+          stat_value: number
+          subcategory: string | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          stat_key: string
+          stat_value?: number
+          subcategory?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          stat_key?: string
+          stat_value?: number
+          subcategory?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
-import { Settings, Users, LogOut, FileText, Mail, ClipboardList } from 'lucide-react';
+import { Settings, Users, LogOut, FileText, Mail, ClipboardList, BarChart3 } from 'lucide-react';
 
 const AdminPanel = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -78,6 +78,18 @@ const AdminPanel = () => {
             <Link to="/news/blog">
               <Settings className="w-4 h-4 mr-2" />
               Blog
+            </Link>
+          </Button>
+          
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/admin/stats">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Statistics
             </Link>
           </Button>
           

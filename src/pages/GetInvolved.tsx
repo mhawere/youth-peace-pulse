@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
+import { useStats } from '@/hooks/useStats';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +25,7 @@ import {
 
 const GetInvolved = () => {
   const { toast } = useToast();
+  const { getStat } = useStats('get_involved');
   
   // Form state
   const [formData, setFormData] = useState({
@@ -88,14 +90,6 @@ const GetInvolved = () => {
 
   // Stats section state
   const [statsTitle, setStatsTitle] = useState('Join a Growing Movement');
-  const [stat1, setStat1] = useState('1,000+');
-  const [stat1Label, setStat1Label] = useState('Active Volunteers');
-  const [stat2, setStat2] = useState('50+');
-  const [stat2Label, setStat2Label] = useState('Country Chapters');
-  const [stat3, setStat3] = useState('200+');
-  const [stat3Label, setStat3Label] = useState('Partner Organizations');
-  const [stat4, setStat4] = useState('25,000+');
-  const [stat4Label, setStat4Label] = useState('Lives Impacted');
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -635,76 +629,36 @@ const GetInvolved = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <EditableText
-                value={stat1}
-                onChange={setStat1}
-                className="text-4xl md:text-5xl font-bold mb-2"
-                as="div"
-              >
-                {stat1}
-              </EditableText>
-              <EditableText
-                value={stat1Label}
-                onChange={setStat1Label}
-                className="text-lg opacity-90"
-                as="div"
-              >
-                {stat1Label}
-              </EditableText>
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                {getStat('get_involved', 'active_volunteers')}+
+              </div>
+              <div className="text-lg opacity-90">
+                Active Volunteers
+              </div>
             </div>
             <div>
-              <EditableText
-                value={stat2}
-                onChange={setStat2}
-                className="text-4xl md:text-5xl font-bold mb-2"
-                as="div"
-              >
-                {stat2}
-              </EditableText>
-              <EditableText
-                value={stat2Label}
-                onChange={setStat2Label}
-                className="text-lg opacity-90"
-                as="div"
-              >
-                {stat2Label}
-              </EditableText>
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                {getStat('get_involved', 'country_chapters')}+
+              </div>
+              <div className="text-lg opacity-90">
+                Country Chapters
+              </div>
             </div>
             <div>
-              <EditableText
-                value={stat3}
-                onChange={setStat3}
-                className="text-4xl md:text-5xl font-bold mb-2"
-                as="div"
-              >
-                {stat3}
-              </EditableText>
-              <EditableText
-                value={stat3Label}
-                onChange={setStat3Label}
-                className="text-lg opacity-90"
-                as="div"
-              >
-                {stat3Label}
-              </EditableText>
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                {getStat('get_involved', 'partner_organizations')}+
+              </div>
+              <div className="text-lg opacity-90">
+                Partner Organizations
+              </div>
             </div>
             <div>
-              <EditableText
-                value={stat4}
-                onChange={setStat4}
-                className="text-4xl md:text-5xl font-bold mb-2"
-                as="div"
-              >
-                {stat4}
-              </EditableText>
-              <EditableText
-                value={stat4Label}
-                onChange={setStat4Label}
-                className="text-lg opacity-90"
-                as="div"
-              >
-                {stat4Label}
-              </EditableText>
+              <div className="text-4xl md:text-5xl font-bold mb-2">
+                {getStat('get_involved', 'lives_impacted')}+
+              </div>
+              <div className="text-lg opacity-90">
+                Lives Impacted
+              </div>
             </div>
           </div>
         </div>

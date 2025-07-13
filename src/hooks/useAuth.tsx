@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       signOut,
       isAdmin
     }}>
-      {children}
+      {loading ? <div className="min-h-screen flex items-center justify-center">Loading...</div> : children}
     </AuthContext.Provider>
   );
 };

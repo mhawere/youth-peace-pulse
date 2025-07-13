@@ -6,55 +6,79 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { Users, Shield, Trash2 } from 'lucide-react';
-import { AdminLayout } from '@/components/AdminLayout';
+import { Navigate } from 'react-router-dom';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 
 interface UserProfile {
   id: string;
-  username: string;
+  email: string;
   created_at: string;
   is_admin: boolean;
 }
 
 const UserManagement = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const { toast } = useToast();
   
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (isAdmin) {
+      fetchUsers();
+    }
+  }, [isAdmin]);
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-8 pt-20">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl text-destructive">Access Denied</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>You don't have permission to access this page. Admin access required.</p>
+            </CardContent>
+          </Card>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
 
   const fetchUsers = async () => {
     try {
-      // Fetch profiles first
+      // Get all profiles first
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
-        .select(`
-          id,
-          username,
-          created_at
-        `);
+        .select('id, username, created_at');
 
       if (profilesError) throw profilesError;
 
-      // Fetch user roles separately
+      // Get user roles
       const { data: rolesData, error: rolesError } = await supabase
         .from('user_roles')
         .select('user_id, is_admin');
 
       if (rolesError) throw rolesError;
 
-      // Combine the data
+      // For each profile, we'll use the profile ID to get email from auth metadata
+      // Since we can't access auth.users directly, we'll show the user ID as email fallback
       const combinedUsers = profilesData?.map((profile: any) => {
         const userRole = rolesData?.find((role: any) => role.user_id === profile.id);
         
         return {
           id: profile.id,
-          username: profile.username || 'Unknown User',
+          email: profile.id, // Using ID as fallback since we can't access auth.users
           created_at: profile.created_at,
           is_admin: userRole?.is_admin || false
         };
@@ -124,42 +148,48 @@ const UserManagement = () => {
 
   if (loading) {
     return (
-      <AdminLayout>
-        <div className="text-center">Loading users...</div>
-      </AdminLayout>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-8 pt-20">
+          <div className="text-center">Loading users...</div>
+        </div>
+        <Footer />
+      </div>
     );
   }
 
   return (
-    <AdminLayout>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
-            <Users className="h-6 w-6" />
-            User Management
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-6">
-            <p className="text-muted-foreground">Manage system users and their admin permissions</p>
-            <div className="mt-2 text-sm text-muted-foreground">
-              <strong>Admin:</strong> Full access to all features including user management and content editing
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <div className="container mx-auto px-4 py-8 pt-20">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <Users className="h-6 w-6" />
+              User Management
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-6">
+              <p className="text-muted-foreground">Manage system users and their admin permissions</p>
+              <div className="mt-2 text-sm text-muted-foreground">
+                <strong>Admin:</strong> Full access to all features including user management and content editing
+              </div>
             </div>
-          </div>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Username</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created Date</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>User ID</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Created Date</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {users.map((userProfile) => (
                   <TableRow key={userProfile.id}>
-                    <TableCell className="font-medium">{userProfile.username}</TableCell>
+                    <TableCell className="font-medium font-mono text-sm">{userProfile.email}</TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded text-xs ${
                     userProfile.is_admin ? 'bg-destructive/10 text-destructive' : 'bg-muted text-muted-foreground'
@@ -200,8 +230,10 @@ const UserManagement = () => {
             </Table>
           </CardContent>
         </Card>
-      </AdminLayout>
-    );
-  };
+      </div>
+      <Footer />
+    </div>
+  );
+};
   
   export default UserManagement;

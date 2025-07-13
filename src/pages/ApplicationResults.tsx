@@ -7,6 +7,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { FileText, Users, Calendar, Mail, MapPin } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 
 interface Application {
@@ -40,17 +42,19 @@ const ApplicationResults = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4 pt-16">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-8 pt-20">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-red-600">Access Denied</CardTitle>
+              <CardTitle className="text-2xl text-destructive">Access Denied</CardTitle>
             </CardHeader>
             <CardContent>
               <p>You don't have permission to access this page. Admin access required.</p>
             </CardContent>
           </Card>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -79,17 +83,20 @@ const ApplicationResults = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4 pt-16">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-8 pt-20">
           <div className="text-center">Loading applications...</div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 pt-16">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <div className="container mx-auto px-4 py-8 pt-20">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl">
@@ -191,6 +198,7 @@ const ApplicationResults = () => {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -63,6 +63,18 @@ const AdminPanel = () => {
             size="sm"
             className="w-full justify-start"
           >
+            <Link to="/admin/success-stories">
+              <Award className="w-4 h-4 mr-2" />
+              Success Stories
+            </Link>
+          </Button>
+          
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
             <Link to="/news/press-releases">
               <FileText className="w-4 h-4 mr-2" />
               Press Releases
@@ -90,18 +102,6 @@ const AdminPanel = () => {
             <Link to="/news/blog">
               <Settings className="w-4 h-4 mr-2" />
               Blog
-            </Link>
-          </Button>
-          
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start"
-          >
-            <Link to="/admin/success-stories">
-              <Award className="w-4 h-4 mr-2" />
-              Success Stories
             </Link>
           </Button>
           

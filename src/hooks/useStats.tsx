@@ -44,8 +44,11 @@ export const useStats = (category?: string, statKey?: string) => {
     fetchStats();
   }, [category, statKey]);
 
-  // Set up real-time subscription for stats updates
+  // Optimized real-time subscription - only for dashboard stats
   useEffect(() => {
+    // Only subscribe to real-time updates for dashboard stats to reduce overhead
+    if (category !== 'dashboard') return;
+    
     const channel = supabase
       .channel('website_stats_changes')
       .on(
@@ -53,7 +56,8 @@ export const useStats = (category?: string, statKey?: string) => {
         {
           event: '*',
           schema: 'public',
-          table: 'website_stats'
+          table: 'website_stats',
+          filter: 'category=eq.dashboard'
         },
         () => {
           fetchStats();

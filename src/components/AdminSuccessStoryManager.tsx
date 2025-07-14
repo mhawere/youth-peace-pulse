@@ -24,7 +24,7 @@ interface SuccessStoryFormData {
 }
 
 const AdminSuccessStoryManager = () => {
-  const { successStories, loading, createSuccessStory, updateSuccessStory, deleteSuccessStory } = useSuccessStories();
+  const { successStories, loading, createSuccessStory, updateSuccessStory, deleteSuccessStory, fetchSuccessStories } = useSuccessStories();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingStory, setEditingStory] = useState<any>(null);
   const [formData, setFormData] = useState<SuccessStoryFormData>({

@@ -16,6 +16,7 @@ const GetInvolved = lazy(() => import("./pages/GetInvolved"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Donate = lazy(() => import("./pages/Donate"));
 const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 const PressReleases = lazy(() => import("./pages/PressReleases"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
@@ -62,6 +63,7 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/donate" element={<Donate />} />
               <Route path="/news/blog" element={<Blog />} />
+              <Route path="/news/blog/:id" element={<BlogPost />} />
               <Route path="/news/press-releases" element={<PressReleases />} />
               <Route path="/news/newsletter" element={<Newsletter />} />
               <Route path="/user-management" element={<UserManagement />} />

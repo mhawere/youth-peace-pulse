@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
@@ -99,10 +100,12 @@ const Blog = () => {
                         </span>
                       </div>
                     </div>
-                    <Button className="mt-4 bg-primary text-primary-foreground group">
-                      Read More
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                    <Link to={`/news/blog/${post.id}`}>
+                      <Button className="mt-4 bg-primary text-primary-foreground group">
+                        Read More
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               ))}

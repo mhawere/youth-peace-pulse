@@ -41,7 +41,19 @@ const AdminPanel = () => {
           >
             <Link to="/application-results">
               <ClipboardList className="w-4 h-4 mr-2" />
-              Application Results
+              Applications
+            </Link>
+          </Button>
+          
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/admin/stats">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Statistics
             </Link>
           </Button>
           
@@ -78,18 +90,6 @@ const AdminPanel = () => {
             <Link to="/news/blog">
               <Settings className="w-4 h-4 mr-2" />
               Blog
-            </Link>
-          </Button>
-          
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start"
-          >
-            <Link to="/admin/stats">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Statistics
             </Link>
           </Button>
           

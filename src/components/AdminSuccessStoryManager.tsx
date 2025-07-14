@@ -234,24 +234,14 @@ const AdminSuccessStoryManager = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="image_upload">Featured Image</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="image_upload"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      disabled={uploading}
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      disabled={uploading}
-                    >
-                      <Upload className="h-4 w-4" />
-                      {uploading ? 'Uploading...' : 'Upload'}
-                    </Button>
-                  </div>
+                  <Input
+                    id="image_upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploading}
+                    placeholder={uploading ? 'Uploading...' : 'Choose image file'}
+                  />
                   {formData.featured_image_url && (
                     <div className="mt-2">
                       <img 

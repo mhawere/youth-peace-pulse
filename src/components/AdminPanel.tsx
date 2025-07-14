@@ -15,7 +15,7 @@ const AdminPanel = () => {
 
   return (
     <div className="fixed top-4 right-4 z-50">
-      <div className="bg-background rounded-lg shadow-lg border p-4 space-y-2 max-h-[80vh] overflow-y-auto">
+      <div className="bg-background rounded-lg shadow-lg border p-4 space-y-2 max-h-[calc(100vh-8rem)] overflow-y-auto w-48">
         <div className="text-sm font-medium text-foreground">
           Admin Panel
         </div>

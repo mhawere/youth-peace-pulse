@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BarChart3, Users, FileText, Newspaper, Megaphone, Settings } from "lucide-react";
+import { BarChart3, Users, FileText, Newspaper, Megaphone, Award } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import {
@@ -21,6 +21,7 @@ const adminMenuItems = [
   { title: "Blog Management", url: "/admin/blog", icon: FileText },
   { title: "Newsletter Management", url: "/admin/newsletter", icon: Newspaper },
   { title: "Press Releases", url: "/admin/press", icon: Megaphone },
+  { title: "Success Stories", url: "/admin/success-stories", icon: Award },
 ];
 
 export function AdminSidebar() {

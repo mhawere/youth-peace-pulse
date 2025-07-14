@@ -28,6 +28,7 @@ const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const AdminNewsletter = lazy(() => import("./pages/AdminNewsletter"));
 const AdminPress = lazy(() => import("./pages/AdminPress"));
 const AdminSuccessStories = lazy(() => import("./pages/AdminSuccessStories"));
+const SuccessStoryDetail = lazy(() => import("./pages/SuccessStoryDetail"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -68,6 +69,7 @@ const App = () => (
               <Route path="/news/blog/:id" element={<BlogPost />} />
               <Route path="/news/press-releases" element={<PressReleases />} />
               <Route path="/news/success-stories" element={<SuccessStories />} />
+              <Route path="/news/success-stories/:id" element={<SuccessStoryDetail />} />
               <Route path="/news/newsletter" element={<Newsletter />} />
               <Route path="/user-management" element={<UserManagement />} />
               <Route path="/application-results" element={<ApplicationResults />} />

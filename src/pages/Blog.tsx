@@ -32,7 +32,7 @@ const Blog = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="gradient-primary text-white py-20">
+      <section className="bg-primary text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <EditableText
@@ -99,7 +99,7 @@ const Blog = () => {
                         </span>
                       </div>
                     </div>
-                    <Button className="mt-4 gradient-primary text-white group">
+                    <Button className="mt-4 bg-primary text-primary-foreground group">
                       Read More
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>

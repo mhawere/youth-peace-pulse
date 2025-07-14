@@ -53,7 +53,7 @@ const Newsletter = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="gradient-accent text-white py-20">
+      <section className="bg-accent text-accent-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <EditableText
@@ -88,7 +88,7 @@ const Newsletter = () => {
       {/* Newsletter Signup */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="gradient-brand text-white">
+          <Card className="bg-secondary text-secondary-foreground">
             <CardHeader className="text-center">
               <Mail className="h-12 w-12 mx-auto mb-4" />
               <CardTitle className="text-3xl mb-4">

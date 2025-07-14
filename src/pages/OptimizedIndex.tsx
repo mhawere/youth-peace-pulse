@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import OptimizedHeroSection from '@/components/OptimizedHeroSection';
 import FivePsSection from '@/components/FivePsSection';
 import OptimizedEditableText from '@/components/OptimizedEditableText';
+import AdminPanel from '@/components/AdminPanel';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Quote, Users, Globe2, Zap, Sparkles, TrendingUp, Award } from 'lucide-react';
@@ -111,6 +112,7 @@ const OptimizedIndex = memo(() => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-surface">
       <Navigation />
+      <AdminPanel />
       
       <OptimizedHeroSection />
       

@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Quote, Users, Globe2, Zap, Sparkles, TrendingUp, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { usePageContent } from '@/hooks/usePageContent';
+import { useSuccessStories } from '@/hooks/useSuccessStories';
 
 // Memoized components for better performance
 const MissionCard = memo(({ title, description, icon: Icon, colorClass, bgClass }: any) => (
@@ -57,6 +58,7 @@ StoryCard.displayName = 'StoryCard';
 
 const OptimizedIndex = memo(() => {
   const { getContent, updateContent } = usePageContent('index');
+  const { successStories } = useSuccessStories();
 
   const missionCards = [
     {
@@ -82,32 +84,39 @@ const OptimizedIndex = memo(() => {
     }
   ];
 
-  const stories = [
+  // Get featured stories from database (max 3)
+  const featuredStories = successStories.filter(story => story.is_featured).slice(0, 3);
+  
+  // Color schemes for story cards
+  const colorSchemes = [
+    { colorFrom: 'from-primary', colorTo: 'to-primary-dark' },
+    { colorFrom: 'from-secondary', colorTo: 'to-secondary-dark' },
+    { colorFrom: 'from-accent', colorTo: 'to-accent-dark' },
+  ];
+  
+  // Fallback stories if no featured stories exist
+  const fallbackStories = [
     {
       title: getContent('kenyaTitle', 'Climate Action in Kenya'),
-      quote: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
-      author: 'Sarah, 19',
-      colorFrom: 'from-primary',
-      colorTo: 'to-primary-dark',
-      delay: '0.1s'
+      content: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
+      participant_name: 'Sarah, 19',
+      id: 'fallback-1'
     },
     {
       title: getContent('colombiaTitle', 'Peace Building in Colombia'),
-      quote: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
-      author: 'Miguel, 22',
-      colorFrom: 'from-secondary',
-      colorTo: 'to-secondary-dark',
-      delay: '0.2s'
+      content: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
+      participant_name: 'Miguel, 22',
+      id: 'fallback-2'
     },
     {
       title: getContent('indiaTitle', 'Digital Skills in India'),
-      quote: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
-      author: 'Priya, 20',
-      colorFrom: 'from-accent',
-      colorTo: 'to-accent-dark',
-      delay: '0.3s'
+      content: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
+      participant_name: 'Priya, 20',
+      id: 'fallback-3'
     }
   ];
+  
+  const storiesToDisplay = featuredStories.length > 0 ? featuredStories : fallbackStories;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-surface">
@@ -209,8 +218,16 @@ const OptimizedIndex = memo(() => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {stories.map((story, index) => (
-              <StoryCard key={index} {...story} />
+            {storiesToDisplay.map((story, index) => (
+              <StoryCard 
+                key={story.id} 
+                title={story.title}
+                quote={story.content}
+                author={story.participant_name}
+                colorFrom={colorSchemes[index % colorSchemes.length].colorFrom}
+                colorTo={colorSchemes[index % colorSchemes.length].colorTo}
+                delay={`${0.1 * (index + 1)}s`}
+              />
             ))}
           </div>
 
@@ -222,7 +239,7 @@ const OptimizedIndex = memo(() => {
               variant="outline"
               className="hover-lift border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
             >
-              <Link to="/news/blog" className="flex items-center space-x-2">
+              <Link to="/news/success-stories" className="flex items-center space-x-2">
                 <span>View All Stories</span>
                 <ArrowRight className="h-5 w-5" />
               </Link>

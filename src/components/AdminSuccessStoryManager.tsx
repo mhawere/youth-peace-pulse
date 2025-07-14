@@ -7,11 +7,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Edit, Trash2, MapPin, Calendar, User, Award } from 'lucide-react';
+import { Plus, Edit, Trash2, MapPin, Calendar, User, Award, Upload } from 'lucide-react';
 import { useSuccessStories } from '@/hooks/useSuccessStories';
+import { supabase } from '@/integrations/supabase/client';
 
 interface SuccessStoryFormData {
   title: string;
+  summary: string;
   content: string;
   participant_name: string;
   participant_location: string;
@@ -27,6 +29,7 @@ const AdminSuccessStoryManager = () => {
   const [editingStory, setEditingStory] = useState<any>(null);
   const [formData, setFormData] = useState<SuccessStoryFormData>({
     title: '',
+    summary: '',
     content: '',
     participant_name: '',
     participant_location: '',
@@ -35,10 +38,12 @@ const AdminSuccessStoryManager = () => {
     date_achieved: new Date().toISOString().split('T')[0],
     is_featured: false,
   });
+  const [uploading, setUploading] = useState(false);
 
   const resetForm = () => {
     setFormData({
       title: '',
+      summary: '',
       content: '',
       participant_name: '',
       participant_location: '',
@@ -67,6 +72,7 @@ const AdminSuccessStoryManager = () => {
     setEditingStory(story);
     setFormData({
       title: story.title,
+      summary: story.summary || '',
       content: story.content,
       participant_name: story.participant_name,
       participant_location: story.participant_location,
@@ -76,6 +82,35 @@ const AdminSuccessStoryManager = () => {
       is_featured: story.is_featured,
     });
     setIsDialogOpen(true);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `success-stories/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('yporg')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('yporg')
+        .getPublicUrl(filePath);
+
+      setFormData({ ...formData, featured_image_url: publicUrl });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image. Please try again.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -173,6 +208,18 @@ const AdminSuccessStoryManager = () => {
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <Label htmlFor="summary">Summary</Label>
+                <Textarea
+                  id="summary"
+                  value={formData.summary}
+                  onChange={(e) => setFormData({...formData, summary: e.target.value})}
+                  placeholder="Brief summary that will appear on the website (2-3 sentences)"
+                  rows={3}
+                  required
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="date_achieved">Date Achieved</Label>
@@ -186,24 +233,45 @@ const AdminSuccessStoryManager = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="featured_image_url">Featured Image URL</Label>
-                  <Input
-                    id="featured_image_url"
-                    value={formData.featured_image_url}
-                    onChange={(e) => setFormData({...formData, featured_image_url: e.target.value})}
-                    placeholder="https://example.com/image.jpg"
-                  />
+                  <Label htmlFor="image_upload">Featured Image</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="image_upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploading}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={uploading}
+                    >
+                      <Upload className="h-4 w-4" />
+                      {uploading ? 'Uploading...' : 'Upload'}
+                    </Button>
+                  </div>
+                  {formData.featured_image_url && (
+                    <div className="mt-2">
+                      <img 
+                        src={formData.featured_image_url} 
+                        alt="Preview"
+                        className="w-20 h-20 object-cover rounded-md"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="content">Success Story Content</Label>
+                <Label htmlFor="content">Full Success Story Content</Label>
                 <Textarea
                   id="content"
                   value={formData.content}
                   onChange={(e) => setFormData({...formData, content: e.target.value})}
-                  placeholder="Tell the inspiring story of this participant's journey and achievements..."
-                  rows={6}
+                  placeholder="Tell the complete inspiring story of this participant's journey and achievements..."
+                  rows={8}
                   required
                 />
               </div>

@@ -232,6 +232,7 @@ export type Database = {
           participant_location: string
           participant_name: string
           program_name: string
+          summary: string | null
           title: string
           updated_at: string
         }
@@ -245,6 +246,7 @@ export type Database = {
           participant_location: string
           participant_name: string
           program_name: string
+          summary?: string | null
           title: string
           updated_at?: string
         }
@@ -258,6 +260,7 @@ export type Database = {
           participant_location?: string
           participant_name?: string
           program_name?: string
+          summary?: string | null
           title?: string
           updated_at?: string
         }

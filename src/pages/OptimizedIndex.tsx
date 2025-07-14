@@ -98,18 +98,21 @@ const OptimizedIndex = memo(() => {
   const fallbackStories = [
     {
       title: getContent('kenyaTitle', 'Climate Action in Kenya'),
+      summary: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
       content: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
       participant_name: 'Sarah, 19',
       id: 'fallback-1'
     },
     {
       title: getContent('colombiaTitle', 'Peace Building in Colombia'),
+      summary: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
       content: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
       participant_name: 'Miguel, 22',
       id: 'fallback-2'
     },
     {
       title: getContent('indiaTitle', 'Digital Skills in India'),
+      summary: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
       content: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
       participant_name: 'Priya, 20',
       id: 'fallback-3'
@@ -222,7 +225,7 @@ const OptimizedIndex = memo(() => {
               <StoryCard 
                 key={story.id} 
                 title={story.title}
-                quote={story.content}
+                quote={story.summary || story.content}
                 author={story.participant_name}
                 colorFrom={colorSchemes[index % colorSchemes.length].colorFrom}
                 colorTo={colorSchemes[index % colorSchemes.length].colorTo}

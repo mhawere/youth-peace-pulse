@@ -119,7 +119,7 @@ const SuccessStories = () => {
                   
                   <CardContent>
                     <p className="text-muted-foreground mb-4 leading-relaxed">
-                      {story.content.substring(0, 200)}...
+                      {story.summary || story.content.substring(0, 200) + '...'}
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center text-sm text-muted-foreground">
@@ -202,7 +202,7 @@ const SuccessStories = () => {
                     </div>
                     
                     <p className="text-muted-foreground mb-4">
-                      {story.content.substring(0, 120)}...
+                      {story.summary || story.content.substring(0, 120) + '...'}
                     </p>
                     
                     <Link to={`/success-stories/${story.id}`}>

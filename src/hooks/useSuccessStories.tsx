@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 interface SuccessStory {
   id: string;
   title: string;
+  summary?: string;
   content: string;
   participant_name: string;
   participant_location: string;

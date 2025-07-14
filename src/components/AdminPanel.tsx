@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
-import { Settings, Users, LogOut, FileText, Mail, ClipboardList, BarChart3 } from 'lucide-react';
+import { Settings, Users, LogOut, FileText, Mail, ClipboardList, BarChart3, Award } from 'lucide-react';
 
 const AdminPanel = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -15,8 +15,8 @@ const AdminPanel = () => {
 
   return (
     <div className="fixed top-4 right-4 z-50">
-      <div className="bg-white rounded-lg shadow-lg border p-4 space-y-2">
-        <div className="text-sm font-medium text-gray-700">
+      <div className="bg-background rounded-lg shadow-lg border p-4 space-y-2">
+        <div className="text-sm font-medium text-foreground">
           Admin Panel
         </div>
         
@@ -90,6 +90,18 @@ const AdminPanel = () => {
             <Link to="/admin/stats">
               <BarChart3 className="w-4 h-4 mr-2" />
               Statistics
+            </Link>
+          </Button>
+          
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+          >
+            <Link to="/admin/success-stories">
+              <Award className="w-4 h-4 mr-2" />
+              Success Stories
             </Link>
           </Button>
           

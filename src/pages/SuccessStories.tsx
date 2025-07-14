@@ -19,7 +19,7 @@ const SuccessStories = () => {
   const [pageTitle, setPageTitle] = useState("Success Stories");
   const [pageSubtitle, setPageSubtitle] = useState("Inspiring journeys of transformation and achievement from our global Y-Peace community");
 
-  const featuredStories = successStories.filter(story => story.is_featured);
+  const featuredStories = successStories.filter(story => story.is_featured).slice(0, 3);
   const regularStories = successStories.filter(story => !story.is_featured);
 
   return (

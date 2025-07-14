@@ -29,10 +29,21 @@ const MissionCard = memo(({ title, description, icon: Icon, colorClass, bgClass 
 
 MissionCard.displayName = 'MissionCard';
 
-const StoryCard = memo(({ title, quote, author, colorFrom, colorTo, delay }: any) => (
+const StoryCard = memo(({ title, quote, author, colorFrom, colorTo, delay, image }: any) => (
   <Card className="group card-hover shadow-medium overflow-hidden animate-fade-in-up" style={{animationDelay: delay}}>
     <CardContent className="p-0">
       <div className={`h-56 bg-gradient-to-br ${colorFrom} ${colorTo} relative overflow-hidden`}>
+        {image && (
+          <img 
+            src={image} 
+            alt={title}
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        )}
         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-300"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
         <div className="absolute bottom-6 left-6 right-6 text-white">
@@ -101,6 +112,7 @@ const OptimizedIndex = memo(() => {
       summary: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
       content: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
       participant_name: 'Sarah, 19',
+      featured_image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
       id: 'fallback-1'
     },
     {
@@ -108,6 +120,7 @@ const OptimizedIndex = memo(() => {
       summary: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
       content: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
       participant_name: 'Miguel, 22',
+      featured_image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
       id: 'fallback-2'
     },
     {
@@ -115,6 +128,7 @@ const OptimizedIndex = memo(() => {
       summary: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
       content: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
       participant_name: 'Priya, 20',
+      featured_image_url: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
       id: 'fallback-3'
     }
   ];
@@ -227,6 +241,7 @@ const OptimizedIndex = memo(() => {
                 title={story.title}
                 quote={story.summary || story.content}
                 author={story.participant_name}
+                image={story.featured_image_url}
                 colorFrom={colorSchemes[index % colorSchemes.length].colorFrom}
                 colorTo={colorSchemes[index % colorSchemes.length].colorTo}
                 delay={`${0.1 * (index + 1)}s`}

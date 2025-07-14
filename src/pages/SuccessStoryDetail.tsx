@@ -170,7 +170,7 @@ const SuccessStoryDetail = () => {
                     <p className="text-muted-foreground text-sm mb-3 line-clamp-3">
                       {relatedStory.content.substring(0, 100)}...
                     </p>
-                    <Link to={`/success-stories/${relatedStory.id}`}>
+                    <Link to={`/news/success-stories/${relatedStory.id}`}>
                       <Button variant="outline" size="sm" className="w-full group">
                         Read Story
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

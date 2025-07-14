@@ -1,7 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AdminSidebar } from "./AdminSidebar";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 
@@ -38,16 +36,13 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <SidebarProvider>
-        <div className="flex w-full pt-16">
-          <AdminSidebar />
-          <main className="flex-1 bg-background">
-            <div className="p-6">
-              {children}
-            </div>
-          </main>
-        </div>
-      </SidebarProvider>
+      <div className="pt-16">
+        <main className="bg-background">
+          <div className="p-6">
+            {children}
+          </div>
+        </main>
+      </div>
       <Footer />
     </div>
   );

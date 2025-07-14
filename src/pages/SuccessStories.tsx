@@ -130,7 +130,7 @@ const SuccessStories = () => {
                           day: 'numeric'
                         })}
                       </div>
-                      <Link to={`/success-stories/${story.id}`}>
+                      <Link to={`/news/success-stories/${story.id}`}>
                         <Button variant="outline" className="group">
                           Read Full Story
                           <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -205,7 +205,7 @@ const SuccessStories = () => {
                       {story.summary || story.content.substring(0, 120) + '...'}
                     </p>
                     
-                    <Link to={`/success-stories/${story.id}`}>
+                    <Link to={`/news/success-stories/${story.id}`}>
                       <Button variant="outline" size="sm" className="w-full group">
                         Read More
                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

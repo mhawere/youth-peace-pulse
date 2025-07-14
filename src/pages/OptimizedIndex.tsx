@@ -29,7 +29,7 @@ const MissionCard = memo(({ title, description, icon: Icon, colorClass, bgClass 
 
 MissionCard.displayName = 'MissionCard';
 
-const StoryCard = memo(({ title, quote, author, colorFrom, colorTo, delay, image }: any) => (
+const StoryCard = memo(({ title, quote, author, colorFrom, colorTo, delay, image, id }: any) => (
   <Card className="group card-hover shadow-medium overflow-hidden animate-fade-in-up" style={{animationDelay: delay}}>
     <CardContent className="p-0">
       <div className={`h-56 bg-gradient-to-br ${colorFrom} ${colorTo} relative overflow-hidden`}>
@@ -57,9 +57,11 @@ const StoryCard = memo(({ title, quote, author, colorFrom, colorTo, delay, image
       <div className="p-8">
         <Quote className="h-8 w-8 text-primary mb-4 opacity-50" />
         <p className="text-muted-foreground italic mb-6 leading-relaxed text-lg">{quote}</p>
-        <Button variant="ghost" className="text-primary group-hover:bg-primary/10 hover-lift transition-all duration-200 p-0">
-          Read Full Story <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-        </Button>
+        <Link to={`/news/success-stories/${id}`}>
+          <Button variant="ghost" className="text-primary group-hover:bg-primary/10 hover-lift transition-all duration-200 p-0">
+            Read Full Story <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </Link>
       </div>
     </CardContent>
   </Card>
@@ -238,6 +240,7 @@ const OptimizedIndex = memo(() => {
             {storiesToDisplay.map((story, index) => (
               <StoryCard 
                 key={story.id} 
+                id={story.id}
                 title={story.title}
                 quote={story.summary || story.content}
                 author={story.participant_name}

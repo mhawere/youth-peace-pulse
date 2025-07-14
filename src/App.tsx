@@ -18,6 +18,7 @@ const Donate = lazy(() => import("./pages/Donate"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const PressReleases = lazy(() => import("./pages/PressReleases"));
+const SuccessStories = lazy(() => import("./pages/SuccessStories"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const ApplicationResults = lazy(() => import("./pages/ApplicationResults"));
@@ -26,6 +27,7 @@ const AdminStats = lazy(() => import("./pages/AdminStats"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
 const AdminNewsletter = lazy(() => import("./pages/AdminNewsletter"));
 const AdminPress = lazy(() => import("./pages/AdminPress"));
+const AdminSuccessStories = lazy(() => import("./pages/AdminSuccessStories"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -65,6 +67,7 @@ const App = () => (
               <Route path="/news/blog" element={<Blog />} />
               <Route path="/news/blog/:id" element={<BlogPost />} />
               <Route path="/news/press-releases" element={<PressReleases />} />
+              <Route path="/news/success-stories" element={<SuccessStories />} />
               <Route path="/news/newsletter" element={<Newsletter />} />
               <Route path="/user-management" element={<UserManagement />} />
               <Route path="/application-results" element={<ApplicationResults />} />
@@ -73,6 +76,7 @@ const App = () => (
               <Route path="/admin/blog" element={<AdminBlog />} />
               <Route path="/admin/newsletter" element={<AdminNewsletter />} />
               <Route path="/admin/press" element={<AdminPress />} />
+              <Route path="/admin/success-stories" element={<AdminSuccessStories />} />
               <Route path="/admin/logs" element={<AdminLogs />} />
               <Route path="/auth" element={<Auth />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

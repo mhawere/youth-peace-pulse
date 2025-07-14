@@ -221,6 +221,48 @@ export type Database = {
         }
         Relationships: []
       }
+      success_stories: {
+        Row: {
+          content: string
+          created_at: string
+          date_achieved: string
+          featured_image_url: string | null
+          id: string
+          is_featured: boolean
+          participant_location: string
+          participant_name: string
+          program_name: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          date_achieved?: string
+          featured_image_url?: string | null
+          id?: string
+          is_featured?: boolean
+          participant_location: string
+          participant_name: string
+          program_name: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          date_achieved?: string
+          featured_image_url?: string | null
+          id?: string
+          is_featured?: boolean
+          participant_location?: string
+          participant_name?: string
+          program_name?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

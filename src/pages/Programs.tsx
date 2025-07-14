@@ -1,13 +1,18 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import EditableText from '@/components/EditableText';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, Globe, TrendingUp, Heart, Handshake, ArrowRight, CheckCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Users, Globe, TrendingUp, Heart, Handshake, ArrowRight, CheckCircle, Quote } from 'lucide-react';
+import { useSuccessStories } from '@/hooks/useSuccessStories';
 
 const Programs = () => {
+  const { successStories, loading } = useSuccessStories();
+  
   // Page content state
   const [pageTitle, setPageTitle] = useState('Our Programs');
   const [pageSubtitle, setPageSubtitle] = useState('Turning values into action through the Five Ps framework');
@@ -48,23 +53,15 @@ const Programs = () => {
   const [successTitle, setSuccessTitle] = useState('Success Stories');
   const [successSubtitle, setSuccessSubtitle] = useState('Meet the youth and community leaders transforming their regions through Y-Peace programs');
 
-  const [story1Title, setStory1Title] = useState('Climate Action in Kenya');
-  const [story1Location, setStory1Location] = useState('Nairobi, Kenya');
-  const [story1Impact, setStory1Impact] = useState('10,000+ trees planted');
-  const [story1Participant, setStory1Participant] = useState('Sarah M., 19');
-  const [story1Description, setStory1Description] = useState('Led a youth-driven reforestation project that not only planted trees but educated 500+ community members about climate change.');
-
-  const [story2Title, setStory2Title] = useState('Peace Building in Colombia');
-  const [story2Location, setStory2Location] = useState('Medellín, Colombia');
-  const [story2Impact, setStory2Impact] = useState('200+ youth engaged');
-  const [story2Participant, setStory2Participant] = useState('Miguel R., 22');
-  const [story2Description, setStory2Description] = useState('Organized interfaith dialogue sessions that brought together young people from different backgrounds to build lasting peace.');
-
-  const [story3Title, setStory3Title] = useState('Digital Skills in India');
-  const [story3Location, setStory3Location] = useState('Mumbai, India');
-  const [story3Impact, setStory3Impact] = useState('300+ women trained');
-  const [story3Participant, setStory3Participant] = useState('Priya S., 20');
-  const [story3Description, setStory3Description] = useState('Developed a digital literacy program that helped women start online businesses and achieve financial independence.');
+  // Color schemes for story cards
+  const colorSchemes = [
+    { colorFrom: 'from-primary', colorTo: 'to-primary/80' },
+    { colorFrom: 'from-secondary', colorTo: 'to-secondary/80' },
+    { colorFrom: 'from-accent', colorTo: 'to-accent/80' },
+    { colorFrom: 'from-purple-500', colorTo: 'to-purple-400' },
+    { colorFrom: 'from-pink-500', colorTo: 'to-pink-400' },
+    { colorFrom: 'from-indigo-500', colorTo: 'to-indigo-400' }
+  ];
 
   // CTA state
   const [ctaTitle, setCtaTitle] = useState('Start Your Own Program');
@@ -200,47 +197,41 @@ const Programs = () => {
     }
   ];
 
-  const successStories = [
-    {
-      title: story1Title,
-      setTitle: setStory1Title,
-      location: story1Location,
-      setLocation: setStory1Location,
-      impact: story1Impact,
-      setImpact: setStory1Impact,
-      participant: story1Participant,
-      setParticipant: setStory1Participant,
-      description: story1Description,
-      setDescription: setStory1Description,
-      category: 'Planet'
-    },
-    {
-      title: story2Title,
-      setTitle: setStory2Title,
-      location: story2Location,
-      setLocation: setStory2Location,
-      impact: story2Impact,
-      setImpact: setStory2Impact,
-      participant: story2Participant,
-      setParticipant: setStory2Participant,
-      description: story2Description,
-      setDescription: setStory2Description,
-      category: 'Peace'
-    },
-    {
-      title: story3Title,
-      setTitle: setStory3Title,
-      location: story3Location,
-      setLocation: setStory3Location,
-      impact: story3Impact,
-      setImpact: setStory3Impact,
-      participant: story3Participant,
-      setParticipant: setStory3Participant,
-      description: story3Description,
-      setDescription: setStory3Description,
-      category: 'Prosperity'
-    }
-  ];
+  // Success story card component
+  const StoryCard = ({ title, quote, author, colorFrom, colorTo, delay, image, id }: any) => (
+    <Card className="group card-hover shadow-medium overflow-hidden animate-fade-in-up" style={{animationDelay: delay}}>
+      <CardContent className="p-0">
+        <div className={`h-56 bg-gradient-to-br ${colorFrom} ${colorTo} relative overflow-hidden`}>
+          {image && (
+            <img 
+              src={image} 
+              alt={title}
+              className="w-full h-full object-cover"
+            />
+          )}
+          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute top-4 left-4">
+            <Badge variant="secondary" className="bg-white/20 text-white">
+              Featured
+            </Badge>
+          </div>
+          <div className="absolute bottom-4 left-4 right-4 text-white">
+            <h3 className="text-lg font-semibold mb-1">{title}</h3>
+            <p className="text-sm opacity-90">{author}</p>
+          </div>
+        </div>
+        <div className="p-8">
+          <Quote className="h-8 w-8 text-primary mb-4 opacity-50" />
+          <p className="text-muted-foreground italic mb-6 leading-relaxed text-lg">{quote}</p>
+          <Link to={`/news/success-stories/${id}`}>
+            <Button variant="ghost" className="text-primary group-hover:bg-primary/10 hover-lift transition-all duration-200 p-0">
+              Read Full Story <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="min-h-screen">
@@ -398,71 +389,45 @@ const Programs = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {successStories.map((story, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <CardContent className="p-0">
-                  <div className="h-48 bg-gradient-to-br from-primary to-secondary relative overflow-hidden">
-                    <div className="absolute inset-0 bg-black/30"></div>
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-white/20 text-white px-3 py-1 rounded-full text-sm">
-                        {story.category}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <EditableText
-                        value={story.title}
-                        onChange={story.setTitle}
-                        className="text-lg font-semibold mb-1"
-                        as="h3"
-                      >
-                        {story.title}
-                      </EditableText>
-                      <EditableText
-                        value={story.location}
-                        onChange={story.setLocation}
-                        className="text-sm opacity-90"
-                        as="p"
-                      >
-                        {story.location}
-                      </EditableText>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <EditableText
-                        value={story.impact}
-                        onChange={story.setImpact}
-                        className="text-primary font-semibold"
-                        as="span"
-                      >
-                        {story.impact}
-                      </EditableText>
-                      <EditableText
-                        value={story.participant}
-                        onChange={story.setParticipant}
-                        className="text-sm text-gray-500"
-                        as="span"
-                      >
-                        {story.participant}
-                      </EditableText>
-                    </div>
-                    <EditableText
-                      value={story.description}
-                      onChange={story.setDescription}
-                      multiline
-                      className="text-gray-600 mb-4 leading-relaxed"
-                      as="p"
-                    >
-                      {story.description}
-                    </EditableText>
-                    <Button variant="ghost" className="text-primary group-hover:bg-primary/10 w-full">
-                      Read Full Story <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {loading ? (
+              <div className="col-span-3 text-center py-12">
+                <p className="text-muted-foreground">Loading success stories...</p>
+              </div>
+            ) : successStories.length > 0 ? (
+              successStories.slice(0, 3).map((story, index) => (
+                <StoryCard 
+                  key={story.id} 
+                  id={story.id}
+                  title={story.title}
+                  quote={story.summary || story.content}
+                  author={story.participant_name}
+                  image={story.featured_image_url}
+                  colorFrom={colorSchemes[index % colorSchemes.length].colorFrom}
+                  colorTo={colorSchemes[index % colorSchemes.length].colorTo}
+                  delay={`${0.1 * (index + 1)}s`}
+                />
+              ))
+            ) : (
+              <div className="col-span-3 text-center py-12">
+                <p className="text-muted-foreground">No success stories available yet.</p>
+              </div>
+            )}
           </div>
+
+          {/* View All Stories Button */}
+          {successStories.length > 3 && (
+            <div className="text-center mt-12">
+              <Link to="/news/success-stories">
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="border-primary text-primary hover:bg-primary hover:text-white"
+                >
+                  View All Success Stories <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

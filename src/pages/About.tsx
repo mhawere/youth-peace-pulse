@@ -538,6 +538,26 @@ const About = () => {
         </div>
       </section>
 
+      {/* Sustainable Development Goals */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Sustainable Development Goals</h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Y-Peace aligns with the United Nations Sustainable Development Goals to create lasting impact worldwide.
+            </p>
+          </div>
+          
+          <div className="text-center">
+            <img 
+              src="/lovable-uploads/47fad560-1a6b-41da-a6c8-b47c910ca37a.png" 
+              alt="The 17 United Nations Sustainable Development Goals"
+              className="w-full max-w-4xl mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

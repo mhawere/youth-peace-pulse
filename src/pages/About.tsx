@@ -285,6 +285,140 @@ const About = () => {
         </div>
       </section>
 
+      {/* Sustainable Development Goals */}
+      <section className="py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Sustainable Development Goals</h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Y-Peace's programs are strategically aligned with the United Nations Sustainable Development Goals, 
+              ensuring our impact contributes to global efforts for a better world by 2030.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* Primary SDGs we focus on */}
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-red-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">1</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">No Poverty</h3>
+                <p className="text-sm text-gray-600">Economic empowerment and opportunity creation</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-yellow-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">2</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Zero Hunger</h3>
+                <p className="text-sm text-gray-600">Food security and nutrition programs</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-green-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">3</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Good Health</h3>
+                <p className="text-sm text-gray-600">Physical and mental health support</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-red-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">4</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Quality Education</h3>
+                <p className="text-sm text-gray-600">Educational opportunities and skill development</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-secondary/20 hover:border-secondary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-red-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">5</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Gender Equality</h3>
+                <p className="text-sm text-gray-600">Equal opportunities for all genders</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-secondary/20 hover:border-secondary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-cyan-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">6</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Clean Water</h3>
+                <p className="text-sm text-gray-600">Water, sanitation & hygiene programs</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-secondary/20 hover:border-secondary/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-orange-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">11</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Sustainable Cities</h3>
+                <p className="text-sm text-gray-600">Safe and healthy communities</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-accent/20 hover:border-accent/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-green-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">13</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Climate Action</h3>
+                <p className="text-sm text-gray-600">Environmental initiatives and awareness</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-accent/20 hover:border-accent/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">16</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Peace & Justice</h3>
+                <p className="text-sm text-gray-600">Conflict resolution and peacebuilding</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-accent/20 hover:border-accent/40 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-blue-800 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">17</span>
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-2">Partnerships</h3>
+                <p className="text-sm text-gray-600">Global cooperation and collaboration</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <Card className="bg-white/90 backdrop-blur-sm border border-gray-200 inline-block">
+              <CardContent className="p-8">
+                <div className="flex items-center justify-center space-x-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                    <Globe className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800">Global Impact Alignment</h3>
+                </div>
+                <p className="text-gray-700 text-lg max-w-2xl">
+                  Our comprehensive approach ensures that every Y-Peace initiative contributes meaningfully 
+                  to the UN's 2030 Agenda for Sustainable Development, creating lasting change that benefits 
+                  youth and communities worldwide.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Monitoring & Evaluation */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

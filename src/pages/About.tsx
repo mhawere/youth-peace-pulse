@@ -14,9 +14,9 @@ const About = () => {
   const [valuesTitle, setValuesTitle] = useState("Our Core Values");
   const [valuesSubtitle, setValuesSubtitle] = useState("These values guide everything we do and shape how we work with communities worldwide.");
   const [missionTitle, setMissionTitle] = useState("Mission Statement");
-  const [missionText, setMissionText] = useState("To mobilize and empower young people worldwide by connecting them to the resources, platforms, and partnerships needed to advance the United Nations Sustainable Development Goals through advocacy, funding, and community-led action.");
+  const [missionText, setMissionText] = useState("Positively impact the lives of youth by advancing sustainable, community-based solutions that empower, create opportunity, and exemplify shared human values.");
   const [visionTitle, setVisionTitle] = useState("Vision Statement");
-  const [visionText, setVisionText] = useState("A peaceful and united world where youth lead the way in solving the planet's most urgent challenges—from climate action to social justice—by turning shared values into global impact.");
+  const [visionText, setVisionText] = useState("A world where youth are supported, empowered, and engaged to create a peaceful and prosperous future for themselves and their community.");
   const [messagingTitle, setMessagingTitle] = useState("Our Message");
   const [messagingSubtitle, setMessagingSubtitle] = useState("How we communicate our purpose and impact to the world");
   const [teamTitle, setTeamTitle] = useState("Our Leadership Team");
@@ -151,6 +151,172 @@ const About = () => {
                 <EditableText value={visionText} onChange={setVisionText} className="text-gray-700 text-lg leading-relaxed" as="p" multiline>
                   {visionText}
                 </EditableText>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* How We Achieve It */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">How We Achieve It</h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Y-Peace works around the world, funding projects, programs and initiatives that support and uplift youth, 
+              helping to provide them with a voice, opportunity, and agency over their lives and within their communities 
+              rooted in compassion, honesty, patience, resilience and respect.
+            </p>
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto mt-6 leading-relaxed">
+              Our business model is that of a partner and facilitator, where we positively impact individuals and 
+              communities by providing expertise and the resources to scale sustainable solutions.
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            {/* Education & Opportunity */}
+            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+              <CardContent className="p-8">
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-primary/20">
+                    <Lightbulb className="h-8 w-8 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Education & Opportunity</h3>
+                    <p className="text-gray-700 mb-4 leading-relaxed">
+                      Y-Peace supports programs that build skills and development opportunities for youth, including 
+                      school-based or extracurricular activities, so that youth can lead with purpose and make informed 
+                      decisions to uplift their lives and the communities they live in.
+                    </p>
+                    <div className="mb-4">
+                      <p className="font-semibold text-gray-800 mb-2">Supports SDG: 4 (as well 1, 5, 8, 10, 17)</p>
+                      <p className="font-semibold text-gray-800 mb-2">Types of programs:</p>
+                      <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                        <li>Afterschool activities that support social values development (sports, arts, etc.)</li>
+                        <li>School curriculum and activities that promote shared human values and peace</li>
+                        <li>Mentorships, scholarships, and exchange programs</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Food, Health & Nutrition */}
+            <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20">
+              <CardContent className="p-8">
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-secondary/20">
+                    <Heart className="h-8 w-8 text-secondary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Food, Health & Nutrition</h3>
+                    <p className="text-gray-700 mb-4 leading-relaxed">
+                      Programs and initiatives that support physical and mental health through access to and understanding 
+                      of nutritious foods, clean water, sanitation, hygiene (WASH), and medical care.
+                    </p>
+                    <div className="mb-4">
+                      <p className="font-semibold text-gray-800 mb-2">Supports SDGs: 2, 3, & 6 (as well as 10 & 17)</p>
+                      <p className="font-semibold text-gray-800 mb-2">Types of programs:</p>
+                      <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                        <li>School feeding and nutrition programs (e.g., school lunch, community gardens)</li>
+                        <li>Water, sanitation, and hygiene (WASH) programs</li>
+                        <li>Access to basic health services and health-related skills and education (physical and mental health)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Environment & Community */}
+            <Card className="bg-gradient-to-br from-accent/5 to-accent/10 border-accent/20">
+              <CardContent className="p-8">
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-accent/20">
+                    <Globe className="h-8 w-8 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Environment & Community</h3>
+                    <p className="text-gray-700 mb-4 leading-relaxed">
+                      A safe and healthy community and environment are essential for youth; thus Y-Peace supports programs 
+                      and initiatives that work to build safe and healthy communities and address the causes and impacts of climate change.
+                    </p>
+                    <div className="mb-4">
+                      <p className="font-semibold text-gray-800 mb-2">Supports SDGs: 11 & 13 (as well as 14, 15, 16, & 17)</p>
+                      <p className="font-semibold text-gray-800 mb-2">Types of programs:</p>
+                      <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                        <li>Youth driven/engaged community environmental initiatives</li>
+                        <li>Youth conflict management and life skills programs</li>
+                        <li>Mentorships</li>
+                        <li>Youth focused pro-peace initiatives that bring diverse community members together</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Innovation */}
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+              <CardContent className="p-8">
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-purple-200">
+                    <Target className="h-8 w-8 text-purple-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Innovation</h3>
+                    <p className="text-gray-700 mb-4 leading-relaxed">
+                      Creative, community led solutions that are durable and sustainable are required to meet the needs of youth, 
+                      especially when youth driven; Y-Peace invests in the development and scaleup of innovative solutions.
+                    </p>
+                    <div className="mb-4">
+                      <p className="font-semibold text-gray-800 mb-2">Supports SDGs: 1-17</p>
+                      <p className="font-semibold text-gray-800 mb-2">Types of programs:</p>
+                      <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+                        <li>Youth focused and/or youth driven innovation initiatives that aim to develop sustainable solutions benefiting youth</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Monitoring & Evaluation */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Monitoring & Evaluation</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <MessageSquare className="h-12 w-12 text-primary mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-800">Results-Based Management</h3>
+                </div>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  Every Y-Peace project and program is managed utilizing a results-based management approach, 
+                  incorporating a comprehensive results framework and theory of change, together with key 
+                  performance indicators to measure results.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20">
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <Target className="h-12 w-12 text-secondary mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-800">Formal M&E Process</h3>
+                </div>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  A formal Monitoring and Evaluation (M&E) process is used to track the progress of every project, 
+                  program, and initiative to assess effectiveness, identify areas for improvement, and inform future decisions.
+                </p>
               </CardContent>
             </Card>
           </div>

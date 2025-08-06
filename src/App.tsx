@@ -30,6 +30,7 @@ const AdminPress = lazy(() => import("./pages/AdminPress"));
 const AdminSuccessStories = lazy(() => import("./pages/AdminSuccessStories"));
 const SuccessStoryDetail = lazy(() => import("./pages/SuccessStoryDetail"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
+const AdminSEO = lazy(() => import("./pages/AdminSEO"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Loading component
@@ -80,6 +81,7 @@ const App = () => (
               <Route path="/admin/press" element={<AdminPress />} />
               <Route path="/admin/success-stories" element={<AdminSuccessStories />} />
               <Route path="/admin/logs" element={<AdminLogs />} />
+              <Route path="/admin/seo" element={<AdminSEO />} />
               <Route path="/auth" element={<Auth />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,6 +18,7 @@ const VisitMap = () => {
   const [visitData, setVisitData] = useState<VisitData[]>([]);
   const [totalVisits, setTotalVisits] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [hoveredLocation, setHoveredLocation] = useState<VisitData | null>(null);
 
   // Load visit data
   const loadVisitData = async () => {
@@ -46,28 +44,99 @@ const VisitMap = () => {
     loadVisitData();
   }, []);
 
-  // Create custom marker icon
-  const createCustomIcon = (visitCount: number) => {
-    const size = Math.min(15 + visitCount * 3, 40);
-    return L.divIcon({
-      html: `<div style="
-        width: ${size}px;
-        height: ${size}px;
-        background-color: #3b82f6;
-        border: 2px solid white;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: ${Math.max(10, size * 0.3)}px;
-        font-weight: bold;
-      ">${visitCount}</div>`,
-      className: 'custom-marker',
-      iconSize: [size, size],
-      iconAnchor: [size / 2, size / 2],
-    });
+  // Simple coordinate to pixel conversion for world map
+  const coordToPixel = (lat: number, lng: number, width: number, height: number) => {
+    const x = ((lng + 180) / 360) * width;
+    const y = ((90 - lat) / 180) * height;
+    return { x, y };
+  };
+
+  const WorldMap = () => {
+    const svgRef = useRef<SVGSVGElement>(null);
+    const width = 800;
+    const height = 400;
+
+    return (
+      <div className="relative bg-blue-50 rounded-lg overflow-hidden" style={{ width: '100%', height: '400px' }}>
+        <svg 
+          ref={svgRef}
+          width="100%" 
+          height="100%" 
+          viewBox={`0 0 ${width} ${height}`}
+          className="absolute inset-0"
+        >
+          {/* Simple world map background */}
+          <rect width={width} height={height} fill="#e0f2fe" />
+          
+          {/* Continents (simplified shapes) */}
+          <g fill="#10b981" opacity="0.3">
+            {/* North America */}
+            <path d="M50 80 L200 60 L220 120 L180 180 L100 160 Z" />
+            {/* South America */}
+            <path d="M150 200 L200 200 L180 320 L160 340 L140 300 Z" />
+            {/* Europe */}
+            <path d="M380 60 L450 70 L440 120 L400 110 Z" />
+            {/* Africa */}
+            <path d="M380 120 L450 130 L460 240 L400 250 L390 180 Z" />
+            {/* Asia */}
+            <path d="M450 50 L650 60 L680 150 L500 140 Z" />
+            {/* Australia */}
+            <path d="M580 280 L650 290 L640 320 L590 310 Z" />
+          </g>
+
+          {/* Visit markers */}
+          {visitData.map((visit, index) => {
+            if (!visit.latitude || !visit.longitude) return null;
+            
+            const { x, y } = coordToPixel(visit.latitude, visit.longitude, width, height);
+            const size = Math.min(4 + visit.visit_count * 2, 20);
+            
+            return (
+              <g key={`${visit.country}-${visit.city}-${index}`}>
+                <circle
+                  cx={x}
+                  cy={y}
+                  r={size}
+                  fill="#3b82f6"
+                  stroke="white"
+                  strokeWidth="2"
+                  className="cursor-pointer hover:fill-blue-600 transition-colors"
+                  onMouseEnter={() => setHoveredLocation(visit)}
+                  onMouseLeave={() => setHoveredLocation(null)}
+                />
+                <text
+                  x={x}
+                  y={y + 2}
+                  textAnchor="middle"
+                  fontSize={Math.max(8, size * 0.6)}
+                  fill="white"
+                  fontWeight="bold"
+                  pointerEvents="none"
+                >
+                  {visit.visit_count}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* Tooltip */}
+        {hoveredLocation && (
+          <div className="absolute top-4 left-4 bg-white p-3 rounded-lg shadow-lg border z-10">
+            <h3 className="font-bold text-sm">
+              {hoveredLocation.city}, {hoveredLocation.country}
+            </h3>
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Users className="h-3 w-3" />
+              <span>{hoveredLocation.visit_count} visit{hoveredLocation.visit_count !== 1 ? 's' : ''}</span>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Latest: {new Date(hoveredLocation.latest_visit).toLocaleDateString()}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   if (loading) {
@@ -135,45 +204,7 @@ const VisitMap = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="w-full h-96 rounded-lg overflow-hidden border">
-              <MapContainer
-                center={[20, 0]}
-                zoom={2}
-                style={{ height: '100%', width: '100%' }}
-                scrollWheelZoom={true}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {visitData.map((visit, index) => (
-                  visit.latitude && visit.longitude ? (
-                    <Marker
-                      key={`${visit.country}-${visit.city}-${index}`}
-                      position={[visit.latitude, visit.longitude]}
-                      icon={createCustomIcon(visit.visit_count)}
-                    >
-                      <Popup>
-                        <div className="text-center">
-                          <h3 className="font-bold text-lg mb-2">
-                            {visit.city}, {visit.country}
-                          </h3>
-                          <div className="flex items-center justify-center gap-2 mb-1">
-                            <Users className="h-4 w-4" />
-                            <span>
-                              {visit.visit_count} visit{visit.visit_count !== 1 ? 's' : ''}
-                            </span>
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Latest: {new Date(visit.latest_visit).toLocaleDateString()}
-                          </div>
-                        </div>
-                      </Popup>
-                    </Marker>
-                  ) : null
-                ))}
-              </MapContainer>
-            </div>
+            <WorldMap />
             
             {/* Top Locations */}
             <div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { DivIcon, LatLngExpression } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,9 +47,9 @@ const VisitMap = () => {
   }, []);
 
   // Create custom marker icon
-  const createCustomIcon = (visitCount: number): DivIcon => {
+  const createCustomIcon = (visitCount: number) => {
     const size = Math.min(15 + visitCount * 3, 40);
-    return new DivIcon({
+    return L.divIcon({
       html: `<div style="
         width: ${size}px;
         height: ${size}px;
@@ -137,7 +137,7 @@ const VisitMap = () => {
           <div className="space-y-4">
             <div className="w-full h-96 rounded-lg overflow-hidden border">
               <MapContainer
-                center={[20, 0] as LatLngExpression}
+                center={[20, 0]}
                 zoom={2}
                 style={{ height: '100%', width: '100%' }}
                 scrollWheelZoom={true}
@@ -150,7 +150,7 @@ const VisitMap = () => {
                   visit.latitude && visit.longitude ? (
                     <Marker
                       key={`${visit.country}-${visit.city}-${index}`}
-                      position={[visit.latitude, visit.longitude] as LatLngExpression}
+                      position={[visit.latitude, visit.longitude]}
                       icon={createCustomIcon(visit.visit_count)}
                     >
                       <Popup>

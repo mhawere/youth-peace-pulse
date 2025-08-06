@@ -299,6 +299,54 @@ export type Database = {
         }
         Relationships: []
       }
+      visits: {
+        Row: {
+          city: string | null
+          country: string | null
+          created_at: string
+          id: string
+          ip_address: string | null
+          latitude: number | null
+          longitude: number | null
+          page_path: string | null
+          referrer: string | null
+          region: string | null
+          session_id: string | null
+          user_agent: string | null
+          visit_timestamp: string
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          page_path?: string | null
+          referrer?: string | null
+          region?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          visit_timestamp?: string
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          page_path?: string | null
+          referrer?: string | null
+          region?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          visit_timestamp?: string
+        }
+        Relationships: []
+      }
       website_stats: {
         Row: {
           category: string
@@ -334,6 +382,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_visit_stats_by_location: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          country: string
+          city: string
+          region: string
+          latitude: number
+          longitude: number
+          visit_count: number
+          latest_visit: string
+        }[]
+      }
       is_user_admin: {
         Args: { user_id?: string }
         Returns: boolean

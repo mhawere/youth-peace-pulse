@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
+import VisitMap from '@/components/VisitMap';
 import { 
   ExternalLink, 
   Search, 
-  BarChart3, 
+  BarChart3,
   Target, 
   Globe, 
   Map, 
@@ -122,6 +123,7 @@ const AdminSEO = () => {
         <Tabs defaultValue="tools" className="space-y-4">
           <TabsList>
             <TabsTrigger value="tools">SEO Tools</TabsTrigger>
+            <TabsTrigger value="analytics">Visit Analytics</TabsTrigger>
             <TabsTrigger value="notes">SEO Notes</TabsTrigger>
           </TabsList>
 
@@ -252,6 +254,10 @@ const AdminSEO = () => {
                 </Card>
               </div>
             </div>
+          </TabsContent>
+
+          <TabsContent value="analytics" className="space-y-4">
+            <VisitMap />
           </TabsContent>
 
           <TabsContent value="notes" className="space-y-4">

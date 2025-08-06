@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { DivIcon, LatLngExpression } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Users, Eye } from 'lucide-react';
 
@@ -19,12 +18,8 @@ interface VisitData {
 }
 
 const VisitMap = () => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
   const [visitData, setVisitData] = useState<VisitData[]>([]);
   const [totalVisits, setTotalVisits] = useState(0);
-  const [mapboxToken, setMapboxToken] = useState('');
-  const [isTokenSet, setIsTokenSet] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Load visit data
@@ -51,98 +46,29 @@ const VisitMap = () => {
     loadVisitData();
   }, []);
 
-  const initializeMap = () => {
-    if (!mapContainer.current || !mapboxToken) return;
-
-    mapboxgl.accessToken = mapboxToken;
-    
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11',
-      zoom: 2,
-      center: [0, 20],
-      projection: 'globe' as any,
-    });
-
-    // Add navigation controls
-    map.current.addControl(
-      new mapboxgl.NavigationControl({
-        visualizePitch: true,
-      }),
-      'top-right'
-    );
-
-    // Add atmosphere and fog effects
-    map.current.on('style.load', () => {
-      map.current?.setFog({
-        color: 'rgb(255, 255, 255)',
-        'high-color': 'rgb(200, 200, 225)',
-        'horizon-blend': 0.2,
-      });
-
-      // Add visit markers
-      visitData.forEach((visit) => {
-        if (visit.latitude && visit.longitude) {
-          // Create custom marker element
-          const markerElement = document.createElement('div');
-          markerElement.className = 'visit-marker';
-          markerElement.style.width = `${Math.min(10 + visit.visit_count * 2, 30)}px`;
-          markerElement.style.height = `${Math.min(10 + visit.visit_count * 2, 30)}px`;
-          markerElement.style.backgroundColor = '#3b82f6';
-          markerElement.style.borderRadius = '50%';
-          markerElement.style.border = '2px solid white';
-          markerElement.style.cursor = 'pointer';
-          markerElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
-
-          // Create popup content
-          const popup = new mapboxgl.Popup({ offset: 25 })
-            .setHTML(`
-              <div style="padding: 8px;">
-                <h3 style="margin: 0 0 8px 0; font-weight: bold; color: #1f2937;">
-                  ${visit.city}, ${visit.country}
-                </h3>
-                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
-                  <span style="font-size: 14px;">👥</span>
-                  <span style="font-size: 14px; color: #6b7280;">
-                    ${visit.visit_count} visit${visit.visit_count !== 1 ? 's' : ''}
-                  </span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 4px;">
-                  <span style="font-size: 14px;">📅</span>
-                  <span style="font-size: 12px; color: #9ca3af;">
-                    Latest: ${new Date(visit.latest_visit).toLocaleDateString()}
-                  </span>
-                </div>
-              </div>
-            `);
-
-          // Add marker to map
-          new mapboxgl.Marker(markerElement)
-            .setLngLat([visit.longitude, visit.latitude])
-            .setPopup(popup)
-            .addTo(map.current!);
-        }
-      });
+  // Create custom marker icon
+  const createCustomIcon = (visitCount: number): DivIcon => {
+    const size = Math.min(15 + visitCount * 3, 40);
+    return new DivIcon({
+      html: `<div style="
+        width: ${size}px;
+        height: ${size}px;
+        background-color: #3b82f6;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: ${Math.max(10, size * 0.3)}px;
+        font-weight: bold;
+      ">${visitCount}</div>`,
+      className: 'custom-marker',
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
     });
   };
-
-  const handleTokenSubmit = () => {
-    if (mapboxToken.trim()) {
-      setIsTokenSet(true);
-      localStorage.setItem('mapbox-token', mapboxToken);
-      setTimeout(initializeMap, 100);
-    }
-  };
-
-  useEffect(() => {
-    // Check for saved token
-    const savedToken = localStorage.getItem('mapbox-token');
-    if (savedToken) {
-      setMapboxToken(savedToken);
-      setIsTokenSet(true);
-      setTimeout(initializeMap, 100);
-    }
-  }, [visitData]);
 
   if (loading) {
     return (
@@ -208,66 +134,72 @@ const VisitMap = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {!isTokenSet ? (
-            <div className="space-y-4">
-              <div className="bg-muted p-4 rounded-lg">
-                <h3 className="font-semibold mb-2">Mapbox Token Required</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  To display the interactive map, please enter your Mapbox public token. 
-                  You can get one for free at{' '}
-                  <a 
-                    href="https://mapbox.com/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    mapbox.com
-                  </a>
-                </p>
-                <div className="flex space-x-2">
-                  <Input
-                    type="text"
-                    placeholder="pk.ey..."
-                    value={mapboxToken}
-                    onChange={(e) => setMapboxToken(e.target.value)}
-                    className="flex-1"
-                  />
-                  <Button onClick={handleTokenSubmit}>
-                    Set Token
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <div ref={mapContainer} className="w-full h-96 rounded-lg" />
-              
-              {/* Top Locations */}
-              <div>
-                <h3 className="font-semibold mb-3">Top Locations</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {visitData.slice(0, 6).map((visit, index) => (
-                    <div 
-                      key={`${visit.country}-${visit.city}`}
-                      className="flex items-center justify-between p-2 bg-muted rounded-lg"
+          <div className="space-y-4">
+            <div className="w-full h-96 rounded-lg overflow-hidden border">
+              <MapContainer
+                center={[20, 0] as LatLngExpression}
+                zoom={2}
+                style={{ height: '100%', width: '100%' }}
+                scrollWheelZoom={true}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {visitData.map((visit, index) => (
+                  visit.latitude && visit.longitude ? (
+                    <Marker
+                      key={`${visit.country}-${visit.city}-${index}`}
+                      position={[visit.latitude, visit.longitude] as LatLngExpression}
+                      icon={createCustomIcon(visit.visit_count)}
                     >
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">
-                          {visit.city}, {visit.country}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(visit.latest_visit).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <Badge variant="secondary">
-                        {visit.visit_count}
-                      </Badge>
+                      <Popup>
+                        <div className="text-center">
+                          <h3 className="font-bold text-lg mb-2">
+                            {visit.city}, {visit.country}
+                          </h3>
+                          <div className="flex items-center justify-center gap-2 mb-1">
+                            <Users className="h-4 w-4" />
+                            <span>
+                              {visit.visit_count} visit{visit.visit_count !== 1 ? 's' : ''}
+                            </span>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Latest: {new Date(visit.latest_visit).toLocaleDateString()}
+                          </div>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  ) : null
+                ))}
+              </MapContainer>
+            </div>
+            
+            {/* Top Locations */}
+            <div>
+              <h3 className="font-semibold mb-3">Top Locations</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {visitData.slice(0, 6).map((visit, index) => (
+                  <div 
+                    key={`${visit.country}-${visit.city}`}
+                    className="flex items-center justify-between p-2 bg-muted rounded-lg"
+                  >
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">
+                        {visit.city}, {visit.country}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(visit.latest_visit).toLocaleDateString()}
+                      </p>
                     </div>
-                  ))}
-                </div>
+                    <Badge variant="secondary">
+                      {visit.visit_count}
+                    </Badge>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
+          </div>
         </CardContent>
       </Card>
     </div>

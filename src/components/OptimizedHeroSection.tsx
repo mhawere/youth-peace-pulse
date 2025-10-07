@@ -29,12 +29,11 @@ const OptimizedHeroSection = memo(() => {
           </h1>
           
           <p className="text-xl md:text-2xl font-semibold mb-4 text-gray-100">
-            Together for Humanity
+            Youth for Peace
           </p>
           
           <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-gray-200 leading-relaxed">
-            Empowering youth globally to create lasting change through unity, peace, and sustainable development. 
-            Join us in building a world where every individual thrives in harmony.
+            Empowering youth globally to create a peaceful, sustainable, and prosperous future through diplomacy, advocacy, climate action, interfaith cooperation, education, and community service.
           </p>
 
           <div className="flex justify-center">

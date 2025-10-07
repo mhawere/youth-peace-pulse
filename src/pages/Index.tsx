@@ -11,8 +11,8 @@ import { ArrowRight, Quote, Users, Globe2, Zap, Sparkles, TrendingUp, Award } fr
 import { Link } from 'react-router-dom';
 
 const Index = () => {
-  const [missionText, setMissionText] = useState("To mobilize and empower young people worldwide by connecting them to the resources, platforms, and partnerships needed to advance the United Nations Sustainable Development Goals through advocacy, funding, and community-led action.");
-  const [visionText, setVisionText] = useState("A peaceful and united world where youth lead the way in solving the planet's most urgent challenges—from climate action to social justice—by turning shared values into global impact.");
+  const [missionText, setMissionText] = useState("To empower and support youth and their communities to foster peace, sustainability, and prosperity—through diplomacy, advocacy, climate action, interfaith cooperation, education, and community service.");
+  const [visionText, setVisionText] = useState("A world where youth are supported, empowered, and engaged to create a peaceful, sustainable, and prosperous future for themselves and their communities.");
   const [ctaTitle, setCtaTitle] = useState("Ready to Make a Difference?");
   const [ctaDescription, setCtaDescription] = useState("Join thousands of young changemakers worldwide. Whether you want to volunteer, start a program, or partner with us—there's a place for you in the Y-Peace movement.");
   

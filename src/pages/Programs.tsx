@@ -15,8 +15,8 @@ const Programs = () => {
   
   // Page content state
   const [pageTitle, setPageTitle] = useState('Our Programs');
-  const [pageSubtitle, setPageSubtitle] = useState('Turning values into action through the Five Ps framework');
-  const [pageDescription, setPageDescription] = useState('Every initiative aligns with the UN\'s Sustainable Development Goals and reflects our core belief in empowering youth and communities worldwide.');
+  const [pageSubtitle, setPageSubtitle] = useState('Turning values into action through strategic pillars and focused areas of work');
+  const [pageDescription, setPageDescription] = useState('Every initiative aligns with the UN Sustainable Development Goals and reflects our commitment to empowering youth and communities worldwide through measurable impact.');
 
   // Programs state
   const [peopleTitle, setPeopleTitle] = useState('People');

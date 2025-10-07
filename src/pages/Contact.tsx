@@ -68,7 +68,7 @@ const Contact = () => {
   const [inquiry1Description, setInquiry1Description] = useState('Questions about Y-Peace, our mission, or how to get started');
 
   const [inquiry2Title, setInquiry2Title] = useState('Program Information');
-  const [inquiry2Description, setInquiry2Description] = useState('Details about our Five Ps programs and how to participate');
+  const [inquiry2Description, setInquiry2Description] = useState('Details about our programs, strategic pillars, and how to participate');
 
   const [inquiry3Title, setInquiry3Title] = useState('Partnership Opportunities');
   const [inquiry3Description, setInquiry3Description] = useState('Corporate partnerships, NGO collaborations, and institutional alliances');

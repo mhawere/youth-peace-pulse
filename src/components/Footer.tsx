@@ -17,7 +17,7 @@ const Footer = () => {
               className="h-12 w-auto"
             />
             <p className="text-gray-300 text-sm">
-              Together for Humanity - Empowering youth worldwide to create positive change through the UN Sustainable Development Goals.
+              Youth for Peace - Empowering and supporting youth and their communities to foster peace, sustainability, and prosperity worldwide.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
@@ -61,13 +61,12 @@ const Footer = () => {
 
           {/* Programs */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">The 5 Ps</h3>
+            <h3 className="text-lg font-semibold mb-4">Our Focus</h3>
             <ul className="space-y-2">
-              <li><span className="text-gray-300">People</span></li>
-              <li><span className="text-gray-300">Planet</span></li>
-              <li><span className="text-gray-300">Prosperity</span></li>
-              <li><span className="text-gray-300">Peace</span></li>
-              <li><span className="text-gray-300">Partnership</span></li>
+              <li><span className="text-gray-300">Advocacy & Voice</span></li>
+              <li><span className="text-gray-300">Global Mobilization</span></li>
+              <li><span className="text-gray-300">Community Engagement</span></li>
+              <li><span className="text-gray-300">Innovation</span></li>
             </ul>
           </div>
 

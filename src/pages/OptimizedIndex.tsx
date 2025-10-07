@@ -75,22 +75,22 @@ const OptimizedIndex = memo(() => {
 
   const missionCards = [
     {
-      title: getContent('youthCardTitle', 'Youth-Powered Movement'),
-      description: getContent('youthCardDescription', 'Driven by young leaders who understand tomorrow\'s challenges today.'),
+      title: getContent('youthCardTitle', 'Partner & Funder'),
+      description: getContent('youthCardDescription', 'Providing flexible capital and co-financing youth-driven programs with global partners.'),
       icon: Users,
       colorClass: 'text-primary',
       bgClass: 'bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 border-primary/20'
     },
     {
-      title: getContent('globalCardTitle', 'Global Impact'),
-      description: getContent('globalCardDescription', 'Connecting local solutions with global resources for maximum impact.'),
+      title: getContent('globalCardTitle', 'Capacity Builder'),
+      description: getContent('globalCardDescription', 'Strengthening partners and youth organizations through expertise and resources.'),
       icon: Globe2,
       colorClass: 'text-secondary',
       bgClass: 'bg-gradient-to-br from-secondary/5 via-secondary/10 to-secondary/5 border-secondary/20'
     },
     {
-      title: getContent('actionCardTitle', 'Action-Oriented'),
-      description: getContent('actionCardDescription', 'We don\'t just advocate—we activate and create tangible change.'),
+      title: getContent('actionCardTitle', 'SDG-Aligned Impact'),
+      description: getContent('actionCardDescription', 'All initiatives aligned with UN Sustainable Development Goals for measurable outcomes.'),
       icon: Zap,
       colorClass: 'text-accent',
       bgClass: 'bg-gradient-to-br from-accent/5 via-accent/10 to-accent/5 border-accent/20'
@@ -110,26 +110,26 @@ const OptimizedIndex = memo(() => {
   // Fallback stories if no featured stories exist
   const fallbackStories = [
     {
-      title: getContent('kenyaTitle', 'Climate Action in Kenya'),
-      summary: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
-      content: getContent('kenyaQuote', 'Through Y-Peace, we planted over 10,000 trees and educated 500+ youth about climate change in our community.'),
-      participant_name: 'Sarah, 19',
+      title: getContent('kenyaTitle', 'Youth Climate Leadership in Kenya'),
+      summary: getContent('kenyaQuote', 'Through Y-Peace, we planted over 15,000 trees, built climate resilience in 8 communities, and trained 600+ youth as environmental stewards.'),
+      content: getContent('kenyaQuote', 'Through Y-Peace, we planted over 15,000 trees, built climate resilience in 8 communities, and trained 600+ youth as environmental stewards.'),
+      participant_name: 'Sarah M., Youth Leader',
       featured_image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
       id: 'fallback-1'
     },
     {
-      title: getContent('colombiaTitle', 'Peace Building in Colombia'),
-      summary: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
-      content: getContent('colombiaQuote', 'Our interfaith dialogue program brought together 200 youth from different backgrounds to build lasting peace.'),
-      participant_name: 'Miguel, 22',
+      title: getContent('colombiaTitle', 'Interfaith Peacebuilding in Colombia'),
+      summary: getContent('colombiaQuote', 'Our dialogue program united 350+ youth from diverse faith backgrounds, creating lasting bridges of understanding and peace in post-conflict communities.'),
+      content: getContent('colombiaQuote', 'Our dialogue program united 350+ youth from diverse faith backgrounds, creating lasting bridges of understanding and peace in post-conflict communities.'),
+      participant_name: 'Miguel R., Peace Ambassador',
       featured_image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
       id: 'fallback-2'
     },
     {
-      title: getContent('indiaTitle', 'Digital Skills in India'),
-      summary: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
-      content: getContent('indiaQuote', 'We trained 300+ women in digital skills, helping them start their own online businesses and achieve financial independence.'),
-      participant_name: 'Priya, 20',
+      title: getContent('indiaTitle', 'Digital Innovation for Women in India'),
+      summary: getContent('indiaQuote', 'We empowered 450+ young women with digital and entrepreneurial skills, helping them launch sustainable businesses and achieve economic independence.'),
+      content: getContent('indiaQuote', 'We empowered 450+ young women with digital and entrepreneurial skills, helping them launch sustainable businesses and achieve economic independence.'),
+      participant_name: 'Priya K., Digital Entrepreneur',
       featured_image_url: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
       id: 'fallback-3'
     }

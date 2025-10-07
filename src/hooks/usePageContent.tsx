@@ -7,8 +7,8 @@ interface PageContent {
 
 const DEFAULT_CONTENT: Record<string, PageContent> = {
   index: {
-    missionText: "To mobilize and empower young people worldwide by connecting them to the resources, platforms, and partnerships needed to advance the United Nations Sustainable Development Goals through advocacy, funding, and community-led action.",
-    visionText: "A peaceful and united world where youth lead the way in solving the planet's most urgent challenges—from climate action to social justice—by turning shared values into global impact.",
+    missionText: "To empower and support youth and their communities to foster peace, sustainability, and prosperity—through diplomacy, advocacy, climate action, interfaith cooperation, education, and community service.",
+    visionText: "A world where youth are supported, empowered, and engaged to create a peaceful, sustainable, and prosperous future for themselves and their communities.",
     ctaTitle: "Ready to Make a Difference?",
     ctaDescription: "Join thousands of young changemakers worldwide. Whether you want to volunteer, start a program, or partner with us—there's a place for you in the Y-Peace movement.",
     missionSectionTitle: "Our Mission & Vision",

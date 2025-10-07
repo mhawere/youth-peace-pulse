@@ -33,7 +33,7 @@ const OptimizedHeroSection = memo(() => {
           </p>
           
           <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-gray-200 leading-relaxed">
-            Empowering youth globally to create a peaceful, sustainable, and prosperous future through diplomacy, advocacy, climate action, interfaith cooperation, education, and community service.
+            To empower and support youth and their communities to foster peace, sustainability, and prosperity—through diplomacy, advocacy, climate action, interfaith cooperation, education, and community service.
           </p>
 
           <div className="flex justify-center">

@@ -1,8 +1,8 @@
-
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import yPeaceLogo from '@/assets/ypeace-logo.png';
 
 const Footer = () => {
   return (
@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <img 
-              src="/lovable-uploads/52ce99bc-28d2-483b-871e-22efd46cca8e.png" 
+              src={yPeaceLogo} 
               alt="Y-Peace Logo" 
               className="h-12 w-auto"
             />

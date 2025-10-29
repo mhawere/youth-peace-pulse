@@ -30,7 +30,7 @@ const Navigation = () => {
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className="h-20 w-auto"
+              className="h-24 w-auto"
             />
           </Link>
 

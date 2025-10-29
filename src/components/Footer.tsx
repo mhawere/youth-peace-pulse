@@ -14,7 +14,7 @@ const Footer = () => {
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className="h-12 w-auto"
+              className="h-20 w-auto"
             />
             <p className="text-gray-300 text-sm">
               Youth for Peace - Empowering and supporting youth and their communities to foster peace, sustainability, and prosperity worldwide.

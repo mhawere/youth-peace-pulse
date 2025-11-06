@@ -9,9 +9,12 @@ const OptimizedHeroSection = memo(() => {
   const { getStat } = useStats('dashboard');
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
       {/* Enhanced gradient background */}
       <div className="absolute inset-0 gradient-brand"></div>
+      
+      {/* Subtle overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent"></div>
       
       {/* Sophisticated animated background elements */}
       <div className="absolute inset-0 opacity-20">

@@ -24,40 +24,40 @@ const Navigation = () => {
   const isHomePage = location.pathname === '/';
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isHomePage 
-        ? 'bg-transparent' 
-        : 'bg-background/95 backdrop-blur-lg border-b border-border/50'
+        ? 'bg-gradient-to-b from-black/30 to-transparent backdrop-blur-md' 
+        : 'bg-white shadow-sm border-b border-border/50'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center hover-lift">
-            <div className={`rounded-xl transition-all duration-300 ${
-              isHomePage ? 'bg-white/95 backdrop-blur-sm px-3 py-2 shadow-lg' : ''
-            }`}>
-              <img 
-                src={yPeaceLogo} 
-                alt="Y-Peace Logo" 
-                className="h-12 w-auto"
-              />
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img 
+              src={yPeaceLogo} 
+              alt="Y-Peace Logo" 
+              className={`h-16 w-auto transition-all duration-300 ${
+                isHomePage 
+                  ? 'drop-shadow-[0_2px_8px_rgba(255,255,255,0.9)] group-hover:drop-shadow-[0_4px_12px_rgba(255,255,255,1)]' 
+                  : 'group-hover:scale-105'
+              }`}
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-5 py-2.5 text-sm font-semibold transition-all duration-300 rounded-full relative ${
+                className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg ${
                   isActive(item.path)
                     ? isHomePage
-                      ? 'text-white bg-white/20 backdrop-blur-sm'
-                      : 'text-primary bg-primary/10'
+                      ? 'text-white font-semibold drop-shadow-lg bg-white/15'
+                      : 'text-primary font-semibold bg-primary/10'
                     : isHomePage
-                      ? 'text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm'
-                      : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                      ? 'text-white/95 hover:text-white hover:bg-white/10 drop-shadow-md'
+                      : 'text-foreground/70 hover:text-foreground hover:bg-muted'
                 }`}
               >
                 {item.name}
@@ -70,10 +70,10 @@ const Navigation = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className={`px-5 py-2.5 text-sm font-semibold rounded-full ${
+                    className={`px-4 py-2 text-sm font-medium rounded-lg ${
                       isHomePage
-                        ? 'text-white/90 hover:text-white hover:bg-white/10'
-                        : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                        ? 'text-white/95 hover:text-white hover:bg-white/10 drop-shadow-md'
+                        : 'text-foreground/70 hover:text-foreground hover:bg-muted'
                     }`}
                   >
                     Admin
@@ -133,10 +133,10 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className={`rounded-full ${
+              className={`${
                 isHomePage
-                  ? 'text-white hover:bg-white/10'
-                  : 'text-foreground hover:bg-primary/5'
+                  ? 'text-white hover:bg-white/10 drop-shadow-lg'
+                  : 'text-foreground hover:bg-muted'
               }`}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -147,21 +147,21 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className={`md:hidden pb-4 animate-fade-in ${
-            isHomePage ? 'bg-black/20 backdrop-blur-lg' : 'bg-background/95'
+            isHomePage ? 'bg-black/40 backdrop-blur-xl border-t border-white/10' : 'bg-white border-t border-border/50'
           }`}>
-            <div className="space-y-1">
+            <div className="space-y-1 pt-2">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`block px-4 py-3 text-base font-semibold rounded-xl transition-colors ${
+                  className={`block px-4 py-3 text-base font-medium rounded-lg mx-2 transition-colors ${
                     isActive(item.path)
                       ? isHomePage
-                        ? 'text-white bg-white/20'
-                        : 'text-primary bg-primary/10'
+                        ? 'text-white font-semibold bg-white/20'
+                        : 'text-primary font-semibold bg-primary/10'
                       : isHomePage
-                        ? 'text-white/90 hover:text-white hover:bg-white/10'
-                        : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                        ? 'text-white/95 hover:text-white hover:bg-white/10'
+                        : 'text-foreground/70 hover:text-foreground hover:bg-muted'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >

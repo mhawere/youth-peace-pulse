@@ -22,92 +22,95 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-28 py-3">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 mr-auto">
+          <Link to="/" className="flex items-center hover-lift">
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className="h-24 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md ${
+                className={`px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg relative ${
                   isActive(item.path)
-                    ? 'text-primary border-b-2 border-primary'
-                    : 'text-gray-600 hover:text-primary hover:bg-primary/5'
+                    ? 'text-primary'
+                    : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                 }`}
               >
                 {item.name}
+                {isActive(item.path) && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-primary rounded-full" />
+                )}
               </Link>
-              ))}
+            ))}
               
-              {/* Admin Dropdown */}
-              {user && isAdmin && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary hover:bg-primary/5 rounded-md"
-                    >
-                      Admin
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem asChild>
-                      <Link to="/user-management" className="flex items-center w-full">
-                        <Users className="mr-2 h-4 w-4" />
-                        Users
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/application-results" className="flex items-center w-full">
-                        <ClipboardList className="mr-2 h-4 w-4" />
-                        Applications
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/admin/stats" className="flex items-center w-full">
-                        <BarChart3 className="mr-2 h-4 w-4" />
-                        Statistics
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/news/press-releases" className="flex items-center w-full">
-                        <FileText className="mr-2 h-4 w-4" />
-                        Press Releases
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/news/newsletter" className="flex items-center w-full">
-                        <Mail className="mr-2 h-4 w-4" />
-                        Newsletter
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/news/blog" className="flex items-center w-full">
-                        <Settings className="mr-2 h-4 w-4" />
-                        Blog
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={signOut} className="text-red-600">
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            </div>
+            {/* Admin Dropdown */}
+            {user && isAdmin && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg"
+                  >
+                    Admin
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem asChild>
+                    <Link to="/user-management" className="flex items-center w-full cursor-pointer">
+                      <Users className="mr-2 h-4 w-4" />
+                      Users
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/application-results" className="flex items-center w-full cursor-pointer">
+                      <ClipboardList className="mr-2 h-4 w-4" />
+                      Applications
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin/stats" className="flex items-center w-full cursor-pointer">
+                      <BarChart3 className="mr-2 h-4 w-4" />
+                      Statistics
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/news/press-releases" className="flex items-center w-full cursor-pointer">
+                      <FileText className="mr-2 h-4 w-4" />
+                      Press Releases
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/news/newsletter" className="flex items-center w-full cursor-pointer">
+                      <Mail className="mr-2 h-4 w-4" />
+                      Newsletter
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/news/blog" className="flex items-center w-full cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Blog
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut} className="text-destructive cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -115,24 +118,25 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
+              className="hover:bg-primary/5"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+          <div className="md:hidden pb-4 animate-fade-in">
+            <div className="space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  className={`block px-4 py-2.5 text-base font-medium rounded-lg transition-colors ${
                     isActive(item.path)
                       ? 'text-primary bg-primary/10'
-                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                      : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -143,55 +147,57 @@ const Navigation = () => {
               {/* Mobile Admin Menu */}
               {user && isAdmin && (
                 <>
-                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Admin
+                  <div className="px-4 pt-4 pb-2">
+                    <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Admin
+                    </div>
                   </div>
                   <Link
                     to="/user-management"
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Users className="inline mr-2 h-4 w-4" />
+                    <Users className="mr-2 h-4 w-4" />
                     Users
                   </Link>
                   <Link
                     to="/application-results"
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <ClipboardList className="inline mr-2 h-4 w-4" />
+                    <ClipboardList className="mr-2 h-4 w-4" />
                     Applications
                   </Link>
                   <Link
                     to="/admin/stats"
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <BarChart3 className="inline mr-2 h-4 w-4" />
+                    <BarChart3 className="mr-2 h-4 w-4" />
                     Statistics
                   </Link>
                   <Link
                     to="/news/press-releases"
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <FileText className="inline mr-2 h-4 w-4" />
+                    <FileText className="mr-2 h-4 w-4" />
                     Press Releases
                   </Link>
                   <Link
                     to="/news/newsletter"
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Mail className="inline mr-2 h-4 w-4" />
+                    <Mail className="mr-2 h-4 w-4" />
                     Newsletter
                   </Link>
                   <Link
                     to="/news/blog"
-                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
+                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Settings className="inline mr-2 h-4 w-4" />
+                    <Settings className="mr-2 h-4 w-4" />
                     Blog
                   </Link>
                   <button
@@ -199,9 +205,9 @@ const Navigation = () => {
                       signOut();
                       setIsOpen(false);
                     }}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:bg-gray-50"
+                    className="flex items-center w-full px-4 py-2.5 text-base font-medium text-destructive hover:bg-destructive/5 rounded-lg transition-colors"
                   >
-                    <LogOut className="inline mr-2 h-4 w-4" />
+                    <LogOut className="mr-2 h-4 w-4" />
                     Sign Out
                   </button>
                 </>

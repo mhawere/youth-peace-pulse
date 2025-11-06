@@ -41,7 +41,7 @@ const Navigation = () => {
           : 'py-3 z-[1000]'
       } ${
         isHomePage && isScrolled
-          ? 'backdrop-blur-xl bg-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.1)] border-b border-white/20'
+          ? 'backdrop-blur-xl bg-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.1)] border-b border-white/30'
           : !isHomePage
           ? 'bg-background/95 backdrop-blur-lg border-b border-border/50'
           : ''
@@ -174,7 +174,7 @@ const Navigation = () => {
           <div 
             className={`md:hidden pb-4 animate-fade-in transition-all duration-300 ${
               isHomePage && isScrolled
-                ? 'backdrop-blur-xl bg-white/[0.08] border-t border-white/20'
+                ? 'backdrop-blur-xl bg-white/25 border-t border-white/30'
                 : isHomePage && !isScrolled
                 ? 'bg-black/20 backdrop-blur-lg'
                 : 'bg-background/95'

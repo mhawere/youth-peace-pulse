@@ -26,19 +26,19 @@ const Navigation = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isHomePage 
-        ? 'bg-gradient-to-b from-black/30 to-transparent backdrop-blur-md' 
+        ? 'bg-gradient-to-b from-black/40 via-black/20 to-transparent backdrop-blur-md' 
         : 'bg-white shadow-sm border-b border-border/50'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className={`h-16 w-auto transition-all duration-300 ${
+              className={`h-20 w-auto transition-all duration-300 ${
                 isHomePage 
-                  ? 'drop-shadow-[0_2px_8px_rgba(255,255,255,0.9)] group-hover:drop-shadow-[0_4px_12px_rgba(255,255,255,1)]' 
+                  ? 'drop-shadow-[0_2px_12px_rgba(255,255,255,1)] group-hover:drop-shadow-[0_4px_16px_rgba(255,255,255,1)]' 
                   : 'group-hover:scale-105'
               }`}
             />

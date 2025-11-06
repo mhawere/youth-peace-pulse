@@ -35,53 +35,57 @@ const Navigation = () => {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 transition-all duration-500 ease-out ${
         isHomePage && !isScrolled
-          ? 'bg-transparent py-6 z-[1000]'
-          : 'py-3 z-[1000]'
+          ? 'bg-transparent py-8 z-[1000]'
+          : 'py-4 z-[1000]'
       } ${
         isHomePage && isScrolled
-          ? 'backdrop-blur-xl bg-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.1)] border-b border-white/30'
+          ? 'backdrop-blur-2xl bg-gradient-to-b from-white/30 via-white/25 to-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.12)] border-b border-white/40'
           : !isHomePage
-          ? 'bg-background/95 backdrop-blur-lg border-b border-border/50'
+          ? 'bg-gradient-to-b from-background via-background/98 to-background/95 backdrop-blur-xl border-b border-border/40 shadow-sm'
           : ''
       }`}
-      style={isHomePage && isScrolled ? { backdropFilter: 'blur(12px)' } : {}}
+      style={isHomePage && isScrolled ? { backdropFilter: 'blur(16px) saturate(180%)' } : {}}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center hover-lift transition-all duration-300">
+          <Link to="/" className="flex items-center hover-lift transition-all duration-500 group">
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className={`w-auto drop-shadow-lg transition-all duration-300 ${
-                isHomePage && !isScrolled ? 'h-16' : 'h-12'
+              className={`w-auto drop-shadow-2xl transition-all duration-500 group-hover:scale-105 ${
+                isHomePage && !isScrolled ? 'h-20' : 'h-14'
               }`}
+              style={isHomePage && !isScrolled ? { filter: 'drop-shadow(0 10px 25px rgba(255,255,255,0.3))' } : {}}
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-5 py-2.5 text-sm font-semibold transition-all duration-300 rounded-full relative ${
+                className={`px-6 py-3 text-sm font-bold tracking-wide transition-all duration-500 rounded-full relative overflow-hidden group ${
                   isActive(item.path)
                     ? isHomePage && !isScrolled
-                      ? 'text-white bg-white/20 backdrop-blur-sm'
+                      ? 'text-white bg-white/25 backdrop-blur-md shadow-lg shadow-white/20'
                       : isHomePage && isScrolled
-                      ? 'text-white bg-white/30 backdrop-blur-sm'
-                      : 'text-primary bg-primary/10'
+                      ? 'text-white bg-white/35 backdrop-blur-md shadow-lg shadow-white/25'
+                      : 'text-primary bg-gradient-to-r from-primary/15 to-primary/10 shadow-md'
                     : isHomePage && !isScrolled
-                      ? 'text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm'
+                      ? 'text-white/95 hover:text-white hover:bg-white/15 backdrop-blur-sm'
                       : isHomePage && isScrolled
-                      ? 'text-white/95 hover:text-white hover:bg-white/20 backdrop-blur-sm'
-                      : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                      ? 'text-white hover:text-white hover:bg-white/25 backdrop-blur-md'
+                      : 'text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5'
                 }`}
               >
-                {item.name}
+                <span className="relative z-10">{item.name}</span>
+                {!isActive(item.path) && (
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
+                )}
               </Link>
             ))}
               
@@ -91,16 +95,16 @@ const Navigation = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${
+                    className={`px-6 py-3 text-sm font-bold tracking-wide rounded-full transition-all duration-500 ${
                       isHomePage && !isScrolled
-                        ? 'text-white/90 hover:text-white hover:bg-white/10'
+                        ? 'text-white/95 hover:text-white hover:bg-white/15 backdrop-blur-sm'
                         : isHomePage && isScrolled
-                        ? 'text-white/95 hover:text-white hover:bg-white/20'
-                        : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                        ? 'text-white hover:text-white hover:bg-white/25 backdrop-blur-md'
+                        : 'text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5'
                     }`}
                   >
                     Admin
-                    <ChevronDown className="ml-1 h-4 w-4" />
+                    <ChevronDown className="ml-1.5 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
@@ -156,15 +160,15 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className={`rounded-full transition-all duration-300 ${
+              className={`rounded-full transition-all duration-500 hover:scale-110 ${
                 isHomePage && !isScrolled
-                  ? 'text-white hover:bg-white/10'
+                  ? 'text-white hover:bg-white/15 backdrop-blur-sm'
                   : isHomePage && isScrolled
-                  ? 'text-white hover:bg-white/20'
-                  : 'text-foreground hover:bg-primary/5'
+                  ? 'text-white hover:bg-white/25 backdrop-blur-md'
+                  : 'text-foreground hover:bg-primary/10'
               }`}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
             </Button>
           </div>
         </div>

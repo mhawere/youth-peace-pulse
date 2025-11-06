@@ -37,13 +37,13 @@ const Navigation = () => {
     <nav 
       className={`fixed top-0 left-0 right-0 transition-all duration-500 ease-out ${
         isHomePage && !isScrolled
-          ? 'bg-transparent py-8 z-[1000]'
+          ? 'bg-white/95 backdrop-blur-xl py-8 z-[1000] shadow-sm'
           : 'py-4 z-[1000]'
       } ${
         isHomePage && isScrolled
-          ? 'backdrop-blur-2xl bg-gradient-to-b from-white/30 via-white/25 to-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.12)] border-b border-white/40'
+          ? 'bg-white/98 backdrop-blur-2xl shadow-lg border-b border-gray-200/50'
           : !isHomePage
-          ? 'bg-gradient-to-b from-background via-background/98 to-background/95 backdrop-blur-xl border-b border-border/40 shadow-sm'
+          ? 'bg-white/98 backdrop-blur-xl border-b border-gray-200/50 shadow-sm'
           : ''
       }`}
       style={isHomePage && isScrolled ? { backdropFilter: 'blur(16px) saturate(180%)' } : {}}
@@ -70,21 +70,13 @@ const Navigation = () => {
                 to={item.path}
                 className={`px-6 py-3 text-sm font-bold tracking-wide transition-all duration-500 rounded-full relative overflow-hidden group ${
                   isActive(item.path)
-                    ? isHomePage && !isScrolled
-                      ? 'text-white bg-white/25 backdrop-blur-md shadow-lg shadow-white/20'
-                      : isHomePage && isScrolled
-                      ? 'text-white bg-white/35 backdrop-blur-md shadow-lg shadow-white/25'
-                      : 'text-primary bg-gradient-to-r from-primary/15 to-primary/10 shadow-md'
-                    : isHomePage && !isScrolled
-                      ? 'text-white/95 hover:text-white hover:bg-white/15 backdrop-blur-sm'
-                      : isHomePage && isScrolled
-                      ? 'text-white hover:text-white hover:bg-white/25 backdrop-blur-md'
-                      : 'text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5'
+                    ? 'text-primary bg-gradient-to-r from-primary/15 to-primary/10 shadow-md'
+                    : 'text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5'
                 }`}
               >
                 <span className="relative z-10">{item.name}</span>
                 {!isActive(item.path) && (
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
                 )}
               </Link>
             ))}
@@ -95,13 +87,7 @@ const Navigation = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className={`px-6 py-3 text-sm font-bold tracking-wide rounded-full transition-all duration-500 ${
-                      isHomePage && !isScrolled
-                        ? 'text-white/95 hover:text-white hover:bg-white/15 backdrop-blur-sm'
-                        : isHomePage && isScrolled
-                        ? 'text-white hover:text-white hover:bg-white/25 backdrop-blur-md'
-                        : 'text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5'
-                    }`}
+                    className="px-6 py-3 text-sm font-bold tracking-wide rounded-full transition-all duration-500 text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5"
                   >
                     Admin
                     <ChevronDown className="ml-1.5 h-4 w-4" />
@@ -160,13 +146,7 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className={`rounded-full transition-all duration-500 hover:scale-110 ${
-                isHomePage && !isScrolled
-                  ? 'text-white hover:bg-white/15 backdrop-blur-sm'
-                  : isHomePage && isScrolled
-                  ? 'text-white hover:bg-white/25 backdrop-blur-md'
-                  : 'text-foreground hover:bg-primary/10'
-              }`}
+              className="rounded-full transition-all duration-500 hover:scale-110 text-foreground hover:bg-primary/10"
             >
               {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
             </Button>
@@ -176,14 +156,8 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div 
-            className={`md:hidden pb-4 animate-fade-in transition-all duration-300 ${
-              isHomePage && isScrolled
-                ? 'backdrop-blur-xl bg-white/25 border-t border-white/30'
-                : isHomePage && !isScrolled
-                ? 'bg-black/20 backdrop-blur-lg'
-                : 'bg-background/95'
-            }`}
-            style={isHomePage && isScrolled ? { backdropFilter: 'blur(12px)' } : {}}
+            className="md:hidden pb-4 animate-fade-in transition-all duration-300 bg-white/98 backdrop-blur-xl border-t border-gray-200/50"
+            style={{ backdropFilter: 'blur(12px)' }}
           >
             <div className="space-y-1">
               {navItems.map((item) => (
@@ -192,16 +166,8 @@ const Navigation = () => {
                   to={item.path}
                   className={`block px-4 py-3 text-base font-semibold rounded-xl transition-all duration-300 ${
                     isActive(item.path)
-                      ? isHomePage && !isScrolled
-                        ? 'text-white bg-white/20'
-                        : isHomePage && isScrolled
-                        ? 'text-white bg-white/30'
-                        : 'text-primary bg-primary/10'
-                      : isHomePage && !isScrolled
-                        ? 'text-white/90 hover:text-white hover:bg-white/10'
-                        : isHomePage && isScrolled
-                        ? 'text-white/95 hover:text-white hover:bg-white/20'
-                        : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                      ? 'text-primary bg-primary/10'
+                      : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Settings, Users, ClipboardList, FileText, Mail, BarChart3, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,8 +8,18 @@ import yPeaceLogo from '@/assets/ypeace-logo.png';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { user, isAdmin, signOut } = useAuth();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -24,19 +34,30 @@ const Navigation = () => {
   const isHomePage = location.pathname === '/';
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isHomePage 
-        ? 'bg-transparent' 
-        : 'bg-background/95 backdrop-blur-lg border-b border-border/50'
-    }`}>
+    <nav 
+      className={`fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out ${
+        isHomePage && !isScrolled
+          ? 'bg-transparent py-6 z-[1000]'
+          : 'py-3 z-[1000]'
+      } ${
+        isHomePage && isScrolled
+          ? 'backdrop-blur-xl bg-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.1)] border-b border-white/20'
+          : !isHomePage
+          ? 'bg-background/95 backdrop-blur-lg border-b border-border/50'
+          : ''
+      }`}
+      style={isHomePage && isScrolled ? { backdropFilter: 'blur(12px)' } : {}}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center hover-lift">
+          <Link to="/" className="flex items-center hover-lift transition-all duration-300">
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className="h-14 w-auto drop-shadow-lg"
+              className={`w-auto drop-shadow-lg transition-all duration-300 ${
+                isHomePage && !isScrolled ? 'h-16' : 'h-12'
+              }`}
             />
           </Link>
 
@@ -48,11 +69,15 @@ const Navigation = () => {
                 to={item.path}
                 className={`px-5 py-2.5 text-sm font-semibold transition-all duration-300 rounded-full relative ${
                   isActive(item.path)
-                    ? isHomePage
+                    ? isHomePage && !isScrolled
                       ? 'text-white bg-white/20 backdrop-blur-sm'
+                      : isHomePage && isScrolled
+                      ? 'text-white bg-white/30 backdrop-blur-sm'
                       : 'text-primary bg-primary/10'
-                    : isHomePage
+                    : isHomePage && !isScrolled
                       ? 'text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-sm'
+                      : isHomePage && isScrolled
+                      ? 'text-white/95 hover:text-white hover:bg-white/20 backdrop-blur-sm'
                       : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                 }`}
               >
@@ -66,9 +91,11 @@ const Navigation = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className={`px-5 py-2.5 text-sm font-semibold rounded-full ${
-                      isHomePage
+                    className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${
+                      isHomePage && !isScrolled
                         ? 'text-white/90 hover:text-white hover:bg-white/10'
+                        : isHomePage && isScrolled
+                        ? 'text-white/95 hover:text-white hover:bg-white/20'
                         : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                     }`}
                   >
@@ -129,9 +156,11 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className={`rounded-full ${
-                isHomePage
+              className={`rounded-full transition-all duration-300 ${
+                isHomePage && !isScrolled
                   ? 'text-white hover:bg-white/10'
+                  : isHomePage && isScrolled
+                  ? 'text-white hover:bg-white/20'
                   : 'text-foreground hover:bg-primary/5'
               }`}
             >
@@ -142,21 +171,32 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className={`md:hidden pb-4 animate-fade-in ${
-            isHomePage ? 'bg-black/20 backdrop-blur-lg' : 'bg-background/95'
-          }`}>
+          <div 
+            className={`md:hidden pb-4 animate-fade-in transition-all duration-300 ${
+              isHomePage && isScrolled
+                ? 'backdrop-blur-xl bg-white/[0.08] border-t border-white/20'
+                : isHomePage && !isScrolled
+                ? 'bg-black/20 backdrop-blur-lg'
+                : 'bg-background/95'
+            }`}
+            style={isHomePage && isScrolled ? { backdropFilter: 'blur(12px)' } : {}}
+          >
             <div className="space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`block px-4 py-3 text-base font-semibold rounded-xl transition-colors ${
+                  className={`block px-4 py-3 text-base font-semibold rounded-xl transition-all duration-300 ${
                     isActive(item.path)
-                      ? isHomePage
+                      ? isHomePage && !isScrolled
                         ? 'text-white bg-white/20'
+                        : isHomePage && isScrolled
+                        ? 'text-white bg-white/30'
                         : 'text-primary bg-primary/10'
-                      : isHomePage
+                      : isHomePage && !isScrolled
                         ? 'text-white/90 hover:text-white hover:bg-white/10'
+                        : isHomePage && isScrolled
+                        ? 'text-white/95 hover:text-white hover:bg-white/20'
                         : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                   }`}
                   onClick={() => setIsOpen(false)}

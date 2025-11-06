@@ -33,11 +33,15 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center hover-lift">
-            <img 
-              src={yPeaceLogo} 
-              alt="Y-Peace Logo" 
-              className="h-14 w-auto drop-shadow-lg"
-            />
+            <div className={`rounded-xl transition-all duration-300 ${
+              isHomePage ? 'bg-white/95 backdrop-blur-sm px-3 py-2 shadow-lg' : ''
+            }`}>
+              <img 
+                src={yPeaceLogo} 
+                alt="Y-Peace Logo" 
+                className="h-12 w-auto"
+              />
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

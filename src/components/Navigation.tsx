@@ -22,15 +22,15 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16">
+        <div className="flex items-center justify-between py-2">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 mr-auto">
+          <Link to="/" className="flex items-center mr-4">
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className="h-24 w-auto"
+              className="h-20 w-auto"
             />
           </Link>
 

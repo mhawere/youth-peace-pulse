@@ -38,8 +38,24 @@ const Contact = () => {
 
   // Individual contact info state
   const [emailTitle, setEmailTitle] = useState('Email Us');
-  const [emailPrimary, setEmailPrimary] = useState('info@ypeace.org');
+  const [emailPrimary, setEmailPrimary] = useState('hello@y-peace.org');
+  const [emailSecondary, setEmailSecondary] = useState('partnerships@y-peace.org');
   const [emailDescription, setEmailDescription] = useState('General inquiries and partnership opportunities');
+
+  const [phoneTitle, setPhoneTitle] = useState('Call Us');
+  const [phonePrimary, setPhonePrimary] = useState('+1 (555) 123-4567');
+  const [phoneSecondary, setPhoneSecondary] = useState('+44 20 7123 4567');
+  const [phoneDescription, setPhoneDescription] = useState('Available Monday to Friday, 9 AM - 6 PM');
+
+  const [addressTitle, setAddressTitle] = useState('Main Office');
+  const [addressPrimary, setAddressPrimary] = useState('123 Peace Avenue');
+  const [addressSecondary, setAddressSecondary] = useState('Global City, GC 12345');
+  const [addressDescription, setAddressDescription] = useState('Our headquarters and main coordination center');
+
+  const [hoursTitle, setHoursTitle] = useState('Office Hours');
+  const [hoursPrimary, setHoursPrimary] = useState('Mon - Fri: 9:00 AM - 6:00 PM');
+  const [hoursSecondary, setHoursSecondary] = useState('Weekend: Emergency only');
+  const [hoursDescription, setHoursDescription] = useState('We respond to emails within 24 hours');
 
   // Contact form state
   const [formTitle, setFormTitle] = useState('Send us a Message');
@@ -81,8 +97,43 @@ const Contact = () => {
       setTitle: setEmailTitle,
       primary: emailPrimary,
       setPrimary: setEmailPrimary,
+      secondary: emailSecondary,
+      setSecondary: setEmailSecondary,
       description: emailDescription,
       setDescription: setEmailDescription
+    },
+    {
+      icon: Phone,
+      title: phoneTitle,
+      setTitle: setPhoneTitle,
+      primary: phonePrimary,
+      setPrimary: setPhonePrimary,
+      secondary: phoneSecondary,
+      setSecondary: setPhoneSecondary,
+      description: phoneDescription,
+      setDescription: setPhoneDescription
+    },
+    {
+      icon: MapPin,
+      title: addressTitle,
+      setTitle: setAddressTitle,
+      primary: addressPrimary,
+      setPrimary: setAddressPrimary,
+      secondary: addressSecondary,
+      setSecondary: setAddressSecondary,
+      description: addressDescription,
+      setDescription: setAddressDescription
+    },
+    {
+      icon: Clock,
+      title: hoursTitle,
+      setTitle: setHoursTitle,
+      primary: hoursPrimary,
+      setPrimary: setHoursPrimary,
+      secondary: hoursSecondary,
+      setSecondary: setHoursSecondary,
+      description: hoursDescription,
+      setDescription: setHoursDescription
     }
   ];
 
@@ -182,7 +233,7 @@ const Contact = () => {
             </EditableText>
           </div>
 
-          <div className="max-w-md mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {contactInfo.map((contact, index) => {
               const Icon = contact.icon;
               return (
@@ -201,7 +252,7 @@ const Contact = () => {
                     >
                       {contact.title}
                     </EditableText>
-                    <div className="mb-4">
+                    <div className="space-y-2 mb-4">
                       <EditableText
                         value={contact.primary}
                         onChange={contact.setPrimary}
@@ -209,6 +260,14 @@ const Contact = () => {
                         as="p"
                       >
                         {contact.primary}
+                      </EditableText>
+                      <EditableText
+                        value={contact.secondary}
+                        onChange={contact.setSecondary}
+                        className="text-gray-600"
+                        as="p"
+                      >
+                        {contact.secondary}
                       </EditableText>
                     </div>
                     <EditableText

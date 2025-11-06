@@ -9,52 +9,38 @@ const OptimizedHeroSection = memo(() => {
   const { getStat } = useStats('dashboard');
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
-      {/* Enhanced gradient background */}
-      <div className="absolute inset-0 gradient-brand"></div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background with gradient */}
+      <div className="absolute inset-0 gradient-brand opacity-90"></div>
       
-      {/* Subtle overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent"></div>
-      
-      {/* Sophisticated animated background elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white rounded-full blur-3xl animate-float"></div>
-        <div className="absolute top-1/3 right-1/4 w-40 h-40 bg-white rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-1/4 left-1/3 w-36 h-36 bg-white rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/3 right-1/3 w-28 h-28 bg-white rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+      {/* Animated background elements - reduced for performance */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
+        <div className="absolute bottom-20 right-1/3 w-24 h-24 bg-white/10 rounded-full animate-float" style={{animationDelay: '2s'}}></div>
       </div>
 
-      {/* Decorative corner elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/3 translate-y-1/3"></div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-        <div className="space-y-8 animate-fade-in-up">
-          {/* Main heading with enhanced typography */}
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight">
-              Welcome to{' '}
-              <span className="block mt-2 bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent drop-shadow-lg">
-                Y-Peace
-              </span>
-            </h1>
-            
-            <p className="text-2xl md:text-3xl lg:text-4xl font-light tracking-wide text-white/95">
-              Youth for Peace
-            </p>
-          </div>
+        <div className="animate-fade-in-up">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            Welcome to{' '}
+            <span className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+              Y-Peace
+            </span>
+          </h1>
           
-          {/* Mission statement with improved readability */}
-          <p className="text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto text-white/90 leading-relaxed font-light px-4">
+          <p className="text-xl md:text-2xl font-semibold mb-4 text-gray-100">
+            Youth for Peace
+          </p>
+          
+          <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto text-gray-200 leading-relaxed">
             To empower and support youth and their communities to foster peace, sustainability, and prosperity—through diplomacy, advocacy, climate action, interfaith cooperation, education, and community service.
           </p>
 
-          {/* Enhanced CTA button */}
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center">
             <Button 
               asChild
               size="lg" 
-              className="bg-white text-primary hover:bg-white/90 hover:scale-105 text-lg px-10 py-6 rounded-full shadow-2xl transition-all duration-300 group font-semibold"
+              className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4 group"
             >
               <Link to="/donate">
                 Support Us
@@ -63,23 +49,23 @@ const OptimizedHeroSection = memo(() => {
             </Button>
           </div>
 
-          {/* Enhanced statistics with better visual hierarchy */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mt-20 pt-12 border-t border-white/30 backdrop-blur-sm">
-            <div className="text-center group hover-lift p-4">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 group-hover:scale-110 transition-transform duration-300">{getStat('dashboard', 'un_sdgs')}</div>
-              <div className="text-sm md:text-base lg:text-lg text-white/90 font-light tracking-wide">UN SDGs</div>
+          {/* Statistics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/20">
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'un_sdgs')}</div>
+              <div className="text-sm md:text-base text-gray-200">UN SDGs</div>
             </div>
-            <div className="text-center group hover-lift p-4">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 group-hover:scale-110 transition-transform duration-300">{getStat('dashboard', 'core_pillars')}</div>
-              <div className="text-sm md:text-base lg:text-lg text-white/90 font-light tracking-wide">Core Pillars</div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'core_pillars')}</div>
+              <div className="text-sm md:text-base text-gray-200">Core Pillars</div>
             </div>
-            <div className="text-center group hover-lift p-4">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 group-hover:scale-110 transition-transform duration-300">{getStat('dashboard', 'countries')}+</div>
-              <div className="text-sm md:text-base lg:text-lg text-white/90 font-light tracking-wide">Countries</div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'countries')}+</div>
+              <div className="text-sm md:text-base text-gray-200">Countries</div>
             </div>
-            <div className="text-center group hover-lift p-4">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 group-hover:scale-110 transition-transform duration-300">{getStat('dashboard', 'youth_leaders')}+</div>
-              <div className="text-sm md:text-base lg:text-lg text-white/90 font-light tracking-wide">Youth Leaders</div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold mb-2">{getStat('dashboard', 'youth_leaders')}+</div>
+              <div className="text-sm md:text-base text-gray-200">Youth Leaders</div>
             </div>
           </div>
         </div>

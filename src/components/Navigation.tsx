@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Settings, Users, ClipboardList, FileText, Mail, BarChart3, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,18 +8,8 @@ import yPeaceLogo from '@/assets/ypeace-logo.png';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { user, isAdmin, signOut } = useAuth();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -31,114 +21,93 @@ const Navigation = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const isHomePage = location.pathname === '/';
-
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 transition-all duration-500 ease-out ${
-        isHomePage && !isScrolled
-          ? 'bg-white/95 backdrop-blur-xl py-8 z-[1000] shadow-sm'
-          : 'py-4 z-[1000]'
-      } ${
-        isHomePage && isScrolled
-          ? 'bg-white/98 backdrop-blur-2xl shadow-lg border-b border-gray-200/50'
-          : !isHomePage
-          ? 'bg-white/98 backdrop-blur-xl border-b border-gray-200/50 shadow-sm'
-          : ''
-      }`}
-      style={isHomePage && isScrolled ? { backdropFilter: 'blur(16px) saturate(180%)' } : {}}
-    >
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center hover-lift transition-all duration-500 group">
+          <Link to="/" className="flex items-center space-x-2 mr-auto">
             <img 
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
-              className={`w-auto drop-shadow-2xl transition-all duration-500 group-hover:scale-105 ${
-                isHomePage && !isScrolled ? 'h-32' : 'h-20'
-              }`}
-              style={isHomePage && !isScrolled ? { filter: 'drop-shadow(0 10px 25px rgba(255,255,255,0.3))' } : {}}
+              className="h-24 w-auto"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-6 py-3 text-sm font-bold tracking-wide transition-all duration-500 rounded-full relative overflow-hidden group ${
+                className={`px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md ${
                   isActive(item.path)
-                    ? 'text-primary bg-gradient-to-r from-primary/15 to-primary/10 shadow-md'
-                    : 'text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5'
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-gray-600 hover:text-primary hover:bg-primary/5'
                 }`}
               >
-                <span className="relative z-10">{item.name}</span>
-                {!isActive(item.path) && (
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
-                )}
+                {item.name}
               </Link>
-            ))}
+              ))}
               
-            {/* Admin Dropdown */}
-            {user && isAdmin && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    className="px-6 py-3 text-sm font-bold tracking-wide rounded-full transition-all duration-500 text-foreground/75 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5"
-                  >
-                    Admin
-                    <ChevronDown className="ml-1.5 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link to="/user-management" className="flex items-center w-full cursor-pointer">
-                      <Users className="mr-2 h-4 w-4" />
-                      Users
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/application-results" className="flex items-center w-full cursor-pointer">
-                      <ClipboardList className="mr-2 h-4 w-4" />
-                      Applications
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/admin/stats" className="flex items-center w-full cursor-pointer">
-                      <BarChart3 className="mr-2 h-4 w-4" />
-                      Statistics
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/news/press-releases" className="flex items-center w-full cursor-pointer">
-                      <FileText className="mr-2 h-4 w-4" />
-                      Press Releases
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/news/newsletter" className="flex items-center w-full cursor-pointer">
-                      <Mail className="mr-2 h-4 w-4" />
-                      Newsletter
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/news/blog" className="flex items-center w-full cursor-pointer">
-                      <Settings className="mr-2 h-4 w-4" />
-                      Blog
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={signOut} className="text-destructive cursor-pointer">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          </div>
+              {/* Admin Dropdown */}
+              {user && isAdmin && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary hover:bg-primary/5 rounded-md"
+                    >
+                      Admin
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem asChild>
+                      <Link to="/user-management" className="flex items-center w-full">
+                        <Users className="mr-2 h-4 w-4" />
+                        Users
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/application-results" className="flex items-center w-full">
+                        <ClipboardList className="mr-2 h-4 w-4" />
+                        Applications
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/stats" className="flex items-center w-full">
+                        <BarChart3 className="mr-2 h-4 w-4" />
+                        Statistics
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/news/press-releases" className="flex items-center w-full">
+                        <FileText className="mr-2 h-4 w-4" />
+                        Press Releases
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/news/newsletter" className="flex items-center w-full">
+                        <Mail className="mr-2 h-4 w-4" />
+                        Newsletter
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/news/blog" className="flex items-center w-full">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Blog
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={signOut} className="text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -146,28 +115,24 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className="rounded-full transition-all duration-500 hover:scale-110 text-foreground hover:bg-primary/10"
             >
-              {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div 
-            className="md:hidden pb-4 animate-fade-in transition-all duration-300 bg-white/98 backdrop-blur-xl border-t border-gray-200/50"
-            style={{ backdropFilter: 'blur(12px)' }}
-          >
-            <div className="space-y-1">
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`block px-4 py-3 text-base font-semibold rounded-xl transition-all duration-300 ${
+                  className={`block px-3 py-2 text-base font-medium transition-colors ${
                     isActive(item.path)
                       ? 'text-primary bg-primary/10'
-                      : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -178,57 +143,55 @@ const Navigation = () => {
               {/* Mobile Admin Menu */}
               {user && isAdmin && (
                 <>
-                  <div className="px-4 pt-4 pb-2">
-                    <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                      Admin
-                    </div>
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Admin
                   </div>
                   <Link
                     to="/user-management"
-                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Users className="mr-2 h-4 w-4" />
+                    <Users className="inline mr-2 h-4 w-4" />
                     Users
                   </Link>
                   <Link
                     to="/application-results"
-                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
                   >
-                    <ClipboardList className="mr-2 h-4 w-4" />
+                    <ClipboardList className="inline mr-2 h-4 w-4" />
                     Applications
                   </Link>
                   <Link
                     to="/admin/stats"
-                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
                   >
-                    <BarChart3 className="mr-2 h-4 w-4" />
+                    <BarChart3 className="inline mr-2 h-4 w-4" />
                     Statistics
                   </Link>
                   <Link
                     to="/news/press-releases"
-                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
                   >
-                    <FileText className="mr-2 h-4 w-4" />
+                    <FileText className="inline mr-2 h-4 w-4" />
                     Press Releases
                   </Link>
                   <Link
                     to="/news/newsletter"
-                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Mail className="mr-2 h-4 w-4" />
+                    <Mail className="inline mr-2 h-4 w-4" />
                     Newsletter
                   </Link>
                   <Link
                     to="/news/blog"
-                    className="flex items-center px-4 py-2.5 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Settings className="mr-2 h-4 w-4" />
+                    <Settings className="inline mr-2 h-4 w-4" />
                     Blog
                   </Link>
                   <button
@@ -236,9 +199,9 @@ const Navigation = () => {
                       signOut();
                       setIsOpen(false);
                     }}
-                    className="flex items-center w-full px-4 py-2.5 text-base font-medium text-destructive hover:bg-destructive/5 rounded-lg transition-colors"
+                    className="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:bg-gray-50"
                   >
-                    <LogOut className="mr-2 h-4 w-4" />
+                    <LogOut className="inline mr-2 h-4 w-4" />
                     Sign Out
                   </button>
                 </>

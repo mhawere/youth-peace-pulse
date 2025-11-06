@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { useVisitTracker } from "@/hooks/useVisitTracker";
+import { VisitorCounter } from "@/components/VisitorCounter";
 
 // Lazy load components for better performance
 import { lazy, Suspense } from "react";
@@ -64,6 +65,7 @@ const App = () => (
         <AppWithTracking />
         <Toaster />
         <Sonner />
+        <VisitorCounter />
         <BrowserRouter>
           <Suspense fallback={<PageLoader />}>
             <Routes>

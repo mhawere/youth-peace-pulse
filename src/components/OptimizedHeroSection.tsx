@@ -13,9 +13,6 @@ const OptimizedHeroSection = memo(() => {
       {/* Enhanced gradient background */}
       <div className="absolute inset-0 gradient-brand"></div>
       
-      {/* Smooth gradient transition overlay at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background/50 z-[1]"></div>
-      
       {/* Sophisticated animated background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white rounded-full blur-3xl animate-float"></div>

@@ -56,7 +56,7 @@ const Navigation = () => {
               src={yPeaceLogo} 
               alt="Y-Peace Logo" 
               className={`w-auto drop-shadow-2xl transition-all duration-500 group-hover:scale-105 ${
-                isHomePage && !isScrolled ? 'h-20' : 'h-14'
+                isHomePage && !isScrolled ? 'h-32' : 'h-20'
               }`}
               style={isHomePage && !isScrolled ? { filter: 'drop-shadow(0 10px 25px rgba(255,255,255,0.3))' } : {}}
             />

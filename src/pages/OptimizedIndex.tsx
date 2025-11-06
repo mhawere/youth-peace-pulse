@@ -138,16 +138,19 @@ const OptimizedIndex = memo(() => {
   const storiesToDisplay = featuredStories.length > 0 ? featuredStories : fallbackStories;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-surface">
+    <div className="min-h-screen">
       <Navigation />
       <AdminPanel />
       
       <OptimizedHeroSection />
       
+      {/* Smooth transition gradient section */}
+      <div className="h-24 bg-gradient-to-b from-transparent via-background/80 to-background -mt-24 relative z-0"></div>
+      
       <FivePsSection />
       
       {/* Mission Statement Section */}
-      <section className="section-padding bg-gradient-to-br from-white via-surface to-white">
+      <section className="section-padding bg-background">
         <div className="max-w-7xl mx-auto container-padding">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="animate-fade-in-left">

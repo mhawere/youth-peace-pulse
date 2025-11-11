@@ -22,19 +22,19 @@ const About = () => {
   const [teamTitle, setTeamTitle] = useState("Our Leadership Team");
   const [teamSubtitle, setTeamSubtitle] = useState("Meet the diverse leaders driving Y-Peace forward with expertise and passion.");
 
-  // State for values
-  const [unityTitle, setUnityTitle] = useState("Unity in Diversity");
-  const [unityDesc, setUnityDesc] = useState("Embracing and celebrating the richness of diverse cultures, beliefs, and backgrounds worldwide.");
-  const [empowermentTitle, setEmpowermentTitle] = useState("Empowerment");
-  const [empowermentDesc, setEmpowermentDesc] = useState("Equipping individuals and communities with the tools, knowledge, and resources to drive positive change.");
+  // State for values (aligned with investor presentation)
+  const [empathyTitle, setEmpathyTitle] = useState("Empathy");
+  const [empathyDesc, setEmpathyDesc] = useState("We listen before we act.");
   const [collaborationTitle, setCollaborationTitle] = useState("Collaboration");
-  const [collaborationDesc, setCollaborationDesc] = useState("Building strong partnerships across sectors, cultures, and generations to address global challenges.");
+  const [collaborationDesc, setCollaborationDesc] = useState("Peace is built together.");
   const [sustainabilityTitle, setSustainabilityTitle] = useState("Sustainability");
-  const [sustainabilityDesc, setSustainabilityDesc] = useState("Ensuring environmental, economic, and social well-being for current and future generations.");
-  const [peaceTitle, setPeaceTitle] = useState("Peace and Justice");
-  const [peaceDesc, setPeaceDesc] = useState("Advocating for peaceful coexistence, human rights, and just societies for all people everywhere.");
-  const [legacyTitle, setLegacyTitle] = useState("Legacy");
-  const [legacyDesc, setLegacyDesc] = useState("Leaving a lasting, positive impact on future generations through transformative action today.");
+  const [sustainabilityDesc, setSustainabilityDesc] = useState("Protecting our shared home.");
+  const [innovationTitle, setInnovationTitle] = useState("Innovation");
+  const [innovationDesc, setInnovationDesc] = useState("New ideas for new challenges.");
+  const [integrityTitle, setIntegrityTitle] = useState("Integrity");
+  const [integrityDesc, setIntegrityDesc] = useState("We stand for what's right, always.");
+  const [empowermentTitle, setEmpowermentTitle] = useState("Empowerment");
+  const [empowermentDesc, setEmpowermentDesc] = useState("Youth are not the future; they are the present.");
 
   // State for team roles
   const [ceoTitle, setCeoTitle] = useState("CEO & Founder");
@@ -48,12 +48,12 @@ const About = () => {
   const [boardBackground, setBoardBackground] = useState("Committed to transparent and effective leadership");
 
   const values = [
-    { icon: Globe, title: unityTitle, setTitle: setUnityTitle, description: unityDesc, setDescription: setUnityDesc },
-    { icon: Lightbulb, title: empowermentTitle, setTitle: setEmpowermentTitle, description: empowermentDesc, setDescription: setEmpowermentDesc },
+    { icon: Heart, title: empathyTitle, setTitle: setEmpathyTitle, description: empathyDesc, setDescription: setEmpathyDesc },
     { icon: Users, title: collaborationTitle, setTitle: setCollaborationTitle, description: collaborationDesc, setDescription: setCollaborationDesc },
-    { icon: Heart, title: sustainabilityTitle, setTitle: setSustainabilityTitle, description: sustainabilityDesc, setDescription: setSustainabilityDesc },
-    { icon: MessageSquare, title: peaceTitle, setTitle: setPeaceTitle, description: peaceDesc, setDescription: setPeaceDesc },
-    { icon: Target, title: legacyTitle, setTitle: setLegacyTitle, description: legacyDesc, setDescription: setLegacyDesc }
+    { icon: Globe, title: sustainabilityTitle, setTitle: setSustainabilityTitle, description: sustainabilityDesc, setDescription: setSustainabilityDesc },
+    { icon: Lightbulb, title: innovationTitle, setTitle: setInnovationTitle, description: innovationDesc, setDescription: setInnovationDesc },
+    { icon: Target, title: integrityTitle, setTitle: setIntegrityTitle, description: integrityDesc, setDescription: setIntegrityDesc },
+    { icon: MessageSquare, title: empowermentTitle, setTitle: setEmpowermentTitle, description: empowermentDesc, setDescription: setEmpowermentDesc }
   ];
 
   // State for taglines and messages
@@ -79,9 +79,65 @@ const About = () => {
           <EditableText value={pageTitle} onChange={setPageTitle} className="text-5xl md:text-6xl font-bold mb-6" as="h1">
             {pageTitle}
           </EditableText>
-          <EditableText value={pageSubtitle} onChange={setPageSubtitle} className="text-xl md:text-2xl opacity-90" as="p">
+          <EditableText value={pageSubtitle} onChange={setPageSubtitle} className="text-xl md:text-2xl opacity-90 mb-8" as="p">
             {pageSubtitle}
           </EditableText>
+          <p className="text-lg opacity-80 italic max-w-3xl mx-auto">
+            "We build bridges of understanding to turn division into dialogue, and dialogue into development."
+          </p>
+        </div>
+      </section>
+
+      {/* Why Peace Matters Now */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Why Peace Matters Now</h2>
+            <p className="text-xl text-gray-600 italic max-w-3xl mx-auto">
+              "Peace is a prerequisite for opportunity."
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+              <CardContent className="p-8 text-center">
+                <div className="text-4xl font-bold text-primary mb-4">600M+</div>
+                <h3 className="text-xl font-semibold mb-3 text-gray-800">Youth in Fragile Contexts</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Over 600 million youth live in areas where peace is fragile and their future is uncertain.
+                </p>
+                <p className="text-sm text-gray-500 mt-4 italic">- UNDP</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20">
+              <CardContent className="p-8 text-center">
+                <div className="text-4xl font-bold text-secondary mb-4">1 in 4</div>
+                <h3 className="text-xl font-semibold mb-3 text-gray-800">Violence & Instability</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  One in four youth live in conflict zones. Conflict limits the future of one-quarter of all youth.
+                </p>
+                <p className="text-sm text-gray-500 mt-4 italic">- Saferworld</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-accent/5 to-accent/10 border-accent/20">
+              <CardContent className="p-8 text-center">
+                <div className="text-4xl font-bold text-accent mb-4">9 in 10</div>
+                <h3 className="text-xl font-semibold mb-3 text-gray-800">Youth Exclusion</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Nine in ten youth feel unheard in peace decisions. Most young people remain excluded from shaping peace.
+                </p>
+                <p className="text-sm text-gray-500 mt-4 italic">- World Economic Forum</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-lg text-gray-700 italic max-w-4xl mx-auto">
+              "We strongly believe that peace is the first step of development and well-being. Because where there is peace, there is possibility."
+            </p>
+          </div>
         </div>
       </section>
 

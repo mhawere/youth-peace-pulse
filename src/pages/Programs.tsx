@@ -267,6 +267,60 @@ const Programs = () => {
         </div>
       </section>
 
+      {/* Youth-Led Programs */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Youth-Led Programs</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Turning Vision into Impact
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+              <CardContent className="p-8 text-center">
+                <Globe className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Climate Labs</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Youth-driven environmental action and climate education programs that create sustainable communities.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20">
+              <CardContent className="p-8 text-center">
+                <Heart className="h-12 w-12 text-secondary mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Interfaith Dialogues</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Building bridges across religious and cultural divides through open conversation and mutual understanding.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-accent/5 to-accent/10 border-accent/20">
+              <CardContent className="p-8 text-center">
+                <Users className="h-12 w-12 text-accent mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Education for Peace</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Empowering communities through knowledge, skills training, and peace-building education.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+              <CardContent className="p-8 text-center">
+                <Handshake className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Community Action Projects</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Grassroots initiatives that address local challenges and create lasting positive change.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Programs Overview */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -80,9 +80,12 @@ const Donate = () => {
           <EditableText value={pageSubtitle} onChange={setPageSubtitle} className="text-xl md:text-2xl opacity-90 mb-8" as="p">
             {pageSubtitle}
           </EditableText>
-          <EditableText value={pageDescription} onChange={setPageDescription} multiline className="text-lg opacity-80 max-w-3xl mx-auto" as="p">
+          <EditableText value={pageDescription} onChange={setPageDescription} multiline className="text-lg opacity-80 max-w-3xl mx-auto mb-8" as="p">
             {pageDescription}
           </EditableText>
+          <div className="text-2xl font-bold opacity-95 italic">
+            Empower youth. Transform the world. Join us. Invest in peace.
+          </div>
         </div>
       </section>
 

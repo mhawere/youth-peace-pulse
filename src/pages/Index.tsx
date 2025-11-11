@@ -44,6 +44,12 @@ const Index = () => {
       {/* Mission Statement Section */}
       <section className="section-padding bg-gradient-to-br from-white via-surface to-white">
         <div className="max-w-7xl mx-auto container-padding">
+          <div className="text-center mb-12">
+            <p className="text-2xl md:text-3xl italic text-muted-foreground max-w-4xl mx-auto">
+              "We build bridges of understanding to turn division into dialogue, and dialogue into development."
+            </p>
+          </div>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="animate-fade-in-left">
               <EditableText

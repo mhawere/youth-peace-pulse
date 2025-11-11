@@ -505,25 +505,14 @@ const Programs = () => {
           >
             {ctaDescription}
           </EditableText>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all text-lg px-10 py-6 shadow-lg font-semibold">
-              <EditableText
-                value={ctaButton1}
-                onChange={setCtaButton1}
-                as="span"
-              >
-                {ctaButton1}
-              </EditableText>
-            </Button>
-            <Button size="lg" className="bg-secondary text-white hover:bg-secondary-dark hover:scale-105 transition-all text-lg px-10 py-6 shadow-lg font-semibold border-2 border-white/30">
-              <EditableText
-                value={ctaButton2}
-                onChange={setCtaButton2}
-                as="span"
-              >
-                {ctaButton2}
-              </EditableText>
-            </Button>
+          <div className="text-center">
+            <p className="text-2xl font-semibold mb-3">Email us on</p>
+            <a 
+              href="mailto:info@ypeace.org" 
+              className="text-3xl md:text-4xl font-bold hover:opacity-80 transition-opacity"
+            >
+              info@ypeace.org
+            </a>
           </div>
         </div>
       </section>

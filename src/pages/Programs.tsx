@@ -491,7 +491,7 @@ const Programs = () => {
           <EditableText
             value={ctaTitle}
             onChange={setCtaTitle}
-            className="text-4xl font-bold mb-6"
+            className="text-4xl md:text-5xl font-bold mb-6"
             as="h2"
           >
             {ctaTitle}
@@ -500,13 +500,13 @@ const Programs = () => {
             value={ctaDescription}
             onChange={setCtaDescription}
             multiline
-            className="text-xl opacity-90 mb-8 max-w-2xl mx-auto"
+            className="text-xl opacity-90 mb-10 max-w-2xl mx-auto leading-relaxed"
             as="p"
           >
             {ctaDescription}
           </EditableText>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all text-lg px-10 py-6 shadow-lg font-semibold">
               <EditableText
                 value={ctaButton1}
                 onChange={setCtaButton1}
@@ -515,7 +515,7 @@ const Programs = () => {
                 {ctaButton1}
               </EditableText>
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10 text-lg px-8 py-4">
+            <Button size="lg" className="bg-secondary text-white hover:bg-secondary-dark hover:scale-105 transition-all text-lg px-10 py-6 shadow-lg font-semibold border-2 border-white/30">
               <EditableText
                 value={ctaButton2}
                 onChange={setCtaButton2}

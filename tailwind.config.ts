@@ -19,7 +19,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'harabara': ['Harabara Mais', 'system-ui', '-apple-system', 'sans-serif'],
+				'montserrat': ['Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
